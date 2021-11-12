@@ -92,7 +92,7 @@
               <li class="nav-item">
                 <a href="/adduser" class="nav-link ">
                   <i class="far fa-plus nav-icon"></i>
-                  <p>Add User</p>
+                  <p>Add New User</p>
                 </a>
               </li>
               <li class="nav-item">

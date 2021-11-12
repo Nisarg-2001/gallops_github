@@ -20,7 +20,7 @@ class RegisteredUserController extends Controller
      */
     public function create()
     {
-        return view('auth.register');
+        return view('admin.add_user');
     }
 
     /**
@@ -33,22 +33,39 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request)
     {
+       
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'password' => ['required', Rules\Password::defaults()],
+            'contact' => ['required'],
+            'gst' => ['required'],
+            'cin' => ['required'],
+            'fssai' => ['required'],
+            'username' => ['required', 'unique:users'],
+            'pincode' =>['required'],
+            'role' => ['required'],
+        
+            
         ]);
 
+    
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'contact' => $request->contact,
+            'gst' => $request->gst,
+            'cin' => $request->cin,
+            'fssai' => $request->fssai,
+            'username' => $request->username,
+            'address_line_1' => $request->address1,
+            'address_line_2' => $request->address2,
+            'state' => $request->state,
+            'pincode' => $request->pincode,
+            'role' => $request->role,
         ]);
 
-        event(new Registered($user));
-
-        Auth::login($user);
-
-        return redirect(RouteServiceProvider::HOME);
+        return redirect('user');
     }
 }

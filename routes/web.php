@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\userController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,9 +22,6 @@ Route::get('/dashboard', function () {
     return view('admin.dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-Route::get('/user', function () {
-    return view('user.dashboard');
-})->name('dashboard');
 
 Route::get('/admin', function () {
     return view('admin.dashboard');

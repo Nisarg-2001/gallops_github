@@ -26,7 +26,7 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-              <form action="adduser" method="post" id="form">
+              <form method="POST" action="/createuser" >
                 @csrf
 <div class="row">
     <div class="col-12 col-md-4 col-lg-4">
@@ -130,7 +130,7 @@
 <div class="col-12 col-md-4 col-lg-4">
 <div class="form-group">
     <label for="exampleInputPassword1">Pin Code</label>
-    <input type="text" class="form-control" name="pin" placeholder="pincode" required>
+    <input type="text" class="form-control" name="pincode" placeholder="pincode" required>
   </div>
 </div>
 <div class="col-12 col-md-4 col-lg-4">
