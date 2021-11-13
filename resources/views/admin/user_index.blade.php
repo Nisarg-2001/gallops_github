@@ -22,7 +22,7 @@
 
             <div class="card">
               <div class="card-header">
-               <a href="{{url('adduser')}}" class="btn btn-primary">Add User</a>
+               <a href="{{ route('add')}}" class="btn btn-primary">Add User</a>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -37,113 +37,23 @@
                   </tr>
                   </thead>
                   <tbody>
+                    @foreach($user as $users)
                   <tr>
-                    <td>Trident</td>
-                    <td>Internet
-                      Explorer 4.0
-                    </td>
-                    <td>Win 95+</td>
-                    <td> 4</td>
-                    <td>X</td>
+                    <td>{{ $users->id }}</td>
+                    <td>{{ $users->name }}</td>
+                    <td>{{ $users->email }}</td>
+                    @if($users->role==0)
+                    <td> Admin</td>
+                    @else
+                    <td>Franchise</td>
+                    @endif
+                    <td class="text-center">
+                      <a href="#" class="btn btn-info" title="Edit"><i class="fas fa-pencil" ></i></a>
+                      <a href="delete/{{$users->id}}" class="btn btn-danger" title="Delete"><i class="fas fa-trash-alt" ></i></a>
+
+                  </td>
                   </tr>
-                  <tr>
-                    <td>Trident</td>
-                    <td>Internet
-                      Explorer 5.0
-                    </td>
-                    <td>Win 95+</td>
-                    <td>5</td>
-                    <td>C</td>
-                  </tr>
-                  <tr>
-                    <td>Trident</td>
-                    <td>Internet
-                      Explorer 5.5
-                    </td>
-                    <td>Win 95+</td>
-                    <td>5.5</td>
-                    <td>A</td>
-                  </tr>
-                  <tr>
-                    <td>Trident</td>
-                    <td>Internet
-                      Explorer 6
-                    </td>
-                    <td>Win 98+</td>
-                    <td>6</td>
-                    <td>A</td>
-                  </tr>
-                  <tr>
-                    <td>Trident</td>
-                    <td>Internet Explorer 7</td>
-                    <td>Win XP SP2+</td>
-                    <td>7</td>
-                    <td>A</td>
-                  </tr>
-                  <tr>
-                    <td>Trident</td>
-                    <td>AOL browser (AOL desktop)</td>
-                    <td>Win XP</td>
-                    <td>6</td>
-                    <td>A</td>
-                  </tr>
-                  <tr>
-                    <td>Gecko</td>
-                    <td>Firefox 1.0</td>
-                    <td>Win 98+ / OSX.2+</td>
-                    <td>1.7</td>
-                    <td>A</td>
-                  </tr>
-                  <tr>
-                    <td>Gecko</td>
-                    <td>Firefox 1.5</td>
-                    <td>Win 98+ / OSX.2+</td>
-                    <td>1.8</td>
-                    <td>A</td>
-                  </tr>
-                  <tr>
-                    <td>Gecko</td>
-                    <td>Firefox 2.0</td>
-                    <td>Win 98+ / OSX.2+</td>
-                    <td>1.8</td>
-                    <td>A</td>
-                  </tr>
-                 
-                  <tr>
-                    <td>Misc</td>
-                    <td>Links</td>
-                    <td>Text only</td>
-                    <td>-</td>
-                    <td>X</td>
-                  </tr>
-                  <tr>
-                    <td>Misc</td>
-                    <td>Lynx</td>
-                    <td>Text only</td>
-                    <td>-</td>
-                    <td>X</td>
-                  </tr>
-                  <tr>
-                    <td>Misc</td>
-                    <td>IE Mobile</td>
-                    <td>Windows Mobile 6</td>
-                    <td>-</td>
-                    <td>C</td>
-                  </tr>
-                  <tr>
-                    <td>Misc</td>
-                    <td>PSP browser</td>
-                    <td>PSP</td>
-                    <td>-</td>
-                    <td>C</td>
-                  </tr>
-                  <tr>
-                    <td>Other browsers</td>
-                    <td>All others</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>U</td>
-                  </tr>
+                  @endforeach
                   </tbody>
                   <tfoot>
                   <tr>

@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="../../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
         <!-- Styles -->
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+       
         <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
@@ -43,11 +44,10 @@
         <div class="min-h-screen bg-gray-100">
             @include('layouts.navigation')
 
-            <aside class="main-sidebar sidebar-dark-primary elevation-4">
+            <aside class="main-sidebar sidebar-dark-primary ">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
-      <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">AdminLTE 3</span>
+    <a href="#" class="brand-link bg-white" style="height:65px;">
+      <span class=" ml-5 brand-text text-dark font-weight-bold">AdminLTE 3</span>
     </a>
 
     <!-- Sidebar -->
@@ -56,16 +56,7 @@
       
 
       <!-- SidebarSearch Form -->
-      <div class="form-inline mt-2">
-        <div class="input-group" data-widget="sidebar-search">
-          <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-          <div class="input-group-append">
-            <button class="btn btn-sidebar">
-              <i class="fas fa-search fa-fw"></i>
-            </button>
-          </div>
-        </div>
-      </div>
+     
 
       <!-- Sidebar Menu -->
       <nav class="mt-2">
@@ -81,120 +72,51 @@
             </a>
           </li>
           <li class="nav-item menu">
-            <a class="nav-link">
+            <a href="/user" class="nav-link">
               <i class="nav-icon fas fa-users"></i>
               <p>
                 Users
-                <i class="right fas fa-angle-left"></i>
               </p>
             </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="/adduser" class="nav-link ">
-                  <i class="far fa-plus nav-icon"></i>
-                  <p>Add New User</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/user" class="nav-link ">
-                  <i class="far fa-list nav-icon"></i>
-                  <p>View Users</p>
-                </a>
-              </li>
-            </ul>
           </li>
 
           <li class="nav-item menu">
-            <a class="nav-link">
+            <a href="/tax" class="nav-link">
               <i class="nav-icon fas fa-users"></i>
               <p>
               Taxes
-                <i class="right fas fa-angle-left"></i>
+               
               </p>
             </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="/addtax" class="nav-link ">
-                  <i class="far fa-plus nav-icon"></i>
-                  <p>Add new Tax</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/tax" class="nav-link ">
-                  <i class="far fa-list nav-icon"></i>
-                  <p>View Taxes</p>
-                </a>
-              </li>
-            </ul>
           </li>
+
           <li class="nav-item menu">
-            <a class="nav-link">
+            <a href="/category" class="nav-link">
               <i class="nav-icon fas fa-users"></i>
               <p>
                 Categories
-                <i class="right fas fa-angle-left"></i>
+               
               </p>
             </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="/addcategory" class="nav-link ">
-                  <i class="far fa-plus nav-icon"></i>
-                  <p>Add new Category</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/category" class="nav-link ">
-                  <i class="far fa-list nav-icon"></i>
-                  <p>View Category</p>
-                </a>
-              </li>
-            </ul>
           </li>
           <li class="nav-item menu">
-            <a class="nav-link">
+            <a href="/products" class="nav-link">
               <i class="nav-icon fas fa-users"></i>
               <p>
                 Products
-                <i class="right fas fa-angle-left"></i>
+               
               </p>
             </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="/addproduct" class="nav-link ">
-                  <i class="far fa-plus nav-icon"></i>
-                  <p>Add Product</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/products" class="nav-link ">
-                  <i class="far fa-list nav-icon"></i>
-                  <p>View Products</p>
-                </a>
-              </li>
-            </ul>
           </li>
+
           <li class="nav-item menu">
-            <a class="nav-link">
+            <a href="/vendors" class="nav-link">
               <i class="nav-icon fas fa-users"></i>
               <p>
                 Vendors
-                <i class="right fas fa-angle-left"></i>
+                
               </p>
             </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="/addvendor" class="nav-link ">
-                  <i class="far fa-plus nav-icon"></i>
-                  <p>Add vendor</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/vendors" class="nav-link ">
-                  <i class="far fa-list nav-icon"></i>
-                  <p>View Vendors</p>
-                </a>
-              </li>
-            </ul>
           </li>
 
           <li class="nav-item menu">
@@ -207,85 +129,35 @@
           </li>
 
           <li class="nav-item menu">
-            <a class="nav-link">
+            <a href="/orders" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Inwards
-                <i class="right fas fa-angle-left"></i>
+               
               </p>
             </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="/orders" class="nav-link ">
-                  <i class="far fa-plus nav-icon"></i>
-                  <p>Order Inwards</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/orders" class="nav-link ">
-                  <i class="far fa-list nav-icon"></i>
-                  <p>View Inwards</p>
-                </a>
-              </li>
-            </ul>
           </li>
+
           <li class="nav-item menu">
-            <a class="nav-link">
+            <a href="/orders" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Issued Goods
-                <i class="right fas fa-angle-left"></i>
+               
               </p>
             </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="/orders" class="nav-link ">
-                  <i class="far fa-plus nav-icon"></i>
-                  <p>Issue Goods</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/orders" class="nav-link ">
-                  <i class="far fa-list nav-icon"></i>
-                  <p>View Issued Goods</p>
-                </a>
-              </li>
-            </ul>
           </li>
+
           <li class="nav-item menu">
-            <a class="nav-link">
+            <a href="/orders" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Returned Goods
-                <i class="right fas fa-angle-left"></i>
+               
               </p>
             </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="/orders" class="nav-link ">
-                  <i class="far fa-plus nav-icon"></i>
-                  <p>Return Goods</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/orders" class="nav-link ">
-                  <i class="far fa-list nav-icon"></i>
-                  <p>View Returned Goods</p>
-                </a>
-              </li>
-            </ul>
           </li>
          
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
-              <p>
-                Widgets
-                
-              </p>
-            </a>
-          </li>
-        
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
@@ -307,6 +179,8 @@
 </script>
 <!-- Bootstrap 4 -->
 <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Validation Jquery -->
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
 <!-- ChartJS -->
 <script src="plugins/chart.js/Chart.min.js"></script>
 <!-- Sparkline -->
@@ -344,7 +218,7 @@
   $(function () {
     $("#example1").DataTable({
       "responsive": true, "lengthChange": false, "autoWidth": false,
-      "buttons": ["copy", "csv", "excel", "pdf", "print"]
+      "buttons": ["excel", "pdf"]
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
     $('#example2').DataTable({
       "paging": true,

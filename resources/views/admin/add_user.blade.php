@@ -26,7 +26,7 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-              <form method="POST" action="/createuser" >
+              <form method="POST" action="/createuser" id="user" >
                 @csrf
 <div class="row">
     <div class="col-12 col-md-4 col-lg-4">
@@ -137,7 +137,7 @@
 <div class="form-group">
 <label for="inputState">Role</label>
       <select id="inputState" name="role" class="form-control" required>
-        <option value="1">Admin</option>
+        <option value="1" Selected>Admin</option>
         <option value="2">Franchise</option>
       </select>
   </div>
@@ -174,6 +174,59 @@
       <b>Version</b> 3.1.0
     </div>
   </footer>
+  <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+  <script>
+
+$(document).ready(function () {
+
+$('#user').validate({
+
+rules: {
+
+name: {
+
+required: true,
+unique:true
+
+},
+
+email: {
+
+required: true,
+
+email: true,
+
+},
+
+},
+
+errorElement: 'span',
+
+errorPlacement: function (error, element) {
+
+error.addClass('invalid-feedback');
+
+element.closest('.form-group').append(error);
+
+},
+
+highlight: function (element, errorClass, validClass) {
+
+$(element).addClass('is-invalid');
+
+},
+
+unhighlight: function (element, errorClass, validClass) {
+
+$(element).removeClass('is-invalid');
+
+}
+
+});
+
+});
+
+</script>
 
  
 </x-app-layout>

@@ -31,6 +31,8 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
+
+     
     public function store(Request $request)
     {
        
@@ -67,5 +69,12 @@ class RegisteredUserController extends Controller
         ]);
 
         return redirect('user');
+    }
+
+    public function view()
+    {
+        $user = User::all();
+        return view('admin.user_index',['user'=>$user]);
+
     }
 }

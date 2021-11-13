@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\userController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,9 +32,15 @@ Route::get('/product', function () {
 Route::get('/orders', function () {
     return view('user.order_masters');
 })->name('user');
-Route::get('/user', function () {
-    return view('admin.user_index');
-})->name('user');
+
+
+Route::get('/user',[UserController::class,'view']);
+Route::get('/adduser', function () {
+    return view('admin.add_user');
+})->name('add');
+Route::post('/createuser', [UserController::class, 'store']);
+Route::get('/delete/{id}',[UserController::class, 'delete']);
+
 Route::get('/tax', function () {
     return view('admin.tax_index');
 })->name('user');
@@ -44,9 +50,7 @@ Route::get('/category', function () {
 Route::get('/addcategory', function () {
     return view('admin.add_Category');
 })->name('user');
-Route::get('/adduser', function () {
-    return view('admin.add_user');
-})->name('user');
+
 Route::get('/products', function () {
     return view('admin.product_index');
 })->name('user');
