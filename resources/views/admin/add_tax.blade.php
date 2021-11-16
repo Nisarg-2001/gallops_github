@@ -26,7 +26,7 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-              <form action="#" method="post" id="form">
+              <form action="{{ url('createtax') }}" method="post" id="form">
                 @csrf
 <div class="row">
     <div class="col-12 col-md-4 col-lg-4">
@@ -43,11 +43,11 @@
 <div class="form-group">
     <label >Tax type</label>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="type" id="flexRadioDefault1">
+            <input class="form-check-input" type="radio" name="type" value="percentage" id="flexRadioDefault1">
             <label class="form-check-label mr-5" for="flexRadioDefault1">
                 Percentage
             </label>
-            <input class="form-check-input" type="radio" name="type" id="flexRadioDefault2" checked>
+            <input class="form-check-input" type="radio" name="type" value="amount" id="flexRadioDefault2" checked>
                 <label class="form-check-label" for="flexRadioDefault2">
                     Fixed Amount
                 </label>
@@ -57,7 +57,7 @@
 <div class="col-4">
 <div class="form-group">
     <label for="exampleInputPassword1">Value</label>
-    <input type="text" class="form-control" name="value" placeholder="Enter tax value" required>
+    <input type="number" class="form-control" name="value" placeholder="Enter tax value" required>
   </div>
 </div>
 </div>
@@ -68,7 +68,7 @@
 
 
 <div class="text-center">
-  <button type="submit" class="btn btn-primary ">Add</button>
+  <button type="submit" class="btn btn-primary ">Add Tax</button>
   <a href="{{url()->previous()}}" class="btn btn-danger">Cancel</a>
 </div>
 </form>

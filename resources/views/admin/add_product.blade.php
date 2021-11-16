@@ -26,7 +26,7 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-              <form action="adduser" method="post" id="form">
+              <form action="{{ url('createproduct') }}" method="post" id="form">
                 @csrf
 <div class="row">
     <div class="col-12 col-md-4 col-lg-4">
@@ -67,10 +67,9 @@
     <div class="form-group">
     <label >Category</label>
     <select id="inputState" name="category" class="form-control" required>
-        <option value="1">Category 1</option>
-        <option value="2">Category 2</option>
-        <option value="3">Category 3</option>
-        <option value="4">Category 4</option>
+      @foreach($category as $data)
+        <option value="{{ $data->id}}">{{ $data->title }}</option>
+      @endforeach
       </select>
    
   </div>
@@ -78,11 +77,11 @@
 <div class="col-12 col-md-4 col-lg-4">
 <div class="form-group">
     <label for="exampleInputPassword1">Sub category</label>
-    <select id="inputState" name="subcat" class="form-control" required>
-        <option value="1">Category 1</option>
-        <option value="2">Category 2</option>
-        <option value="3">Category 3</option>
-        <option value="4">Category 4</option>
+    <select id="inputState" name="subcategory" class="form-control" required>
+        <option value="1" >Category 1</option>
+        <option value="2" >Category 2</option>
+        <option value="3" >Category 3</option>
+        <option value="4" >Category 4</option>
       </select>
   </div>
 </div>
@@ -90,8 +89,8 @@
 <div class="form-group">
     <label for="exampleInputPassword1">Unit Of Measurement</label>
     <select id="inputState" name="unit" class="form-control" required>
-        <option value="1">Kgs.</option>
-        <option value="2">Ltrs.</option>
+        <option value="kg">Kgs.</option>
+        <option value="ltr">Ltrs.</option>
       </select>
   </div>
 </div>
@@ -103,9 +102,10 @@
     <div class="col-12 col-md-4 col-lg-4">
     <div class="form-group">
     <label >Tax 1</label>
-    <select id="inputState" name="role" class="form-control" required>
-        <option value="1">GSTIN</option>
-        <option value="2">CIN</option>
+    <select id="inputState" name="tax1" class="form-control" required>
+      @foreach($tax as $data)
+        <option value="{{ $data->id}}">{{ $data->tax_name }}</option>
+      @endforeach
       </select>
    
   </div>
@@ -113,18 +113,20 @@
 <div class="col-12 col-md-4 col-lg-4">
 <div class="form-group">
     <label for="exampleInputPassword1">Tax 2</label>
-    <select id="inputState" name="role" class="form-control" required>
-        <option value="1">GSTIN</option>
-        <option value="2">CIN</option>
+    <select id="inputState" name="tax2" class="form-control" required>
+      @foreach($tax as $data)
+        <option value="{{ $data->id}}">{{ $data->tax_name }}</option>
+      @endforeach
       </select>
   </div>
 </div>
 <div class="col-12 col-md-4 col-lg-4">
 <div class="form-group">
 <label for="inputState">Tax 3</label>
-<select id="inputState" name="role" class="form-control" required>
-        <option value="1">GSTIN</option>
-        <option value="2">CIN</option>
+<select id="inputState" name="tax3" class="form-control" required>
+      @foreach($tax as $data)
+        <option value="{{ $data->id}}">{{ $data->tax_name }}</option>
+      @endforeach
       </select>
   </div>
 </div>

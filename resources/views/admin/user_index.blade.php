@@ -21,8 +21,8 @@
         
 
             <div class="card">
-              <div class="card-header">
-               <a href="{{ route('add')}}" class="btn btn-primary">Add User</a>
+            <div class="card-header">
+               <a href="{{url('adduser')}}" class="btn btn-primary">Add new User</a>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -42,13 +42,13 @@
                     <td>{{ $users->id }}</td>
                     <td>{{ $users->name }}</td>
                     <td>{{ $users->email }}</td>
-                    @if($users->role==0)
+                    @if($users->role==1)
                     <td> Admin</td>
                     @else
                     <td>Franchise</td>
                     @endif
                     <td class="text-center">
-                      <a href="#" class="btn btn-info" title="Edit"><i class="fas fa-pencil" ></i></a>
+                      <a href="edituser/{{$users->id}}" class="btn btn-info" title="Edit"><i class="fas fa-pencil" ></i></a>
                       <a href="delete/{{$users->id}}" class="btn btn-danger" title="Delete"><i class="fas fa-trash-alt" ></i></a>
 
                   </td>

@@ -17,8 +17,39 @@ class UserController extends Controller
 
     }
 
-    public function store(Request $request)
+    public function edit($id)
     {
+        $user = User::find($id);
+        return view('admin.edit_user',['user'=>$user]);
+    }
+
+    public function addupdate(Request $request)
+    {
+        if($request->has('id'))
+        {
+            $user = User::find($request->id);
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->password = Hash::make($request->password);
+            $user->contact = $request->contact;
+            $user->gst = $request->gst;
+            $user->cin = $request->cin;
+            $user->fssai = $request->fssai;
+            $user->address_line_1 = $request->address1;
+            $user->address_line_2 = $request->address2;
+            $user->state = $request->state;
+            $user->pincode = $request->pincode;
+            $user->role = $request->role;
+            $user->save();
+
+            return redirect('user');
+
+
+
+
+        }
+        else
+        {
         
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -53,13 +84,14 @@ class UserController extends Controller
         ]);
 
         return redirect('user');
+        }
     }
 
     public function delete($id)
     {
         $user=User::find($id);
         $user->delete();
-        return redirect('user');
+        return redirect('user');  
     }
 
     

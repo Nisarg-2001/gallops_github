@@ -26,7 +26,7 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-              <form action="adduser" method="post" id="form">
+              <form action="{{ url('createcategory') }}" method="post" id="form">
                 @csrf
 
 
@@ -35,7 +35,7 @@
     <div class="form-group">
     <label >Title</label>
     <input type="text" class="form-control" name="title"  placeholder="Title" required>
-    @error('username')
+    @error('title')
     <div class="text-danger">{{$message}}</div>
     @enderror
    
@@ -45,7 +45,7 @@
 <div class="form-group">
     <label for="exampleInputPassword1">Description</label>
     <input type="text" class="form-control" name="description" placeholder="Description" required>
-    @error('username')
+    @error('description')
     <div class="text-danger">{{$message}}</div>
     @enderror
   </div>

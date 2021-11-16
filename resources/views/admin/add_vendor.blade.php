@@ -26,7 +26,7 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-              <form action="adduser" method="post" id="form">
+              <form action="{{ url('createvendor') }}" method="post" id="form">
                 @csrf
                 <div class="row">
     <div class="col-12 col-md-4 col-lg-4">
@@ -130,18 +130,10 @@
 <div class="col-12 col-md-4 col-lg-4">
 <div class="form-group">
     <label for="exampleInputPassword1">Pin Code</label>
-    <input type="text" class="form-control" name="pin" placeholder="pincode" required>
+    <input type="text" class="form-control" name="pincode" placeholder="pincode" required>
   </div>
 </div>
-<div class="col-12 col-md-4 col-lg-4">
-<div class="form-group">
-<label for="inputState">Role</label>
-      <select id="inputState" name="role" class="form-control" required>
-        <option value="1">Admin</option>
-        <option value="2">Franchise</option>
-      </select>
-  </div>
-</div>
+
 
 </div>
 
