@@ -24,6 +24,7 @@
               <div class="card-header">
               <h3>Add Tax</h3>
               </div>
+              
               <!-- /.card-header -->
               <div class="card-body">
               <form action="{{ url('createtax') }}" method="post" id="taxForm">

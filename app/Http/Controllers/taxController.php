@@ -23,7 +23,11 @@ class taxController extends Controller
 
     public function addupdate(Request $request)
     {
-        
+      $request->validate([
+        "name" => ["required","unique:tax_masters,tax_name"],
+        "type" => ["required"],
+        "value" => ["required"],
+        ]);
        if($request->has('id'))
        {
          $tax = tax_master::find($request->id);
@@ -34,13 +38,10 @@ class taxController extends Controller
 
          return redirect('tax');
        }
-     else{   
-      $request->validate([
-        'tax_name' => ['required'],
-        'type' => ['required'],
-        'value' => ['required'],
-    ]);
+     else{
 
+        
+       
 
       $tax = new tax_master;
       $tax->tax_name = $request->name;

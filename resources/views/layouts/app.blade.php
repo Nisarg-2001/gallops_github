@@ -233,11 +233,7 @@
 <script src="dist/js/adminlte.js"></script>
 <script>
   $(function () {
-    $.validator.setDefaults({
-    submitHandler: function () {
-      alert( "Form successful submitted!" );
-    }
-  });
+    
   $('#userForm').validate({
     rules: {
       email: {

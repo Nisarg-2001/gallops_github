@@ -10,9 +10,5 @@ class tax_master extends Model
     use HasFactory;
 
 
-    protected $fillable = [
-        'tax_name',
-        'type',
-        'value',
-    ];
+    
 }

@@ -21,6 +21,10 @@ class categoryController extends Controller
     }
     public function addupdate(Request $request)
     {
+        $request->validate([
+            'title' => "required|unique:category_masters,title",
+            'description' => "required",
+        ]);
         if($request->has('id'))
         {
             $data = category_master::find($request->id);
