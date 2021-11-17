@@ -81,21 +81,21 @@
                     <td>Misc</td>
                     <td>IE Mobile</td>
                     <td>Windows Mobile 6</td>
-                    <td>-</td>
+                    <td>Tax : <input type="text" name="value" class="form-input"  /> <strong>&nbsp;%</strong></td>
                     <td>C</td>
                   </tr>
                   <tr>
                     <td>Misc</td>
                     <td>PSP browser</td>
                     <td>PSP</td>
-                    <td>-</td>
+                    <td>Tax : <input type="text" name="value" class="form-input"  /> <strong>&nbsp;%</strong></td>
                     <td>C</td>
                   </tr>
                   <tr>
                     <td>Other browsers</td>
                     <td>All others</td>
                     <td>-</td>
-                    <td>-</td>
+                    <td>Tax : <input type="text" name="value" class="form-input"  /> <strong>&nbsp;%</strong></td>
                     <td>U</td>
                   </tr>
                    
