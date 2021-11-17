@@ -25,6 +25,9 @@
   <link rel="stylesheet" href="{{ asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
   <!-- JQVMap -->
   <link rel="stylesheet" href="{{ asset('plugins/jqvmap/jqvmap.min.css') }}">
+   <!-- Select2 -->
+   <link rel="stylesheet" href="{{ asset('/plugins/select2/css/select2.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
   <!-- overlayScrollbars -->
@@ -120,6 +123,16 @@
           </li>
 
           <li class="nav-item menu">
+            <a href="/assign" class="nav-link ">
+              <i class="nav-icon fas fa-list"></i>
+              <p>
+                Assign Products
+              </p>
+            </a>
+          </li>
+
+
+          <li class="nav-item menu">
             <a href="/orders" class="nav-link ">
               <i class="nav-icon fas fa-list"></i>
               <p>
@@ -179,6 +192,8 @@
 </script>
 <!-- Bootstrap 4 -->
 <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<!-- Select2 -->
+<script src="../../plugins/select2/js/select2.full.min.js"></script>
 <!-- Validation Jquery -->
 
 <!-- ChartJS -->
@@ -216,6 +231,12 @@
 <script src="dist/js/adminlte.js"></script>
 <script>
   $(function () {
+    $('.select2').select2()
+
+//Initialize Select2 Elements
+$('.select2bs4').select2({
+  theme: 'bootstrap4'
+})
     $("#example1").DataTable({
       "responsive": true, "lengthChange": false, "autoWidth": false,
       "buttons": ["excel", "pdf"]

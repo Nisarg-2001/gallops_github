@@ -22,7 +22,7 @@ use App\Http\Controllers\vendorController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 Route::get('/dashboard', function () {
@@ -98,6 +98,15 @@ Route::post('/createvendor',[vendorController::class,'addupdate']);
 Route::get('/updatevendor/{id}', [vendorController::class,'edit']);
 Route::post('/updatevendor',[vendorController::class,'addupdate']);
 Route::get('/deletevendor/{id}', [vendorController::class,'delete']);
+
+## ASSIGN PRODUCT ROUTES ##
+
+Route::get('/assign',function(){
+    return View('admin.assign_index');
+});
+Route::get('/assignproduct',function(){
+    return View('admin.assignproduct');
+});
 
 Route::get('/placeorder', function () {
     return view('user.forms.place_order');
