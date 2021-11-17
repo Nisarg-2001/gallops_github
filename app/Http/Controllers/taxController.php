@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\tax_master;
+use Illuminate\Validation\Rules;
 
 class taxController extends Controller
 {
@@ -34,6 +35,13 @@ class taxController extends Controller
          return redirect('tax');
        }
      else{   
+      $request->validate([
+        'tax_name' => ['required'],
+        'type' => ['required'],
+        'value' => ['required'],
+    ]);
+
+
       $tax = new tax_master;
       $tax->tax_name = $request->name;
       $tax->type = $request->type;

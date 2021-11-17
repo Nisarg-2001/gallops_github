@@ -26,14 +26,14 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-              <form action="{{ url('createtax') }}" method="post" id="form">
+              <form action="{{ url('createtax') }}" method="post" id="taxForm">
                 @csrf
 <div class="row">
     <div class="col-12 col-md-4 col-lg-4">
   <div class="form-group">
     
     <label >Tax Name</label>
-    <input type="text" class="form-control" name="name" aria-describedby="emailHelp" placeholder="Enter Tax Name" required>
+    <input type="text" class="form-control" name="name" aria-describedby="emailHelp" placeholder="Enter Tax Name" >
     @error('name')
     <div class="text-danger">{{$message}}</div>
     @enderror
@@ -57,7 +57,7 @@
 <div class="col-4">
 <div class="form-group">
     <label for="exampleInputPassword1">Value</label>
-    <input type="number" class="form-control" name="value" placeholder="Enter tax value" required>
+    <input type="number" class="form-control" name="value" placeholder="Enter tax value">
   </div>
 </div>
 </div>
@@ -94,6 +94,8 @@
       <b>Version</b> 3.1.0
     </div>
   </footer>
+
+  
 
  
 </x-app-layout>

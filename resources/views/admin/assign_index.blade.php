@@ -28,7 +28,12 @@
               <div class="card-body">
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
-             
+                  <tr>
+                    <th>ID</th>
+                    <th>Product</th>
+                    <th>Vendor</th>
+                    <th>Action</th>
+                  </tr>
                   <tr>
                     <td>Trident</td>
                     <td>Internet

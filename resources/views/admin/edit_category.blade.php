@@ -26,7 +26,7 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-              <form action="{{ url('updatecategory') }}" method="post" id="form">
+              <form action="{{ url('updatecategory') }}" method="post" id="catForm">
                 @csrf
 
 

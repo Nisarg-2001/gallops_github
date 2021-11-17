@@ -6,6 +6,8 @@ use App\Http\Controllers\taxController;
 use App\Http\Controllers\categoryController;
 use App\Http\Controllers\productController;
 use App\Http\Controllers\vendorController;
+use App\Http\Controllers\assignController;
+
 
 
 
@@ -104,9 +106,7 @@ Route::get('/deletevendor/{id}', [vendorController::class,'delete']);
 Route::get('/assign',function(){
     return View('admin.assign_index');
 });
-Route::get('/assignproduct',function(){
-    return View('admin.assignproduct');
-});
+Route::get('/assignproduct',[assignController::class,'create']);
 
 Route::get('/placeorder', function () {
     return view('user.forms.place_order');

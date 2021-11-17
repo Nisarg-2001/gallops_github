@@ -26,7 +26,7 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-              <form method="POST" action="/createuser" id="user" >
+              <form method="POST" action="/createuser" id="userForm" >
                 @csrf
 <div class="row">
     <div class="col-12 col-md-4 col-lg-4">
@@ -174,58 +174,52 @@
       <b>Version</b> 3.1.0
     </div>
   </footer>
-  <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+  
   <script>
-
-$(document).ready(function () {
-
-$('#user').validate({
-
-rules: {
-
-name: {
-
-required: true,
-unique:true
-
-},
-
-email: {
-
-required: true,
-
-email: true,
-
-},
-
-},
-
-errorElement: 'span',
-
-errorPlacement: function (error, element) {
-
-error.addClass('invalid-feedback');
-
-element.closest('.form-group').append(error);
-
-},
-
-highlight: function (element, errorClass, validClass) {
-
-$(element).addClass('is-invalid');
-
-},
-
-unhighlight: function (element, errorClass, validClass) {
-
-$(element).removeClass('is-invalid');
-
-}
-
+$(function () {
+  $.validator.setDefaults({
+    submitHandler: function () {
+      alert( "Form successful submitted!" );
+    }
+  });
+  $('#userForm').validate({
+    rules: {
+      email: {
+        required: true,
+        email: true,
+      },
+      password: {
+        required: true,
+        minlength: 5
+      },
+      terms: {
+        required: true
+      },
+    },
+    messages: {
+      email: {
+        required: "Please enter a email address",
+        email: "Please enter a vaild email address"
+      },
+      password: {
+        required: "Please provide a password",
+        minlength: "Your password must be at least 5 characters long"
+      },
+      terms: "Please accept our terms"
+    },
+    errorElement: 'span',
+    errorPlacement: function (error, element) {
+      error.addClass('invalid-feedback');
+      element.closest('.form-group').append(error);
+    },
+    highlight: function (element, errorClass, validClass) {
+      $(element).addClass('is-invalid');
+    },
+    unhighlight: function (element, errorClass, validClass) {
+      $(element).removeClass('is-invalid');
+    }
+  });
 });
-
-});
-
 </script>
 
  

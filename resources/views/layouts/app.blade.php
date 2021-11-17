@@ -195,7 +195,9 @@
 <!-- Select2 -->
 <script src="../../plugins/select2/js/select2.full.min.js"></script>
 <!-- Validation Jquery -->
-
+<!-- jquery-validation -->
+<script src="{{ asset('/plugins/jquery-validation/jquery.validate.min.js') }}"></script>
+<script src="{{ asset('/plugins/jquery-validation/additional-methods.min.js') }}"></script>
 <!-- ChartJS -->
 <script src="{{ asset('plugins/chart.js/Chart.min.js') }}"></script>
 <!-- Sparkline -->
@@ -231,6 +233,122 @@
 <script src="dist/js/adminlte.js"></script>
 <script>
   $(function () {
+    $.validator.setDefaults({
+    submitHandler: function () {
+      alert( "Form successful submitted!" );
+    }
+  });
+  $('#userForm').validate({
+    rules: {
+      email: {
+        required: true,
+        email: true,
+      },
+      password: {
+        required: true,
+        minlength: 5
+      },
+      terms: {
+        required: true
+      },
+    },
+    messages: {
+      email: {
+        required: "Please enter a email address",
+        email: "Please enter a vaild email address"
+      },
+      password: {
+        required: "Please provide a password",
+        minlength: "Your password must be at least 5 characters long"
+      },
+      terms: "Please accept our terms"
+    },
+    errorElement: 'span',
+    errorPlacement: function (error, element) {
+      error.addClass('invalid-feedback');
+      element.closest('.form-group').append(error);
+    },
+    highlight: function (element, errorClass, validClass) {
+      $(element).addClass('is-invalid');
+    },
+    unhighlight: function (element, errorClass, validClass) {
+      $(element).removeClass('is-invalid');
+    }
+  });
+  $('#taxForm').validate({
+    rules: {
+      name: {
+        required: true,
+        
+      },
+      value: {
+        required: true,
+       
+      },
+      terms: {
+        required: true
+      },
+    },
+    messages: {
+      name: {
+        required: "Please enter a Tax Name",
+       
+      },
+      value: {
+        required: "Please provide a Value",
+        
+      },
+      
+    },
+    errorElement: 'span',
+    errorPlacement: function (error, element) {
+      error.addClass('invalid-feedback');
+      element.closest('.form-group').append(error);
+    },
+    highlight: function (element, errorClass, validClass) {
+      $(element).addClass('is-invalid');
+    },
+    unhighlight: function (element, errorClass, validClass) {
+      $(element).removeClass('is-invalid');
+    }
+  });
+
+  $('#catForm').validate({
+    rules: {
+      title: {
+        required: true,
+        
+      },
+      description: {
+        required: true,
+       
+      },
+      
+    },
+    messages: {
+      title: {
+        required: "Please enter a Category Title",
+       
+      },
+      description: {
+        required: "Please provide a Category Description",
+        
+      },
+      
+    },
+    errorElement: 'span',
+    errorPlacement: function (error, element) {
+      error.addClass('invalid-feedback');
+      element.closest('.form-group').append(error);
+    },
+    highlight: function (element, errorClass, validClass) {
+      $(element).addClass('is-invalid');
+    },
+    unhighlight: function (element, errorClass, validClass) {
+      $(element).removeClass('is-invalid');
+    }
+  });
+
     $('.select2').select2()
 
 //Initialize Select2 Elements

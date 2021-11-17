@@ -33,13 +33,9 @@
     <div class="form-group">
                   <label>Select vendor</label>
                   <select class="form-control select2" style="width: 100%;">
-                    <option selected="selected">Alabama</option>
-                    <option>Alaska</option>
-                    <option>California</option>
-                    <option>Delaware</option>
-                    <option>Tennessee</option>
-                    <option>Texas</option>
-                    <option>Washington</option>
+                  @foreach($product as $info)
+                    <option value="{{$info->id}}">{{ $info->name }}</option>
+                  @endforeach
                   </select>
                 </div>
 </div>
@@ -51,30 +47,33 @@
     <div class="form-group">
                   <label>Select Product</label>
                   <select class="form-control select2" style="width: 100%;">
-                    <option selected="selected">Alabama</option>
-                    <option>Alaska</option>
-                    <option>California</option>
-                    <option>Delaware</option>
-                    <option>Tennessee</option>
-                    <option>Texas</option>
-                    <option>Washington</option>
+                  @foreach($vendor as $info)
+                    <option value="{{$info->id}}">{{ $info->name }}</option>
+                  @endforeach
                   </select>
                 </div>
 </div>
 
 
 </div>
-
 <table id="example1" class="table table-bordered table-striped">
                   <thead>
-             
+                  <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Tax</th>
+                    <th>Action</th>
+                  </tr>
+                  </thead>
+                  <tbody>
                   <tr>
                     <td>Trident</td>
                     <td>Internet
                       Explorer 5.0
                     </td>
                     <td>Win 95+</td>
-                    <td>5</td>
+                    <td>Tax : <input type="text" name="value" class="form-input"  /> <strong>&nbsp;%</strong></td>
                     <td>C</td>
                   </tr>
               
@@ -99,17 +98,21 @@
                     <td>-</td>
                     <td>U</td>
                   </tr>
+                   
+                  </tr>
+                 
                   </tbody>
                   <tfoot>
                   <tr>
-                    <th>ID</th>
-                    <th>Order ID</th>
-                    <th>Order date</th>
-                    <th>Quantity</th>
+                  <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Tax</th>
                     <th>Action</th>
                   </tr>
                   </tfoot>
                 </table>
+                 
 
 
 
