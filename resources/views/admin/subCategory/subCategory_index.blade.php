@@ -5,7 +5,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">User Masters</h1>
+           
           </div><!-- /.col -->
         
         </div><!-- /.row -->
@@ -21,8 +21,8 @@
         
 
             <div class="card">
-            <div class="card-header">
-               <a href="{{url('adduser')}}" class="btn btn-primary">Add new User</a>
+              <div class="card-header">
+               <a href="{{url('addSubCategory')}}" class="btn btn-primary">Add SubCategory</a>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -30,39 +30,24 @@
                   <thead>
                   <tr>
                     <th>ID</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Role</th>
+                    <th>Title</th>
+                    <th>Parent</th>
                     <th>Action</th>
                   </tr>
                   </thead>
                   <tbody>
-                    @foreach($user as $users)
+                    @foreach($data as $info)
                   <tr>
-                    <td>{{ $users->id }}</td>
-                    <td>{{ $users->name }}</td>
-                    <td>{{ $users->email }}</td>
-                    @if($users->role==1)
-                    <td> Admin</td>
-                    @else
-                    <td>Franchise</td>
-                    @endif
+                    <td>{{$info->id}}</td>
+                    <td>{{$info->sub_category}}</td>
+                    <td>{{$info->category}}</td>
                     <td class="text-center">
-                      <a href="edituser/{{$users->id}}" class="btn btn-info" title="Edit"><i class="fas fa-pencil" ></i></a>
-                      <a href="delete/{{$users->id}}" class="btn btn-danger" title="Delete"><i class="fas fa-trash-alt" ></i></a>
-
+                      <a href="updatesubCategory/{{$info->id}}" class="btn btn-info" title="Edit"><i class="fas fa-pencil" ></i></a>
+                      <a href="deletesubCategory/{{$info->id}}" class="btn btn-danger" title="Delete"><i class="fas fa-trash-alt" ></i></a>
                   </td>
+                    
                   </tr>
-                  @endforeach
-                  </tbody>
-                  <tfoot>
-                  <tr>
-                  <th>ID</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Role</th>
-                    <th>Action</th>
-                  </tr>
+                 @endforeach
                   </tfoot>
                 </table>
               </div>

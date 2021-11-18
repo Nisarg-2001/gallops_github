@@ -14,7 +14,7 @@ class productController extends Controller
     public function view()
     {
         $data = product_master::all();
-        return view('admin.product_index',['data'=>$data]);
+        return view('admin.product.product_index',['data'=>$data]);
     }
 
     public function create()
@@ -22,7 +22,7 @@ class productController extends Controller
         $tax = tax_master::all();
         $category = category_master::all();
 
-        return view('admin.add_product',['tax'=>$tax,'category'=>$category]);
+        return view('admin.product.product_action',['tax'=>$tax,'category'=>$category]);
     }
 
     public function edit($id)
@@ -31,7 +31,7 @@ class productController extends Controller
         $tax = tax_master::all();
         $category = category_master::all();
 
-        return view('admin.edit_product',['data'=>$data,'tax'=>$tax,'category'=>$category]);
+        return view('admin.product.product_action',['data'=>$data,'tax'=>$tax,'category'=>$category]);
     }
 
     public function addupdate(Request $request)

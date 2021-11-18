@@ -75,7 +75,7 @@
             </a>
           </li>
           <li class="nav-item menu">
-            <a href="/user" class="nav-link">
+            <a href="{{ url('/user') }}" class="nav-link">
               <i class="nav-icon fas fa-users"></i>
               <p>
                 Users
@@ -84,7 +84,7 @@
           </li>
 
           <li class="nav-item menu">
-            <a href="/tax" class="nav-link">
+            <a href="{{ url('/tax') }}" class="nav-link">
               <i class="nav-icon fas fa-users"></i>
               <p>
               Taxes
@@ -94,7 +94,7 @@
           </li>
 
           <li class="nav-item menu">
-            <a href="/category" class="nav-link">
+            <a href="{{ url('/category') }}" class="nav-link">
               <i class="nav-icon fas fa-users"></i>
               <p>
                 Categories
@@ -102,8 +102,18 @@
               </p>
             </a>
           </li>
+
           <li class="nav-item menu">
-            <a href="/products" class="nav-link">
+            <a href="{{ url('/subCategory') }}" class="nav-link">
+              <i class="nav-icon fas fa-users"></i>
+              <p>
+               Sub Categories
+               
+              </p>
+            </a>
+          </li>
+          <li class="nav-item menu">
+            <a href="{{ url('/products') }}" class="nav-link">
               <i class="nav-icon fas fa-users"></i>
               <p>
                 Products
@@ -113,7 +123,7 @@
           </li>
 
           <li class="nav-item menu">
-            <a href="/vendors" class="nav-link">
+            <a href="{{ url('/vendors') }}" class="nav-link">
               <i class="nav-icon fas fa-users"></i>
               <p>
                 Vendors
@@ -123,7 +133,7 @@
           </li>
 
           <li class="nav-item menu">
-            <a href="/assign" class="nav-link ">
+            <a href="{{ url('/assign') }}" class="nav-link ">
               <i class="nav-icon fas fa-list"></i>
               <p>
                 Assign Products
@@ -133,7 +143,7 @@
 
 
           <li class="nav-item menu">
-            <a href="/orders" class="nav-link ">
+            <a href="{{ url('/orders') }}" class="nav-link ">
               <i class="nav-icon fas fa-list"></i>
               <p>
                 View Orders
@@ -142,7 +152,7 @@
           </li>
 
           <li class="nav-item menu">
-            <a href="/orders" class="nav-link">
+            <a href="{{ url('/orders') }}" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Inwards
@@ -152,7 +162,7 @@
           </li>
 
           <li class="nav-item menu">
-            <a href="/orders" class="nav-link">
+            <a href="{{ url('/orders') }}" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Issued Goods
@@ -162,7 +172,7 @@
           </li>
 
           <li class="nav-item menu">
-            <a href="/orders" class="nav-link">
+            <a href="{{ url('/orders') }}" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Returned Goods

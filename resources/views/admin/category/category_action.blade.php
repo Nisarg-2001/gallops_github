@@ -5,7 +5,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Tax Masters</h1>
+           
           </div><!-- /.col -->
         
         </div><!-- /.row -->
@@ -22,54 +22,43 @@
 
             <div class="card">
               <div class="card-header">
-              <h3>Add Tax</h3>
+           
               </div>
-              
               <!-- /.card-header -->
               <div class="card-body">
-              <form action="{{ url('createtax') }}" method="post" id="taxForm">
+              <form action="{{ url('createcategory') }}" method="post" id="catForm">
                 @csrf
+
+
 <div class="row">
-    <div class="col-12 col-md-4 col-lg-4">
-  <div class="form-group">
-    
-    <label >Tax Name</label>
-    <input type="text" class="form-control" name="name" aria-describedby="emailHelp" placeholder="Enter Tax Name" >
-    @error('name')
+    <div class="col-12 col-md-6 col-lg-6">
+    <div class="form-group">
+    <label >Title</label>
+    <input type="hidden" name="id" value="{{ (isset($data->id) && !empty($data->id)) ? $data->id : '' }}" >
+    <input type="text" class="form-control" name="title" value="{{ ( isset($data->title) && !empty($data->title)) ? $data->title : '' }}"  placeholder="Title" required>
+    @error('title')
+    <div class="text-danger">{{$message}}</div>
+    @enderror
+   
+  </div>
+</div>
+<div class="col-12 col-md-6 col-lg-6">
+<div class="form-group">
+    <label for="exampleInputPassword1">Description</label>
+    <input type="text" class="form-control" name="description" value="{{ (isset($data->description) && !empty($data->description)) ? $data->description : '' }}"  placeholder="Description" required>
+    @error('description')
     <div class="text-danger">{{$message}}</div>
     @enderror
   </div>
 </div>
-<div class="col-12 col-md-3 col-lg-3">
-<div class="form-group">
-    <label >Tax type</label>
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="type" value="percentage" id="flexRadioDefault1">
-            <label class="form-check-label mr-5" for="flexRadioDefault1">
-                Percentage
-            </label>
-            <input class="form-check-input" type="radio" name="type" value="amount" id="flexRadioDefault2" checked>
-                <label class="form-check-label" for="flexRadioDefault2">
-                    Fixed Amount
-                </label>
-        </div>
 </div>
-</div>
-<div class="col-4">
-<div class="form-group">
-    <label for="exampleInputPassword1">Value</label>
-    <input type="number" class="form-control" name="value" placeholder="Enter tax value">
-  </div>
-</div>
-</div>
-
 
 
 
 
 
 <div class="text-center">
-  <button type="submit" class="btn btn-primary ">Add Tax</button>
+  <button type="submit" class="btn btn-primary ">Submit</button>
   <a href="{{url()->previous()}}" class="btn btn-danger">Cancel</a>
 </div>
 </form>
@@ -95,8 +84,6 @@
       <b>Version</b> 3.1.0
     </div>
   </footer>
-
-  
 
  
 </x-app-layout>

@@ -5,7 +5,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Category Masters</h1>
+           
           </div><!-- /.col -->
         
         </div><!-- /.row -->
@@ -34,8 +34,8 @@
     <div class="col-12 col-md-6 col-lg-6">
     <div class="form-group">
     <label >Title</label>
-    <input type="hidden" name="id" value="{{$data->id}}">
-    <input type="text" class="form-control" name="title" value="{{$data->title}}"  placeholder="Title" required>
+    <input type="hidden" name="id" value="{{ (isset($data->id) && !empty($data->id)) ? $data->title : '' }} >
+    <input type="text" class="form-control" name="title" value="{{ (isset($data->title) && !empty($data->title)) ? $data->title : '' }}"  placeholder="Title" required>
     @error('username')
     <div class="text-danger">{{$message}}</div>
     @enderror

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\taxController;
 use App\Http\Controllers\categoryController;
+use App\Http\Controllers\sub_categoryController;
 use App\Http\Controllers\productController;
 use App\Http\Controllers\vendorController;
 use App\Http\Controllers\assignController;
@@ -45,9 +46,7 @@ Route::get('/orders', function () {
 ## USER ROUTES ##
 
 Route::get('/user',[UserController::class,'view']);
-Route::get('/adduser', function () {
-    return view('admin.add_user');
-})->name('add');
+Route::get('/adduser',[UserController::class, 'create']);
 Route::post('/createuser', [UserController::class, 'addupdate']);
 Route::get('/edituser/{id}',[UserController::class, 'edit']);
 Route::post('/updateuser',[UserController::class, 'addupdate']);
@@ -56,9 +55,7 @@ Route::get('/delete/{id}',[UserController::class, 'delete']);
 ## TAX Routes ##
 
 Route::get('/tax',[taxController::class,'view']);
-Route::get('/addtax', function () {
-    return view('admin.add_tax');
-});
+Route::get('/addtax',[taxController::class, 'create']);
 Route::post('/createtax',[taxController::class,'addupdate']);
 Route::get('/edittax/{id}',[taxController::class, 'edit']);
 Route::post('/updatetax',[taxController::class, 'addupdate']);
@@ -70,14 +67,21 @@ Route::get('/deletetax/{id}',[taxController::class, 'delete']);
 ## CATEGORY ROUTES ##
 
 Route::get('/category',[categoryController::class,'view']);
-Route::get('/addcategory', function () {
-    return view('admin.add_Category');
-});
+Route::get('/addcategory',[categoryController::class,'create']);
 Route::post('/createcategory',[categoryController::class,'addupdate']);
 Route::get('/updatecategory/{id}',[categoryController::class,'edit']);
 Route::post('/updatecategory',[categoryController::class,'addupdate']);
 Route::get('/deletecategory/{id}',[categoryController::class,'delete']);
 
+ ## SUB CATEGORIES ROUTES ##
+
+ 
+Route::get('/subCategory',[sub_categoryController::class,'view']);
+Route::get('/addSubCategory',[sub_categoryController::class,'create']);
+Route::post('/createsubCategory',[sub_categoryController::class,'addupdate']);
+Route::get('/updatesubCategory/{id}',[sub_categoryController::class,'edit']);
+Route::post('/createsubCategory',[sub_categoryController::class,'addupdate']);
+Route::get('/deletesubCategory/{id}',[sub_categoryController::class,'delete']);
 
 
 
@@ -93,9 +97,7 @@ Route::get('/deleteproduct/{id}',[productController::class,'delete']);
 
 ## VENDOR ROUTES ##
 Route::get('/vendors', [vendorController::class,'view']);
-Route::get('/addvendor',function(){
-    return view('admin.add_vendor');
-});
+Route::get('/addvendor', [vendorController::class,'create']);
 Route::post('/createvendor',[vendorController::class,'addupdate']);
 Route::get('/updatevendor/{id}', [vendorController::class,'edit']);
 Route::post('/updatevendor',[vendorController::class,'addupdate']);

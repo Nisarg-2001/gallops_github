@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\state;
 use Illuminate\Validation\Rules;
 use Hash;
 
@@ -13,14 +14,22 @@ class UserController extends Controller
     public function view()
     {
         $user = User::all();
-        return view('admin.user_index',['user'=>$user]);
+        return view('admin.user.user_index',['user'=>$user]);
 
+    }
+
+    public function create()
+    {
+        $state = state::all();
+        return view('admin.user.user_action')->with(['state'=>$state]);
     }
 
     public function edit($id)
     {
+        $state = state::all();
         $user = User::find($id);
-        return view('admin.edit_user',['user'=>$user]);
+        
+        return view('admin.user.user_action',['data'=>$user,'state'=>$state]);
     }
 
     public function addupdate(Request $request)

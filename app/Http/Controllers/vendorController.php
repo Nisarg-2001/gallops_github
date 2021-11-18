@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\vendor_master;
+use App\Models\state;
 use Illuminate\Http\Request;
 use Hash;
 
@@ -11,13 +12,20 @@ class vendorController extends Controller
     public function view()
     {
         $data = vendor_master::all();
-        return view('admin.vendor_index',['data'=>$data]);
+        return view('admin.vendor.vendor_index',['data'=>$data]);
     }
 
-    public function edit($id)
+    public function create()
+    {
+        $state = state::all();
+        return view('admin.vendor.vendor_action')->with(['state'=>$state]);
+    }
+
+   public function edit($id)
     {
         $vendor = vendor_master::find($id);
-        return view('admin.edit_vendor',['vendor'=>$vendor]);
+        $state = state::all();
+        return view('admin.vendor.vendor_action',['data'=>$vendor,'state'=>$state]);
     }
 
     public function addupdate(Request $request)

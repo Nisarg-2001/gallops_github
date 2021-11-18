@@ -12,23 +12,24 @@ class taxController extends Controller
     public function view()
     {
       $data = tax_master::all();
-      return view('admin.tax_index',['data'=>$data]);
+      return view('admin.tax.tax_index',['data'=>$data]);
+    }
+
+    public function create()
+    {
+      return view('admin.tax.tax_action');
     }
 
     public function edit($id)
     {
       $tax = tax_master::find($id);
-      return view('admin.edit_tax',['tax'=>$tax]);
+      return view('admin.tax.tax_action',['tax'=>$tax]);
     }
 
     public function addupdate(Request $request)
     {
-      $request->validate([
-        "name" => ["required","unique:tax_masters,tax_name"],
-        "type" => ["required"],
-        "value" => ["required"],
-        ]);
-       if($request->has('id'))
+      
+      if(isset($request->id))
        {
          $tax = tax_master::find($request->id);
          $tax->tax_name = $request->name;
@@ -40,7 +41,11 @@ class taxController extends Controller
        }
      else{
 
-        
+      $request->validate([
+        "name" => ["required","unique:tax_masters,tax_name"],
+        "type" => ["required"],
+        "value" => ["required"],
+        ]);
        
 
       $tax = new tax_master;

@@ -21,8 +21,8 @@
         
 
             <div class="card">
-              <div class="card-header">
-              <a href="{{ url('assignproduct') }}" class="btn btn-primary"> Assign Product</a>
+            <div class="card-header">
+               <a href="{{url('adduser')}}" class="btn btn-primary">Add new User</a>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -30,48 +30,37 @@
                   <thead>
                   <tr>
                     <th>ID</th>
-                    <th>Product</th>
-                    <th>Vendor</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
                     <th>Action</th>
                   </tr>
+                  </thead>
+                  <tbody>
+                    @foreach($user as $users)
                   <tr>
-                    <td>Trident</td>
-                    <td>Internet
-                      Explorer 5.0
-                    </td>
-                    <td>Win 95+</td>
-                    <td>5</td>
-                    <td>C</td>
+                    <td>{{ $users->id }}</td>
+                    <td>{{ $users->name }}</td>
+                    <td>{{ $users->email }}</td>
+                    @if($users->role==1)
+                    <td> Admin</td>
+                    @else
+                    <td>Franchise</td>
+                    @endif
+                    <td class="text-center">
+                      <a href="edituser/{{$users->id}}" class="btn btn-info" title="Edit"><i class="fas fa-pencil" ></i></a>
+                      <a href="delete/{{$users->id}}" class="btn btn-danger" title="Delete"><i class="fas fa-trash-alt" ></i></a>
+
+                  </td>
                   </tr>
-              
-                  <tr>
-                    <td>Misc</td>
-                    <td>IE Mobile</td>
-                    <td>Windows Mobile 6</td>
-                    <td>-</td>
-                    <td>C</td>
-                  </tr>
-                  <tr>
-                    <td>Misc</td>
-                    <td>PSP browser</td>
-                    <td>PSP</td>
-                    <td>-</td>
-                    <td>C</td>
-                  </tr>
-                  <tr>
-                    <td>Other browsers</td>
-                    <td>All others</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>U</td>
-                  </tr>
+                  @endforeach
                   </tbody>
                   <tfoot>
                   <tr>
-                    <th>ID</th>
-                    <th>Order ID</th>
-                    <th>Order date</th>
-                    <th>Quantity</th>
+                  <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
                     <th>Action</th>
                   </tr>
                   </tfoot>

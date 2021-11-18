@@ -11,21 +11,23 @@ class categoryController extends Controller
     public function view()
     {
         $data = category_master::all();
-        return view('admin.category_index',['data'=>$data]); 
+        return view('admin.category.category_index',['data'=>$data]); 
+    }
+
+    public function create()
+    {
+        return view('admin.category.category_action');
     }
 
     public function edit($id)
     {
-        $data = category_master::find($id);
-        return view('admin.edit_category',['data'=>$data]);
+            $data = category_master::find($id);
+            return view('admin.category.category_action',['data'=>$data]); 
     }
     public function addupdate(Request $request)
     {
-        $request->validate([
-            'title' => "required|unique:category_masters,title",
-            'description' => "required",
-        ]);
-        if($request->has('id'))
+       
+        if(isset($request->id))
         {
             $data = category_master::find($request->id);
             $data->title = $request->title;
@@ -35,6 +37,10 @@ class categoryController extends Controller
         }
         else
         {
+            $request->validate([
+                'title' => "required|unique:category_masters,title",
+                'description' => "required",
+            ]);
         $category = new category_master;
         $category->title = $request->title;
         $category->description = $request->description;
