@@ -127,7 +127,7 @@
     <label >State</label>
     <select id="inputState" name="state" class="form-control" required>
       @foreach($state as $info)
-        <option value="{{ $info->id}}" @if(isset($data->state)==$info->id) ? Selected="Selected" :'' @endif >{{ $info->state_name }}</option>
+        <option value="{{ $info->id}}" @if(isset($data->state) && $data->state==$info->id) ? Selected="Selected" :'' @endif >{{ $info->state_name }}</option>
       @endforeach
       </select>
    
@@ -143,8 +143,8 @@
 <div class="form-group">
 <label for="inputState">Role</label>
       <select id="inputState" name="role" class="form-control" required>
-        <option value="1"  @if(isset($data->role)==1) ? selected="Selected" :'' @endif>Admin</option>
-        <option value="2"  @if(isset($data->role)==2) ? selected="Selected" :'' @endif>Franchise</option>
+        <option value="1"  @if(isset($data->role) && $data->role==1) ? selected="Selected" :'' @endif>Admin</option>
+        <option value="2"  @if(isset($data->role) && $data->role==2) ? selected="Selected" :'' @endif>Franchise</option>
       </select>
   </div>
 </div>

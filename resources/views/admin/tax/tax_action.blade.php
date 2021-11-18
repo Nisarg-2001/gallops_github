@@ -49,14 +49,14 @@
                                                 <label>Tax type</label>
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="radio" name="type"
-                                                        @if(isset($tax->type) && !empty($tax->type)) ? checked="checked"
-                                                    : checked="" @endif value="percentage" id="flexRadioDefault1">
+                                                        @if(isset($tax->type) && $tax->type=='percentage') ? checked="Checked"
+                                                    :"" @endif value="percentage" id="flexRadioDefault1">
                                                     <label class="form-check-label mr-5" for="flexRadioDefault1">
                                                         Percentage
                                                     </label>
                                                     <input class="form-check-input" type="radio" name="type"
-                                                        @if(isset($tax->type) && !empty($tax->type)) ? checked="checked"
-                                                    : checked="" @endif value="amount" id="flexRadioDefault2" checked>
+                                                        @if(isset($tax->type) && $tax->type=='amount') ? checked="Checked"
+                                                    :"" @endif value="amount" id="flexRadioDefault2" >
                                                     <label class="form-check-label" for="flexRadioDefault2">
                                                         Fixed Amount
                                                     </label>

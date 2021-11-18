@@ -127,7 +127,7 @@
     <label >State</label>
     <select id="inputState" name="state" class="form-control" required>
       @foreach($state as $info)
-        <option value="{{ $info->id}}" @if(isset($data->state)==$info->id) ? selected="Selected" :'' @endif >{{ $info->state_name }}</option>
+        <option value="{{ $info->id}}" @if(isset($data->state) && $data->state==$info->id) ? selected="Selected" :'' @endif >{{ $info->state_name }}</option>
       @endforeach
       </select>
    

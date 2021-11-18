@@ -47,7 +47,7 @@
     <label for="exampleInputPassword1">Category</label>
     <select id="inputState" name="category" class="form-control" required>
       @foreach($category as $info)
-        <option value="{{ $info->id}}" @if(isset($data->category)==$info->id) ? selected="Selected" :'' @endif >{{ $info->title }}</option>
+        <option value="{{ $info->id}}" @if(isset($data->category) && $data->category==$info->id) ? selected="Selected" :'' @endif >{{ $info->title }}</option>
       @endforeach
       </select>
   </div>
