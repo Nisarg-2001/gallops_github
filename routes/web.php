@@ -33,15 +33,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 
-Route::get('/admin', function () {
-    return view('admin.dashboard');
-})->name('admin');
-Route::get('/product', function () {
-    return view('admin.product_masters');
-})->name('admin');
-Route::get('/orders', function () {
-    return view('user.order_masters');
-})->name('user');
+
 
 ## USER ROUTES ##
 
@@ -110,8 +102,6 @@ Route::get('/assign',function(){
 });
 Route::get('/assignproduct',[assignController::class,'create']);
 
-Route::get('/placeorder', function () {
-    return view('user.forms.place_order');
-})->name('order');
+
 
 require __DIR__.'/auth.php';
