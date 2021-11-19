@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\tax_master;
 use App\Models\category_master;
+use App\Models\sub_category_master;
 use App\Models\product_master;
 
 
@@ -21,8 +22,9 @@ class productController extends Controller
     {
         $tax = tax_master::all();
         $category = category_master::all();
+        $sub_category = sub_category_master::all();
 
-        return view('admin.product.product_action',['tax'=>$tax,'category'=>$category]);
+        return view('admin.product.product_action',['tax'=>$tax,'category'=>$category,'sub_category'=>$sub_category]);
     }
 
     public function edit($id)
@@ -30,8 +32,9 @@ class productController extends Controller
         $data = product_master::find($id);
         $tax = tax_master::all();
         $category = category_master::all();
+        $sub_category = sub_category_master::all();
 
-        return view('admin.product.product_action',['data'=>$data,'tax'=>$tax,'category'=>$category]);
+        return view('admin.product.product_action',['data'=>$data,'tax'=>$tax,'category'=>$category,'sub_category'=>$sub_category]);
     }
 
     public function addupdate(Request $request)

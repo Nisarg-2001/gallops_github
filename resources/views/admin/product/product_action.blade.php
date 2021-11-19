@@ -79,10 +79,9 @@
 <div class="form-group">
     <label for="exampleInputPassword1">Sub category</label>
     <select id="inputState" name="subcategory" class="form-control" required>
-        <option value="1" @if(isset($data->sub_category)==1) ? selected="Selected" :'' @endif >Category 1</option>
-        <option value="2" @if(isset($data->sub_category)==2) ? selected="Selected" :'' @endif>Category 2</option>
-        <option value="3" @if(isset($data->sub_category)==3) ? selected="Selected" :'' @endif>Category 3</option>
-        <option value="4" @if(isset($data->sub_category)==4) ? selected="Selected" :'' @endif>Category 4</option>
+    @foreach($sub_category as $info)
+        <option value="{{ $info->id}}" @if(isset($data->sub_category)==$info->id) ? selected="Selected" :'' @endif>{{ $info->sub_category }}</option>
+      @endforeach
       </select>
   </div>
 </div>
@@ -125,13 +124,7 @@
     <!-- /.content -->
   </div>
 
-  <footer class="main-footer">
-    <strong>Copyright &copy; 2014-2021 </strong>
-    All rights reserved.
-    <div class="float-right d-none d-sm-inline-block">
-      <b>Version</b> 3.1.0
-    </div>
-  </footer>
+  @include('layouts.footer')
 
  
 </x-app-layout>
