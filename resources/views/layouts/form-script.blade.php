@@ -76,41 +76,7 @@
     }
   });
 
-  $('#catForm').validate({
-    rules: {
-      title: {
-        required: true,
-        
-      },
-      description: {
-        required: true,
-       
-      },
-      
-    },
-    messages: {
-      title: {
-        required: "Please enter a Category Title",
-       
-      },
-      description: {
-        required: "Please provide a Category Description",
-        
-      },
-      
-    },
-    errorElement: 'span',
-    errorPlacement: function (error, element) {
-      error.addClass('invalid-feedback');
-      element.closest('.form-group').append(error);
-    },
-    highlight: function (element, errorClass, validClass) {
-      $(element).addClass('is-invalid');
-    },
-    unhighlight: function (element, errorClass, validClass) {
-      $(element).removeClass('is-invalid');
-    }
-  });
+  
 
   $('#productForm').validate({
     rules: {
