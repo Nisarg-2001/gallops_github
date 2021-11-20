@@ -1,11 +1,11 @@
 <?php return array(
     'root' => array(
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
+        'pretty_version' => 'dev-master',
+        'version' => 'dev-master',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => NULL,
+        'reference' => '8eda3b768d80d3998674d508f37c4cca574823d0',
         'name' => 'laravel/laravel',
         'dev' => true,
     ),
@@ -404,12 +404,12 @@
             'dev_requirement' => false,
         ),
         'laravel/laravel' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => NULL,
+            'reference' => '8eda3b768d80d3998674d508f37c4cca574823d0',
             'dev_requirement' => false,
         ),
         'laravel/sail' => array(
@@ -1272,6 +1272,15 @@
             'install_path' => __DIR__ . '/../tijsverkoyen/css-to-inline-styles',
             'aliases' => array(),
             'reference' => 'b43b05cf43c1b6d849478965062b6ef73e223bb5',
+            'dev_requirement' => false,
+        ),
+        'uxweb/sweet-alert' => array(
+            'pretty_version' => '2.0.5',
+            'version' => '2.0.5.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../uxweb/sweet-alert',
+            'aliases' => array(),
+            'reference' => 'e9eb83d7d991de0fcb74398a698e0cdfef6d189d',
             'dev_requirement' => false,
         ),
         'vlucas/phpdotenv' => array(

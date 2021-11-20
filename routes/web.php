@@ -29,20 +29,18 @@ Route::get('/dashboard',[UserController::class,'dashboard'])->middleware(['auth'
 ## USER ROUTES ##
 
 Route::get('/user',[UserController::class,'view']);
-Route::get('/adduser',[UserController::class, 'create']);
-Route::post('/createuser', [UserController::class, 'addupdate']);
-Route::get('/edituser/{id}',[UserController::class, 'edit']);
-Route::post('/updateuser',[UserController::class, 'addupdate']);
-Route::get('/delete/{id}',[UserController::class, 'delete']);
+Route::get('/user/add',[UserController::class, 'create']);
+Route::post('/user/post', [UserController::class, 'addupdate']);
+Route::get('/user/edit/{id}',[UserController::class, 'edit']);
+Route::get('/user/delete/{id}',[UserController::class, 'delete']);
 
 ## TAX Routes ##
 
 Route::get('/tax',[taxController::class,'view']);
-Route::get('/addtax',[taxController::class, 'create']);
-Route::post('/createtax',[taxController::class,'addupdate']);
-Route::get('/edittax/{id}',[taxController::class, 'edit']);
-Route::post('/updatetax',[taxController::class, 'addupdate']);
-Route::get('/deletetax/{id}',[taxController::class, 'delete']);
+Route::get('/tax/add',[taxController::class, 'create']);
+Route::post('/tax/post',[taxController::class,'addupdate']);
+Route::get('/tax/edit/{id}',[taxController::class, 'edit']);
+Route::get('/tax/delete/{id}',[taxController::class, 'delete']);
 
 
 
@@ -53,38 +51,34 @@ Route::get('/category',[categoryController::class,'view']);
 Route::get('/category/add',[categoryController::class,'create']);
 Route::post('/category/post',[categoryController::class,'addupdate']);
 Route::get('/category/edit/{id}',[categoryController::class,'edit']);
-// Route::post('/updatecategory',[categoryController::class,'addupdate']);
 Route::get('/category/delete/{id}',[categoryController::class,'delete']);
 
  ## SUB CATEGORIES ROUTES ##
 
  
 Route::get('/subCategory',[sub_categoryController::class,'view']);
-Route::get('/addSubCategory',[sub_categoryController::class,'create']);
-Route::post('/createsubCategory',[sub_categoryController::class,'addupdate']);
-Route::get('/updatesubCategory/{id}',[sub_categoryController::class,'edit']);
-Route::post('/createsubCategory',[sub_categoryController::class,'addupdate']);
-Route::get('/deletesubCategory/{id}',[sub_categoryController::class,'delete']);
+Route::get('/subCategory/add',[sub_categoryController::class,'create']);
+Route::post('/subCategory/post',[sub_categoryController::class,'addupdate']);
+Route::get('/subCategory/edit/{id}',[sub_categoryController::class,'edit']);
+Route::get('/subCategory/delete/{id}',[sub_categoryController::class,'delete']);
 
 
 
 ## PRODUCT ROUTES ##
 
 Route::get('/products',[productController::class,'view']);
-Route::get('/addproduct',[productController::class,'create']);
-Route::post('/createproduct',[productController::class,'addupdate']);
-Route::get('/updateproduct/{id}',[productController::class,'edit']);
-Route::post('/updateproduct',[productController::class,'addupdate']);
-Route::get('/deleteproduct/{id}',[productController::class,'delete']);
+Route::get('/product/add',[productController::class,'create']);
+Route::post('/product/post',[productController::class,'addupdate']);
+Route::get('/product/edit/{id}',[productController::class,'edit']);
+Route::get('/product/delete/{id}',[productController::class,'delete']);
 
 
 ## VENDOR ROUTES ##
 Route::get('/vendors', [vendorController::class,'view']);
-Route::get('/addvendor', [vendorController::class,'create']);
-Route::post('/createvendor',[vendorController::class,'addupdate']);
-Route::get('/updatevendor/{id}', [vendorController::class,'edit']);
-Route::post('/updatevendor',[vendorController::class,'addupdate']);
-Route::get('/deletevendor/{id}', [vendorController::class,'delete']);
+Route::get('/vendor/add', [vendorController::class,'create']);
+Route::post('/vendor/post',[vendorController::class,'addupdate']);
+Route::get('/vendor/edit/{id}', [vendorController::class,'edit']);
+Route::get('/vendor/delete/{id}', [vendorController::class,'delete']);
 
 ## ASSIGN PRODUCT ROUTES ##
 

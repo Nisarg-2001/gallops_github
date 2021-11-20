@@ -14,7 +14,7 @@
     <!-- /.content-header -->
 
     <!-- Main content -->
-    <section class="content">
+    <section class="content mt-5">
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">
@@ -48,7 +48,7 @@
 
                     </tr>
                     @endforeach
-                    </tfoot>
+                   
                 </table>
               </div>
               <!-- /.card-body -->
@@ -64,6 +64,9 @@
 
     <!-- /.content -->
   </div>
+  @section('page-footer-script')
+    <script src="{{ asset('/admin/assets/js/data-tables.js') }}"></script>
+    @endsection
 
   @include('layouts.footer')
 

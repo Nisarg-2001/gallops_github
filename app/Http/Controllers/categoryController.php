@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use UxWeb\SweetAlert\SweetAlertServiceProvider;
 use Illuminate\Http\Request;
 use App\Models\category_master;
 
@@ -50,6 +51,8 @@ class categoryController extends Controller
 
     public function delete($id)
     {
+        
+        dd("done");
         $user = category_master::find($id);
         $user->delete();
         return redirect('category');

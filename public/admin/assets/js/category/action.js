@@ -3,7 +3,6 @@ $('#catForm').validate({
         title: {
             required: true,
             xssProtection: true
-
         },
         description: {
             required: true,

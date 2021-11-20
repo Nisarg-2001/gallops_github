@@ -12,42 +12,44 @@ class sub_categoryController extends Controller
     public function view()
     {
         $data = sub_category_master::all();
-        return view('admin.subCategory.subCategory_index',['data'=>$data]); 
+        return view('admin.subCategory.index',['data'=>$data]); 
     }
 
     public function create()
     {   
         $category= category_master::all();
-        return view('admin.subCategory.subCategory_action')->with(['category'=>$category]);
+        return view('admin.subCategory.action')->with(['category'=>$category]);
     }
 
     public function edit($id)
     {
             $data = sub_category_master::find($id);
             $category= category_master::all();
-            return view('admin.subCategory.subCategory_action',['data'=>$data,'category'=>$category]); 
+            return view('admin.subCategory.action',['data'=>$data,'category'=>$category]); 
     }
     public function addupdate(Request $request)
     {
        
-        if(isset($request->id))
+        if(isset($request->id) && !empty($request->id))
         {
             $data = sub_category_master::find($request->id);
             $data->sub_category = $request->name;
             $data->category = $request->category;
             $data->save();
+            $request->session()->flash('status', 'Task was successful!');
             return redirect('subCategory');
         }
         else
         {
             $request->validate([
-                'name' => "required",
+                'name' => "required|unique:sub_category_masters,sub_category",
                 'category' => "required",
             ]);
         $category = new sub_category_master;
         $category->sub_category = $request->name;
         $category->category = $request->category;
         $category->save();
+        $request->session()->flash('status', 'Task was successful!');
 
         return redirect('subCategory');
         }

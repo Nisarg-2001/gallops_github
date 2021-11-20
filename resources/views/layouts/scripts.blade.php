@@ -12,6 +12,7 @@
 <!-- Select2 -->
 <script src="{{ asset('/plugins/select2/js/select2.full.min.js') }}"></script>
 <!-- Validation Jquery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <!-- jquery-validation -->
 <script src="{{ asset('/plugins/jquery-validation/jquery.validate.min.js') }}"></script>
 <script src="{{ asset('/plugins/jquery-validation/additional-methods.min.js') }}"></script>

@@ -12,25 +12,25 @@ class vendorController extends Controller
     public function view()
     {
         $data = vendor_master::all();
-        return view('admin.vendor.vendor_index',['data'=>$data]);
+        return view('admin.vendor.index',['data'=>$data]);
     }
 
     public function create()
     {
         $state = state::all();
-        return view('admin.vendor.vendor_action')->with(['state'=>$state]);
+        return view('admin.vendor.action')->with(['state'=>$state]);
     }
 
    public function edit($id)
     {
         $vendor = vendor_master::find($id);
         $state = state::all();
-        return view('admin.vendor.vendor_action',['data'=>$vendor,'state'=>$state]);
+        return view('admin.vendor.action',['data'=>$vendor,'state'=>$state]);
     }
 
     public function addupdate(Request $request)
     {
-        if($request->has('id'))
+        if($request->has('id') && !empty($request->id))
         {
             $data = vendor_master::find($request->id);
             $data->name = $request->name;
@@ -44,6 +44,7 @@ class vendorController extends Controller
             $data->state = $request->state;
             $data->pincode = $request->pincode;
             $data->save();
+            $request->session()->flash('status', 'Task was successful!');
             return redirect('vendors');
 
 
@@ -65,7 +66,7 @@ class vendorController extends Controller
         $vendor->state = $request->state;
         $vendor->pincode = $request->pincode;
         $vendor->save();
-
+        $request->session()->flash('status', 'Task was successful!');
         return redirect('vendors');
         }
     }

@@ -21,14 +21,14 @@ class UserController extends Controller
     public function view()
     {
         $user = User::all();
-        return view('admin.user.user_index',['user'=>$user]);
+        return view('admin.user.index',['user'=>$user]);
 
     }
 
     public function create()
     {
         $state = state::all();
-        return view('admin.user.user_action')->with(['state'=>$state]);
+        return view('admin.user.action')->with(['state'=>$state]);
     }
 
     public function edit($id)
@@ -36,12 +36,12 @@ class UserController extends Controller
         $state = state::all();
         $user = User::find($id);
         
-        return view('admin.user.user_action',['data'=>$user,'state'=>$state]);
+        return view('admin.user.action',['data'=>$user,'state'=>$state]);
     }
 
     public function addupdate(Request $request)
     {
-        if($request->has('id'))
+        if($request->has('id') && !empty($request->id))
         {
             $user = User::find($request->id);
             $user->name = $request->name;
@@ -57,17 +57,12 @@ class UserController extends Controller
             $user->pincode = $request->pincode;
             $user->role = $request->role;
             $user->save();
-
+            $request->session()->flash('status', 'Task was successful!');
             return redirect('user');
-
-
-
-
         }
         else
         {
-        
-        $request->validate([
+         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required'],
@@ -77,9 +72,7 @@ class UserController extends Controller
             'fssai' => ['required'],
             'username' => ['required'],
             'pincode' =>['required'],
-            'role' => ['required'],
-            
-            
+            'role' => ['required'],    
         ]);
 
         $user = User::create([
@@ -96,19 +89,15 @@ class UserController extends Controller
             'state' => $request->state,
             'pincode' => $request->pincode,
             'role' => $request->role,
-            
         ]);
-
+        $request->session()->flash('status', 'Task was successful!');
         return redirect('user');
         }
     }
-
     public function delete($id)
     {
         $user=User::find($id);
         $user->delete();
         return redirect('user');  
     }
-
-    
 }

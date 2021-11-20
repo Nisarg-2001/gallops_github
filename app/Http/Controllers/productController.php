@@ -15,7 +15,7 @@ class productController extends Controller
     public function view()
     {
         $data = product_master::all();
-        return view('admin.product.product_index',['data'=>$data]);
+        return view('admin.product.index',['data'=>$data]);
     }
 
     public function create()
@@ -24,7 +24,7 @@ class productController extends Controller
         $category = category_master::all();
         $sub_category = sub_category_master::all();
 
-        return view('admin.product.product_action',['tax'=>$tax,'category'=>$category,'sub_category'=>$sub_category]);
+        return view('admin.product.action',['tax'=>$tax,'category'=>$category,'sub_category'=>$sub_category]);
     }
 
     public function edit($id)
@@ -34,12 +34,12 @@ class productController extends Controller
         $category = category_master::all();
         $sub_category = sub_category_master::all();
 
-        return view('admin.product.product_action',['data'=>$data,'tax'=>$tax,'category'=>$category,'sub_category'=>$sub_category]);
+        return view('admin.product.action',['data'=>$data,'tax'=>$tax,'category'=>$category,'sub_category'=>$sub_category]);
     }
 
     public function addupdate(Request $request)
     {
-        if($request->has('id'))
+        if($request->has('id') && !empty($request->id))
         {
             $data = product_master::find($request->id);
             $data->name = $request->name;
@@ -48,10 +48,8 @@ class productController extends Controller
             $data->category = $request->category;
             $data->sub_category = $request->subcategory;
             $data->unit = $request->unit;
-            $data->tax_1 = $request->tax1;
-            $data->tax_2 = $request->tax2;
-            $data->tax_3 = $request->tax3;
             $data->save();
+            $request->session()->flash('status', 'Task was successful!');
 
             return redirect('products');
         }
@@ -67,10 +65,8 @@ class productController extends Controller
         $product->category = $request->category;
         $product->sub_category = $request->subcategory;
         $product->unit = $request->unit;
-        $product->tax_1 = $request->tax1;
-        $product->tax_2 = $request->tax2;
-        $product->tax_3 = $request->tax3;
         $product->save();
+        $request->session()->flash('status', 'Task was successful!');
 
         return redirect('products');
     }

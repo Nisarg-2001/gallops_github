@@ -12,31 +12,31 @@ class taxController extends Controller
     public function view()
     {
       $data = tax_master::all();
-      return view('admin.tax.tax_index',['data'=>$data]);
+      return view('admin.tax.index',['data'=>$data]);
     }
 
     public function create()
     {
-      return view('admin.tax.tax_action');
+      return view('admin.tax.action');
     }
 
     public function edit($id)
     {
       $tax = tax_master::find($id);
-      return view('admin.tax.tax_action',['tax'=>$tax]);
+      return view('admin.tax.action',['tax'=>$tax]);
     }
 
     public function addupdate(Request $request)
     {
       
-      if(isset($request->id))
+      if(isset($request->id) && !empty($request->id))
        {
          $tax = tax_master::find($request->id);
          $tax->tax_name = $request->name;
          $tax->type = $request->type;
          $tax->value = $request->value;
          $tax->save();
-
+         $request->session()->flash('status', 'Task was successful!');
          return redirect('tax');
        }
      else{
@@ -53,8 +53,7 @@ class taxController extends Controller
       $tax->type = $request->type;
       $tax->value = $request->value;
       $tax->save();
-      
-
+      $request->session()->flash('status', 'Task was successful!');
         return redirect('tax');
      }
        

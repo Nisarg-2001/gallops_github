@@ -24,7 +24,6 @@
     </div>
 
     @include('layouts.scripts')
-    @include('layouts.form-script')
     
     @yield('page-footer-script')
 
