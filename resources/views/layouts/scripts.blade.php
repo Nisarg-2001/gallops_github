@@ -10,7 +10,7 @@
 <!-- Bootstrap 4 -->
 <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <!-- Select2 -->
-<script src="../../plugins/select2/js/select2.full.min.js"></script>
+<script src="{{ asset('/plugins/select2/js/select2.full.min.js') }}"></script>
 <!-- Validation Jquery -->
 <!-- jquery-validation -->
 <script src="{{ asset('/plugins/jquery-validation/jquery.validate.min.js') }}"></script>

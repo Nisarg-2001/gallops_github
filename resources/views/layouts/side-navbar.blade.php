@@ -1,7 +1,7 @@
-<aside class="main-sidebar sidebar-dark-primary ">
+<aside class="main-sidebar sidebar-dark-primary fixed-top ">
     <!-- Brand Logo -->
     <a href="#" class="brand-link bg-white" style="height:65px;">
-      <span class=" ml-5 brand-text text-dark font-weight-bold">AdminLTE 3</span>
+      <span class=" ml-5 brand-text text-dark font-weight-bold">GALLOPS</span>
     </a>
 
     <!-- Sidebar -->
@@ -13,7 +13,7 @@
      
 
       <!-- Sidebar Menu -->
-      <nav class="mt-2">
+      <nav class="mt-2 ">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->

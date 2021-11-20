@@ -4,12 +4,19 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\product_master;
 use App\Models\state;
 use Illuminate\Validation\Rules;
 use Hash;
 
 class UserController extends Controller
 {
+    public function dashboard()
+    {
+        $user = User::all()->count();
+        $product = product_master::all()->count();
+        return view('admin.dashboard')->with(['user'=>$user,'product'=>$product]);
+    }
 
     public function view()
     {

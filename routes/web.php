@@ -9,10 +9,6 @@ use App\Http\Controllers\productController;
 use App\Http\Controllers\vendorController;
 use App\Http\Controllers\assignController;
 
-
-
-
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,13 +20,8 @@ use App\Http\Controllers\assignController;
 |
 */
 
-Route::get('/', function () {
-    return view('auth.login');
-});
-
-Route::get('/dashboard', function () {
-    return view('admin.dashboard');
-})->middleware(['auth'])->name('dashboard');
+    ## DASHBOARD ROUTES ##
+Route::get('/dashboard',[UserController::class,'dashboard'])->middleware(['auth'])->name('dashboard');
 
 
 
