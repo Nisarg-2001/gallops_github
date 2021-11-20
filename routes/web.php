@@ -50,11 +50,11 @@ Route::get('/deletetax/{id}',[taxController::class, 'delete']);
 ## CATEGORY ROUTES ##
 
 Route::get('/category',[categoryController::class,'view']);
-Route::get('/addcategory',[categoryController::class,'create']);
-Route::post('/createcategory',[categoryController::class,'addupdate']);
-Route::get('/updatecategory/{id}',[categoryController::class,'edit']);
-Route::post('/updatecategory',[categoryController::class,'addupdate']);
-Route::get('/deletecategory/{id}',[categoryController::class,'delete']);
+Route::get('/category/add',[categoryController::class,'create']);
+Route::post('/category/post',[categoryController::class,'addupdate']);
+Route::get('/category/edit/{id}',[categoryController::class,'edit']);
+// Route::post('/updatecategory',[categoryController::class,'addupdate']);
+Route::get('/category/delete/{id}',[categoryController::class,'delete']);
 
  ## SUB CATEGORIES ROUTES ##
 
