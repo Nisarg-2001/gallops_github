@@ -27,11 +27,8 @@
                                         <div class="col-12 col-md-4 col-lg-4">
                                             <div class="form-group">
                                                 <label>Tax Name</label>
-                                                <input type="hidden" name="id"
-                                                    value="{{(isset($tax->id) && !empty($tax->id)) ? $tax->id : ''}}">
-                                                <input type="text" class="form-control" name="name"
-                                                    value="{{(isset($tax->tax_name) && !empty($tax->tax_name)) ? $tax->tax_name : ''}}"
-                                                    aria-describedby="emailHelp" placeholder="Enter Tax Name">
+                                                <input type="hidden" name="id" value="{{(isset($tax->id) && !empty($tax->id)) ? $tax->id : ''}}">
+                                                <input type="text" class="form-control" name="name" value="{{(isset($tax->tax_name) && !empty($tax->tax_name)) ? $tax->tax_name : ''}}" aria-describedby="emailHelp" placeholder="Enter Tax Name">
                                                 @error('name')
                                                 <div class="text-danger">{{$message}}</div>
                                                 @enderror
@@ -41,15 +38,13 @@
                                             <div class="form-group">
                                                 <label>Tax type</label>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="type"
-                                                        @if(isset($tax->type) && $tax->type=='percentage') ?
+                                                    <input class="form-check-input" type="radio" name="type" @if(isset($tax->type) && $tax->type=='percentage') ?
                                                     checked="Checked"
                                                     :"" @endif value="percentage" id="flexRadioDefault1">
                                                     <label class="form-check-label mr-5" for="flexRadioDefault1">
                                                         Percentage
                                                     </label>
-                                                    <input class="form-check-input" type="radio" name="type"
-                                                        @if(isset($tax->type) && $tax->type=='amount') ?
+                                                    <input class="form-check-input" type="radio" name="type" @if(isset($tax->type) && $tax->type=='amount') ?
                                                     checked="Checked"
                                                     :"" @endif value="amount" id="flexRadioDefault2" >
                                                     <label class="form-check-label" for="flexRadioDefault2">
@@ -61,9 +56,7 @@
                                         <div class="col-4">
                                             <div class="form-group">
                                                 <label for="exampleInputPassword1">Value</label>
-                                                <input type="number" class="form-control" name="value"
-                                                    value="{{(isset($tax->value) && !empty($tax->value)) ? $tax->value : ''}}"
-                                                    placeholder="Enter tax value">
+                                                <input type="number" class="form-control" name="value" value="{{(isset($tax->value) && !empty($tax->value)) ? $tax->value : ''}}" placeholder="Enter tax value">
                                             </div>
                                         </div>
                                     </div>
@@ -86,6 +79,7 @@
         <!-- /.content -->
     </div>
     @section('page-footer-script')
+    <script src="{{ asset('/admin/assets/js/common.js') }}"></script>
     <script src="{{ asset('/admin/assets/js/form-validation.js') }}"></script>
     <script src="{{ asset('/admin/assets/js/tax/action.js') }}"></script>
     @endsection

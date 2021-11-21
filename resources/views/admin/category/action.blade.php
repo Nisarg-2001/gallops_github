@@ -83,6 +83,7 @@
     </div>
 
     @section('page-footer-script')
+    <script src="{{ asset('/admin/assets/js/common.js') }}"></script>
     <script src="{{ asset('/admin/assets/js/form-validation.js') }}"></script>
     <script src="{{ asset('/admin/assets/js/category/action.js') }}"></script>
     @endsection

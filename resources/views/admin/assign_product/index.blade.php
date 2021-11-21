@@ -22,7 +22,7 @@
 
             <div class="card">
               <div class="card-header">
-              <a href="{{ url('assignproduct') }}" class="btn btn-primary"> Assign Product</a>
+              <a href="{{ url('assign_product/add') }}" class="btn btn-primary"> Assign Product</a>
               </div>
               <!-- /.card-header -->
               <div class="card-body">

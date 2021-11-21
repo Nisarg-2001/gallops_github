@@ -8,9 +8,11 @@
 
     <title>{{ config('app.name', 'Gallops') }}</title>
     @include('layouts.css-links')
-</head>
 
-    @include('layouts.css-links')
+    <script>
+        var APP_NAME = "{{ env('APP_NAME') }}";
+        var APP_URL = "{{ env('APP_URL') }}";
+    </script>
 </head>
 <body class="font-sans antialiased">
     <div class="wrapper">
