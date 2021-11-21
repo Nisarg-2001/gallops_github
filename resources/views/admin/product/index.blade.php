@@ -39,6 +39,8 @@
                                             <td>{{ $info->self_life }} Months</td>
                                             <td>{{ $info->unit}}</td>
                                             <td class="text-center">
+                                                <a href="assign_product/add?product={{$info->id}}" class="btn btn-warning"
+                                                    title="Assign Vendor"><i class="fas fa-user-plus"></i></a>
                                                 <a href="{{url('product/edit/'.$info->id)}}" class="btn btn-info"
                                                     title="Edit"><i class="fas fa-pencil"></i></a>
                                                 <a href="{{url('product/delete/'.$info->id)}}" class="btn btn-danger"

@@ -84,7 +84,7 @@
           </li>
 
           <li class="nav-item menu">
-            <a href="{{ url('/assign') }}" class="nav-link ">
+            <a href="{{ url('/assign_product') }}" class="nav-link ">
               <i class="nav-icon fas fa-list"></i>
               <p>
                 Assign Products

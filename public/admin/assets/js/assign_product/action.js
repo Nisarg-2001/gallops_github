@@ -1,8 +1,16 @@
-$('#productForm').validate({
+$('#assignProductForm').validate({
     rules: {
-        name: {
+        vendor_id: {
             required: true,
-            xssProtection: true
+        },
+        product_id: {
+            required: true,
+        },
+        // "tax_value[]": {
+            
+        // },
+        "price": {
+            required: true,
         },
         alias: {
             required: true,
@@ -10,12 +18,12 @@ $('#productForm').validate({
         },
     },
     messages: {
-        name: {
-            required: "Please enter a Product Name",
+        "tax_value[]": {
+            pattern: "Please enter a valid value."
         },
-        alias: {
-            required: "Please enter a Product alias Name",
-        },
+        price: {
+            pattern: "Please enter a valid value."
+        }
     },
     errorElement: 'span',
     errorPlacement: function (error, element) {
@@ -30,12 +38,24 @@ $('#productForm').validate({
     }
 });
 
-$(document).on('change', '#product', function () {
-    let product_id = $(this).val();
+$(document).ready(function () {
+    // getTax();
+    let urlParams = new URLSearchParams(window.location.search);
+    let product_id = urlParams.get('product');
+    getTax(product_id);
+
+});
+
+$(document).on('change', '#product_id', function () {
+    let product_id = $('#product_id').val();
     getTax(product_id);
 });
 
 function getTax(product_id) {
+    if (!product_id) {
+        return false;
+    }
+
     $.ajax({
         url: APP_URL + 'assign_product/getTax',
         type: 'POST',

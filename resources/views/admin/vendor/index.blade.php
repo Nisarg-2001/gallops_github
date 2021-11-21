@@ -39,10 +39,13 @@
                                             <td>{{ $info->email }}</td>
                                             <td>{{ $info->gst }}</td>
                                             <td class="text-center">
+                                                <a href="assign_product/add?vendor={{$info->id}}" class="btn btn-warning"
+                                                    title="Assign Product"><i class="fas fa-cart-plus"></i></a>
                                                 <a href="updatevendor/{{$info->id}}" class="btn btn-info"
                                                     title="Edit"><i class="fas fa-pencil"></i></a>
                                                 <a href="deletevendor/{{$info->id}}" class="btn btn-danger"
                                                     title="Delete"><i class="fas fa-trash-alt"></i></a>
+                                                    
                                             </td>
                                         </tr>
                                         @endforeach

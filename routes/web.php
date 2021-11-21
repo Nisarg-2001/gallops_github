@@ -82,11 +82,15 @@ Route::get('/vendor/delete/{id}', [vendorController::class,'delete']);
 
 ## ASSIGN PRODUCT ROUTES ##
 
-Route::get('/assign_product',function(){
-    return View('admin.assign_product.index');
-});
+// Route::get('/assign_product',function(){
+//     return View('admin.assign_product.index');
+// });
+
+Route::get('/assign_product', [assignController::class,'view']);
 Route::get('/assign_product/add',[assignController::class,'create']);
+Route::get('/assign_product/edit/{id}', [assignController::class,'edit']);
 Route::post('/assign_product/getTax',[assignController::class,'getTax']);
+Route::post('/assign_product/post',[assignController::class,'addupdate']);
 
 
 
