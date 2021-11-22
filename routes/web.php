@@ -8,6 +8,11 @@ use App\Http\Controllers\sub_categoryController;
 use App\Http\Controllers\productController;
 use App\Http\Controllers\vendorController;
 use App\Http\Controllers\assignController;
+use App\Http\Controllers\orderController;
+use App\Http\Controllers\inwardController;
+use App\Http\Controllers\outwardController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -91,6 +96,18 @@ Route::get('/assign_product/add',[assignController::class,'create']);
 Route::get('/assign_product/edit/{id}', [assignController::class,'edit']);
 Route::post('/assign_product/getTax',[assignController::class,'getTax']);
 Route::post('/assign_product/post',[assignController::class,'addupdate']);
+
+##  ORDER ROUTES ##
+Route::get('/order',[orderController::class,'view']);
+Route::get('/order/add',[orderController::class,'create']);
+
+##  INWARD ROUTES ##
+Route::get('/inward',[inwardController::class,'view']);
+Route::get('/inward/add',[inwardController::class,'create']);
+
+##  OUTWARD ROUTES ##
+Route::get('/outward',[outwardController::class,'view']);
+Route::get('/outward/add',[outwardController::class,'create']);
 
 
 

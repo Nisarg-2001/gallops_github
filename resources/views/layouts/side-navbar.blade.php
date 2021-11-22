@@ -94,17 +94,17 @@
 
 
           <li class="nav-item menu">
-            <a href="{{ url('/orders') }}" class="nav-link ">
+            <a href="{{ url('/order') }}" class="nav-link ">
               <i class="nav-icon fas fa-list"></i>
               <p>
-                View Orders
+                Orders
               </p>
             </a>
           </li>
 
           <li class="nav-item menu">
-            <a href="{{ url('/orders') }}" class="nav-link">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
+            <a href="{{ url('/inward') }}" class="nav-link">
+              <i class="nav-icon fas fa-list"></i>
               <p>
                 Inwards
                
@@ -113,10 +113,10 @@
           </li>
 
           <li class="nav-item menu">
-            <a href="{{ url('/orders') }}" class="nav-link">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
+            <a href="{{ url('/outward') }}" class="nav-link">
+              <i class="nav-icon fas fa-list"></i>
               <p>
-                Issued Goods
+                Outwards
                
               </p>
             </a>

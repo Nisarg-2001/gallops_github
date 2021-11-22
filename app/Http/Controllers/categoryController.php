@@ -52,7 +52,6 @@ class categoryController extends Controller
     public function delete($id)
     {
         
-        dd("done");
         $user = category_master::find($id);
         $user->delete();
         return redirect('category');

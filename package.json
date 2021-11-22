@@ -21,6 +21,7 @@
         "tailwindcss": "^2.0.2"
     },
     "dependencies": {
+        "bootstrap-icons": "^1.7.1",
         "sweetalert": "^2.1.2"
     }
 }

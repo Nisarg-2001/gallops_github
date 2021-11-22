@@ -42,7 +42,7 @@
                       <td>{{$info->title}}</td>
                       <td>{{$info->description}}</td>
                       <td class="text-center">
-                        <a href="{{ url('category/edit/' . $info->id) }}" class="btn btn-info" title="Edit"><i class="fas fa-pencil"></i></a>
+                        <a href="{{ url('category/edit/' . $info->id) }}" class=" delete btn btn-info" title="Edit"><i class="fas fa-pencil"></i></a>
                         <a href="{{ url('category/delete/' . $info->id) }}" class="btn btn-danger" title="Delete"><i class="fas fa-trash-alt"></i></a>
                       </td>
 

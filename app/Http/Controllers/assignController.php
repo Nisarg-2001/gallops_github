@@ -3,13 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\vendor_master;
-use App\Models\product_master;
 use App\Models\assign_product;
+use App\Models\product_master;
 use App\Models\tax_master;
-use DB;
-
+use App\Models\vendor_master;
+use Illuminate\Http\Request;
 
 class assignController extends Controller
 {
@@ -34,6 +32,7 @@ class assignController extends Controller
     {
         $taxIds = $taxName = $taxValue = [];
         $jsonTax = '';
+        $taxData[][]='';
         if (isset($request->tax_id) && isset($request->tax_name) && isset($request->tax_value)) {
             $taxIds = $request->tax_id;
             $taxName = $request->tax_name;
@@ -129,10 +128,9 @@ class assignController extends Controller
             'taxData' => $taxData,
             'product' => $product,
             'vendor' => $vendor,
-            'defaultProdcutTaxView' => view('admin.assign_product.tax', ['taxData' => $taxData, 'defaultProdcutTax' => $defaultProdcutTax])->render()
+            'defaultProdcutTaxView' => view('admin.assign_product.tax', ['taxData' => $taxData, 'defaultProdcutTax' => $defaultProdcutTax])->render(),
         ]);
     }
-
 
     public function delete($id)
     {
