@@ -47,7 +47,14 @@ class assignController extends Controller
 
         $jsonTax = json_encode($taxData);
 
-        if (isset($request->is_default) && $request->is_default == 1 && !empty($request->product_id)) {
+        // check if product is assigned to vendor first time then make it default
+        $productData = assign_product::where('product_id', $request->product_id)
+                    ->where('is_default', 0)
+                    ->first();
+        
+        if ($productData->count() == 0) {
+            $request->is_default = 1;
+        } else if (isset($request->is_default) && $request->is_default == 1 && !empty($request->product_id)) {
             // reset default flag for old product records
             assign_product::where('is_default', 1)
                 ->where('product_id', $request->product_id)
@@ -134,8 +141,8 @@ class assignController extends Controller
 
     public function delete($id)
     {
-        $user = assign_product::find($id);
-        $user->delete();
+        $data = assign_product::find($id);
+        $data->delete();
         return redirect('assign_product');
     }
 }

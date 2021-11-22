@@ -62,6 +62,12 @@ function getTax(product_id) {
         data: {
             product_id: product_id,
         },
+        beforeSend: function () {
+            $("#assignProductForm").find('input[type=submit]').attr('disabled', true);
+        },
+        complete: function () {
+            $("#assignProductForm").find('input[type=submit]').attr('disabled', false);
+        },
         success: function (data) {
             $('#taxSection').html(data.data);
         }

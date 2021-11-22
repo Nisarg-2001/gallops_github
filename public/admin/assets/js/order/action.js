@@ -1,0 +1,155 @@
+var products = {};
+
+var i = $("table.order-table tr").length;
+
+$(document).ready(function () {
+    getAllProducts();
+});
+
+$(document).ready(function () {
+    $(window).keydown(function (event) {
+        if (event.keyCode == 13) {
+            event.preventDefault();
+            return false;
+        }
+    });
+});
+
+$("#product_id").change(function () {
+
+
+    count = $("table.order-table tr").length;
+
+    itemid = $(this).val();
+
+    let taxes = JSON.parse(products[itemid].tax);
+    let tax_amount = 0;
+
+    if (taxes.length > 0) {
+        taxes.forEach(function(currentValue, index, arr){
+            tax_amount = tax_amount + ((products[itemid].price * currentValue.value) / 100);
+        });
+    }
+
+
+    var row = "<tr style='background-color: #f9f9f9;'><td class='text-center'>" + i + "</td>";
+
+    row += "<td><input type='text' value='" + products[itemid] + "' id='Item_" + i + "' name='Item[]' class='form-control ' readonly><input type='hidden' name='intItemID[]' id='intItemID_" + i + "' value='" + itemid + "'> <input type='hidden' name='itemTax[]'  id='itemTax_" + i + "' value='" + products[itemid].tax + "' data-id='" + i + "'></td>";
+
+    row += "<td><input type='text' value='" + products[itemid].price + "' id='NetPrice_" + i + "' name='NetPrice[]' class='form-control filterme' readonly></td>";
+
+    row += "<td><input type='number' value='1' id='Qty_" + i + "' name='Qty[]' class='form-control filterme' min='1' max='9999'  onkeyup=updateAmount(" + itemid + ',' + i + ") onchange=updateAmount(" + itemid + ',' + i + ")></td>";
+
+    row += "<td><input type='text' value='" + products[itemid].price + "' id='Amount_" + i + "' name='Amount[]' class='form-control filterme' readonly><input type='hidden' name='taxAmount[]'  id='taxAmount_" + i + "' value='" + tax_amount + "' data-id='" + i + "'></td>";
+
+    row += '<td><a class="btn btn-red tooltips removethis" data-placement="top" href="#" data-original-title="Remove" title="Remove"><i class="fa fa-trash-o fa fa-white "></i></a></td>';
+
+    row += "</tr>";
+
+    $("table.order-table").append(row);
+
+    updateTotal();
+
+    $("#taxTotal").show();
+
+    i++;
+});
+
+$('table.order-table').on('click', 'a.removethis', function (e) {
+    $(this).closest('tr').remove();
+    var ctr = $("table.order-table tr").length;
+
+    if (ctr == 1) {
+        $("#taxTotal").hide();
+    } else {
+        updateTotal();
+    }
+});
+
+function getAllProducts() {
+    $.ajax({
+        url: APP_URL + 'order/getProduct',
+        type: 'POST',
+        beforeSend: function () {
+            $("#orderForm").find('input[type=submit]').attr('disabled', true);
+        },
+        complete: function () {
+            $("#orderForm").find('input[type=submit]').attr('disabled', false);
+        },
+        success: function (data) {
+            data.forEach(function (currentValue, index, arr) {
+                products[currentValue.id] = currentValue;
+            });
+        }
+    });
+}
+
+function updateAmount(itemid, id) {
+
+    let unitprice = $("#NetPrice_" + id).val();
+    let qty = $("#Qty_" + id).val();
+    let amount = qty * unitprice;
+    
+    $("#Amount_" + id).val(amount.toFixed(2));
+
+    //update tax amount
+    let taxes = JSON.parse($("#itemTax_" + id).val());
+    let tax_amount = 0;
+
+    if (taxes.length > 0) {
+        taxes.forEach(function(currentValue, index, arr){
+            tax_amount += amount * currentValue.value;
+            
+            let hiddenTax = $("#hiddenTotalTax_" + currentValue.id).val();
+            $("#hiddenTotalTax_" + currentValue.id).val((hiddenTax + tax_amount).toFixed(2));
+            $("#TotalSingleTax_" + currentValue.id).html((hiddenTax + tax_amount).toFixed(2));
+        });
+    }
+
+    $("#TaxAmount_" + id).val((amount + tax_amount).toFixed(2));
+
+
+    updateTotal();
+}
+
+function updateTotal() {
+    var SubTotalAmt = '0';
+
+    $('input[name^="Amount"]').each(function () {
+        SubTotalAmt = parseFloat(SubTotalAmt) + parseFloat($(this).val());
+    });
+
+    var totalTax = 0;
+    $('input[name^="taxAmount"]').each(function () {
+        
+        let id = $(this).attr('data-id');
+        let tax = $("#taxAmount_" + id).val();
+        let qty = $("#Qty_" + id).val();
+        let taxAmount = qty * tax;
+
+        totalTax += taxAmount;
+    });
+    
+    var TotalAmt = parseFloat(SubTotalAmt) + parseFloat(totalTax);
+
+    //calculate tax
+    $("#SubTotalAmt").html(SubTotalAmt.toFixed(2));
+    $("#hiddenSubTotalAmt").val(SubTotalAmt.toFixed(2));
+
+    $("#TotalAmt").html(TotalAmt.toFixed(2));
+    $("#hiddenTotalAmt").val(TotalAmt.toFixed(2));
+
+}
+
+function check() {
+    count = $("table.table-list tr").length;
+    if (count == '1') {
+        alert("Please select product.");
+        return false;
+    } else {
+        var r = confirm("Please press 'OK' to confirm your order.");
+        if (r == false) {
+            return false;
+        }
+    }
+}
