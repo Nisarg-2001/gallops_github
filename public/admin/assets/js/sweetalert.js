@@ -10,9 +10,8 @@
             //pop up
             swal({
                 title: "Are you sure you want to delete ??",
-                text: 'After Delete you won\'t be able to revert back',
-                position: 'top-center',
-                text: message, 
+                text: 'After Delete, you won\'t be able to revert back',
+                position: 'top',
                 icon: "error",
                 buttons: true,
                 dangerMode: true,
