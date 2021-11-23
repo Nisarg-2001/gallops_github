@@ -85,6 +85,8 @@ Route::get('/order',[orderController::class,'view']);
 Route::get('/order/add',[orderController::class,'create']);
 Route::post('/order/post',[orderController::class,'addupdate']);
 Route::post('/order/getProduct',[orderController::class,'getProduct']);
+Route::post('/order/getTaxes',[orderController::class,'getTaxes']);
+
 
 ##  INWARD ROUTES ##
 Route::get('/inward',[inwardController::class,'view']);

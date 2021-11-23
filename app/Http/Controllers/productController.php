@@ -82,6 +82,7 @@ class productController extends Controller
             $product->self_life = $request->life;
             $product->category = $request->category;
             $product->sub_category = $request->subcategory;
+            $product->default_tax = (!empty($jsonTax)) ? $jsonTax : null;
             $product->unit = $request->unit;
             $product->save();
             $request->session()->flash('status', 'Task was successful!');

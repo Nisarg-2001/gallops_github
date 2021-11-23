@@ -51,10 +51,11 @@
                       </tr>
                     </thead>
                     <tbody>
+                    <?php /*
                       <tr>
                         <td class='text-center'> 1 </td>
                         <td>
-                          <?php /* ?>
+                           ?>
                           <input type='text' value="<?php echo $xx[$i]['I_Name'];?>" id="Item_<?php echo $i+1;?>" name='Item[]' class='form-control ' readonly>
                           <input type='hidden' name='intItemID[]' id="intItemID_<?php echo $i+1;?>" value='<?php echo $xx[$i]['I_ItemID'];?>'>
                           <?php */ ?>
@@ -72,14 +73,14 @@
                         <td>
                           <?php /* ?>
                           <input type='text' value="<?php echo $xx[$i]['I_ItemPrice']*$xx[$i]['I_ItemQty'] ;?>" id='Amount_<?php echo $i+1;?>' name='Amount[]' class='form-control filterme' readonly>
-                          <?php */ ?>
+                          <?php 
                         </td>
                         <td class='text-center'>
                           <button type="button" class="btn btn-danger btn-sm removethis">
                             <i class="fa fa-trash"></i>
                           </button>
                         </td>
-                      </tr>
+                      </tr>*/ ?>
                     </tbody>
                   </table>
 
@@ -91,7 +92,9 @@
 
                     @foreach($taxes as $t)
                     <tr>
-                      <input type="hidden" name="hiddenTotalTax[]" id="hiddenTotalTax_{{ $t->id }}" value="0">    
+                      <input type="hidden" name="hiddenTotalTax[]" id="hiddenTotalTax_{{ $t->id }}" value="0"> 
+                      <input type="hidden" name="hiddenTaxId[]" id="hiddenTaxId_{{ $t->id }}" value="{{ $t->id }}">
+                      <input type="hidden" name="hiddenTaxName[]" id="hiddenTaxName_{{ $t->id }}" value="{{ $t->tax_name }}">
                       <td width="85%" align="right" style="padding-right:20px;"><b>{{ $t->tax_name }}</b> </td>
                       <td width="15%" align="right"> <b><span id="TotalSingleTax_{{ $t->id }}">0.00</span></b></td>
                     </tr>
@@ -106,9 +109,19 @@
                   <input type="hidden" name="hiddenSubTotalAmt" id="hiddenSubTotalAmt" value="">
                   <input type="hidden" name="hiddenTotalAmt" id="hiddenTotalAmt" value="">
 
+                  <div class="col-12 col-md-12 col-lg-12">
+                      <div class="form-group">
+                        <label for="exampleInputPassword1">Note</label>
+                        <textarea type="text" class="form-control" name="note" id="note" value="" placeholder="Enter Note..." ></textarea>
+                        @error('name')
+                        <div class="text-danger">{{$message}}</div>
+                        @enderror
+                      </div>
+                    </div>
+
                   <div class="text-center">
                     <button type="submit" class="btn btn-primary">Place Order</button>
-                    <a href="{{url('order   ')}}" class="btn btn-danger">Cancel</a>
+                    <a href="{{url('order')}}" class="btn btn-danger">Cancel</a>
                   </div>
                 </form>
               </div>
