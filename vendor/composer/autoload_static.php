@@ -36,6 +36,7 @@ class ComposerStaticInit994730993cab0e2d3337110d82fadf5f
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         'b6b991a57620e2fb6b2f66f03fe9ddc2' => __DIR__ . '/..' . '/symfony/string/Resources/functions.php',
         'ed962a97bd972bc82007176b647d4e36' => __DIR__ . '/..' . '/facade/ignition/src/helpers.php',
+        '6b34c85f7b1ad6faa15aa12109e030f2' => __DIR__ . '/..' . '/realrashid/sweet-alert/src/functions.php',
         'a806c12c6e24e7e4e900847766218dba' => __DIR__ . '/..' . '/uxweb/sweet-alert/src/SweetAlert/functions.php',
     );
 
@@ -94,6 +95,7 @@ class ComposerStaticInit994730993cab0e2d3337110d82fadf5f
         ),
         'R' => 
         array (
+            'RealRashid\\SweetAlert\\' => 22,
             'Ramsey\\Uuid\\' => 12,
             'Ramsey\\Collection\\' => 18,
         ),
@@ -324,6 +326,10 @@ class ComposerStaticInit994730993cab0e2d3337110d82fadf5f
         array (
             0 => __DIR__ . '/..' . '/symfony/console',
         ),
+        'RealRashid\\SweetAlert\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/realrashid/sweet-alert/src',
+        ),
         'Ramsey\\Uuid\\' => 
         array (
             0 => __DIR__ . '/..' . '/ramsey/uuid/src',
@@ -548,6 +554,9 @@ class ComposerStaticInit994730993cab0e2d3337110d82fadf5f
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\assignController' => __DIR__ . '/../..' . '/app/Http/Controllers/assignController.php',
         'App\\Http\\Controllers\\categoryController' => __DIR__ . '/../..' . '/app/Http/Controllers/categoryController.php',
+        'App\\Http\\Controllers\\inwardController' => __DIR__ . '/../..' . '/app/Http/Controllers/inwardController.php',
+        'App\\Http\\Controllers\\orderController' => __DIR__ . '/../..' . '/app/Http/Controllers/orderController.php',
+        'App\\Http\\Controllers\\outwardController' => __DIR__ . '/../..' . '/app/Http/Controllers/outwardController.php',
         'App\\Http\\Controllers\\productController' => __DIR__ . '/../..' . '/app/Http/Controllers/productController.php',
         'App\\Http\\Controllers\\sub_categoryController' => __DIR__ . '/../..' . '/app/Http/Controllers/sub_categoryController.php',
         'App\\Http\\Controllers\\taxController' => __DIR__ . '/../..' . '/app/Http/Controllers/taxController.php',
@@ -563,8 +572,11 @@ class ComposerStaticInit994730993cab0e2d3337110d82fadf5f
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\Http\\Requests\\Auth\\LoginRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Auth/LoginRequest.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
-        'App\\Models\\assign_master' => __DIR__ . '/../..' . '/app/Models/assign_master.php',
+        'App\\Models\\assign_product' => __DIR__ . '/../..' . '/app/Models/assign_product.php',
         'App\\Models\\category_master' => __DIR__ . '/../..' . '/app/Models/category_master.php',
+        'App\\Models\\inward_master' => __DIR__ . '/../..' . '/app/Models/inward_master.php',
+        'App\\Models\\orders' => __DIR__ . '/../..' . '/app/Models/orders.php',
+        'App\\Models\\outward_master' => __DIR__ . '/../..' . '/app/Models/outward_master.php',
         'App\\Models\\product_master' => __DIR__ . '/../..' . '/app/Models/product_master.php',
         'App\\Models\\state' => __DIR__ . '/../..' . '/app/Models/state.php',
         'App\\Models\\sub_category_master' => __DIR__ . '/../..' . '/app/Models/sub_category_master.php',
@@ -4427,6 +4439,13 @@ class ComposerStaticInit994730993cab0e2d3337110d82fadf5f
         'Ramsey\\Uuid\\UuidInterface' => __DIR__ . '/..' . '/ramsey/uuid/src/UuidInterface.php',
         'Ramsey\\Uuid\\Validator\\GenericValidator' => __DIR__ . '/..' . '/ramsey/uuid/src/Validator/GenericValidator.php',
         'Ramsey\\Uuid\\Validator\\ValidatorInterface' => __DIR__ . '/..' . '/ramsey/uuid/src/Validator/ValidatorInterface.php',
+        'RealRashid\\SweetAlert\\Console\\PublishCommand' => __DIR__ . '/..' . '/realrashid/sweet-alert/src/Console/PublishCommand.php',
+        'RealRashid\\SweetAlert\\Facades\\Alert' => __DIR__ . '/..' . '/realrashid/sweet-alert/src/Facades/Alert.php',
+        'RealRashid\\SweetAlert\\Storage\\AlertSessionStore' => __DIR__ . '/..' . '/realrashid/sweet-alert/src/Storage/AlertSessionStore.php',
+        'RealRashid\\SweetAlert\\Storage\\SessionStore' => __DIR__ . '/..' . '/realrashid/sweet-alert/src/Storage/SessionStore.php',
+        'RealRashid\\SweetAlert\\SweetAlertServiceProvider' => __DIR__ . '/..' . '/realrashid/sweet-alert/src/SweetAlertServiceProvider.php',
+        'RealRashid\\SweetAlert\\ToSweetAlert' => __DIR__ . '/..' . '/realrashid/sweet-alert/src/ToSweetAlert.php',
+        'RealRashid\\SweetAlert\\Toaster' => __DIR__ . '/..' . '/realrashid/sweet-alert/src/Toaster.php',
         'ReturnTypeWillChange' => __DIR__ . '/..' . '/symfony/polyfill-php81/Resources/stubs/ReturnTypeWillChange.php',
         'SebastianBergmann\\CliParser\\AmbiguousOptionException' => __DIR__ . '/..' . '/sebastian/cli-parser/src/exceptions/AmbiguousOptionException.php',
         'SebastianBergmann\\CliParser\\Exception' => __DIR__ . '/..' . '/sebastian/cli-parser/src/exceptions/Exception.php',

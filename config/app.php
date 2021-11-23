@@ -1,4 +1,5 @@
 <?php
+ 
 
 return [
 
@@ -13,8 +14,8 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
-
+    'name' => env('APP_NAME', 'Gallops'),
+   
     /*
     |--------------------------------------------------------------------------
     | Application Environment
@@ -139,6 +140,7 @@ return [
         /*
          * Laravel Framework Service Providers...
          */
+        UxWeb\SweetAlert\SweetAlertServiceProvider::class,
         Illuminate\Auth\AuthServiceProvider::class,
         Illuminate\Broadcasting\BroadcastServiceProvider::class,
         Illuminate\Bus\BusServiceProvider::class,
@@ -161,8 +163,6 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-        UxWeb\SweetAlert\SweetAlertServiceProvider::class,
-
         /*
          * Package Service Providers...
          */

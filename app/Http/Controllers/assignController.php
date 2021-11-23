@@ -49,8 +49,8 @@ class assignController extends Controller
 
         // check if product is assigned to vendor first time then make it default
         $productData = assign_product::where('product_id', $request->product_id)
-                    ->where('is_default', 0)
-                    ->first();
+                    ->where('is_default', 1)
+                    ->get();
         
         if ($productData->count() == 0) {
             $request->is_default = 1;

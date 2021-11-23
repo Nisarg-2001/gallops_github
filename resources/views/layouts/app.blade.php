@@ -24,9 +24,7 @@
             </main>
         </div>
     </div>
-
     @include('layouts.scripts')
-    
     @yield('page-footer-script')
 
 </body>
