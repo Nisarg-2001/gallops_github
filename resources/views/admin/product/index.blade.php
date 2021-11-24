@@ -18,6 +18,8 @@
                         <div class="card">
                             <div class="card-header">
                                 <a href="{{url('product/add')}}" class="btn btn-primary">Add Product</a>
+                                <a href="" id="reload" class="btn btn-sm btn-primary float-right"
+                                    title="Refresh"><i class="fas fa-redo-alt"></i></a>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
@@ -27,6 +29,7 @@
                                             <th>ID</th>
                                             <th>Product Name</th>
                                             <th>Product Self Life</th>
+                                            <th>Price</th>
                                             <th>Unit</th>
                                             <th>Action</th>
                                         </tr>
@@ -37,13 +40,15 @@
                                             <td>{{ $info->id }}</td>
                                             <td>{{ $info->name }}</td>
                                             <td>{{ $info->self_life }} Months</td>
+                                            <td>{{ $info->price }}</td>
                                             <td>{{ $info->unit}}</td>
                                             <td class="text-center">
-                                                <a href="assign_product/add?product={{$info->id}}" class="btn btn-warning"
-                                                    title="Assign Vendor"><i class="fas fa-user-plus"></i></a>
+                                                <a href="assign_product/add?product={{$info->id}}"
+                                                    class="btn btn-warning" title="Assign Vendor"><i
+                                                        class="fas fa-user-plus"></i></a>
                                                 <a href="{{url('product/edit/'.$info->id)}}" class="btn btn-info"
                                                     title="Edit"><i class="fas fa-pencil"></i></a>
-                                                <a href="{{url('product/delete/'.$info->id)}}" class="btn btn-danger"
+                                                <a data-confirm="" data-id="{{$info->id}}" href="{{url('product/delete/'.$info->id)}}" class="btn btn-danger"
                                                     title="Delete"><i class="fas fa-trash-alt"></i></a>
                                             </td>
                                         </tr>
@@ -64,6 +69,8 @@
     </div>
     @section('page-footer-script')
     <script src="{{ asset('/admin/assets/js/data-tables.js') }}"></script>
+    <script src="{{ asset('/admin/assets/js/sweetalert.js') }}"></script>
+
     @endsection
     @include('layouts.footer')
 </x-app-layout>

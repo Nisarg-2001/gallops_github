@@ -23,6 +23,8 @@
             <div class="card">
               <div class="card-header">
                 <a href="{{ url('inward/add') }}" class="btn btn-primary"> Add Inward</a>
+                <a href="" id="reload" class="btn btn-sm btn-primary float-right"
+                                    title="Refresh"><i class="fas fa-redo-alt"></i></a>
               </div>
               <!-- /.card-header -->
               <div class="card-body">

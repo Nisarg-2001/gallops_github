@@ -23,6 +23,8 @@
             <div class="card">
               <div class="card-header">
                 <a href="{{url('category/add')}}" class="btn btn-primary" title="Add Category">Add Category</a>
+                <a href="" id="reload" class="btn btn-sm btn-primary float-right"
+                                    title="Refresh"><i class="fas fa-redo-alt"></i></a>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -43,7 +45,7 @@
                       <td>{{$info->description}}</td>
                       <td class="text-center">
                         <a href="{{ url('category/edit/' . $info->id) }}" class=" delete btn btn-info" title="Edit"><i class="fas fa-pencil"></i></a>
-                        <a data-confirm="After Delete you won't be able to revert back" href="{{ url('category/delete/' . $info->id) }}"  class="del btn btn-danger" data-id="{{$info->id}}" title="Delete"><i class="fas fa-trash-alt"></i></a>
+                        <a data-confirm="" href="{{ url('category/delete/' . $info->id) }}"  class="del btn btn-danger" data-id="{{$info->id}}" title="Delete"><i class="fas fa-trash-alt"></i></a>
                       </td>
 
                     </tr>

@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\orders;
+use App\Models\order;
+use App\Models\User;
 use App\Models\tax_master;
 use App\Models\order_items;
+use Auth;
 
 
 
@@ -15,7 +17,8 @@ class orderController extends Controller
 
     public function view()
     {
-        return view('admin.order.index');
+        $order = order::all();
+        return view('admin.order.index')->with(['data'=>$order]);
     }
 
     public function create(Request $request)
@@ -30,7 +33,7 @@ class orderController extends Controller
 
     public function getProduct(Request $request) 
     {
-        $product = orders::getProduct();
+        $product = order::getProduct();
 
         if($request->ajax()){
             return response()->json($product->toArray());
@@ -76,10 +79,11 @@ class orderController extends Controller
 
             // insert into orders table
             $order = new orders;
-            $order->user_id = 1;
+            $order->user_id = Auth::id();
             $order->sub_total = $request->hiddenSubTotalAmt;
             $order->tax = $jsonOrderTax;
             $order->total = $request->hiddenTotalAmt;
+            $order->order_required_date = $request->exp_date;
             $order->save();
 
             $order_id = $order->id;
@@ -103,5 +107,13 @@ class orderController extends Controller
 
         return redirect('order');
         
+    }
+    public function delete($id)
+    {
+        $order = order::find($id);
+        $order_item = order_items::where('order_id',$id);
+        $order->delete();
+        $order_item->delete();
+        return redirect('order'); 
     }
 }

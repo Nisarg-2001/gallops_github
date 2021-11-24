@@ -14,7 +14,7 @@
         var APP_URL = "{{ env('APP_URL') }}";
     </script>
 </head>
-<body class="font-sans antialiased">
+<body class="font-sans antialiased hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
         <div class="min-h-screen bg-gray-100">
             @include('layouts.navigation')

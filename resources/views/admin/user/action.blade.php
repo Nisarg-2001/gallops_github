@@ -27,8 +27,11 @@
                                         <div class="col-12 col-md-4 col-lg-4">
                                             <div class="form-group">
                                                 <label>Company Name / Franchise Name</label>
-                                                <input type="hidden" name="id" value="{{ (isset($data->id) && !empty($data->id)) ? $data->id : '' }}">
-                                                <input type="text" class="form-control" name="name" value="{{ (isset($data->name) && !empty($data->name)) ? $data->name : '' }}" placeholder="Enter Name" required>
+                                                <input type="hidden" name="id"
+                                                    value="{{ (isset($data->id) && !empty($data->id)) ? $data->id : '' }}">
+                                                <input type="text" class="form-control" name="name"
+                                                    value="{{ (isset($data->name) && !empty($data->name)) ? $data->name : '' }}"
+                                                    placeholder="Enter Name" required>
                                                 @error('name')
                                                 <div class="text-danger">{{$message}}</div>
                                                 @enderror
@@ -37,7 +40,9 @@
                                         <div class="col-12 col-md-4 col-lg-4">
                                             <div class="form-group">
                                                 <label>Email</label>
-                                                <input type="email" class="form-control" name="email" value="{{ (isset($data->email) && !empty($data->email)) ? $data->email : '' }}" aria-describedby="emailHelp" placeholder="Enter Email" required>
+                                                <input type="email" class="form-control" name="email"
+                                                    value="{{ (isset($data->email) && !empty($data->email)) ? $data->email : '' }}"
+                                                    aria-describedby="emailHelp" placeholder="Enter Email" required>
                                                 @error('email')
                                                 <div class="text-danger">{{$message}}</div>
                                                 @enderror
@@ -46,7 +51,9 @@
                                         <div class="col-12 col-md-4 col-lg-4">
                                             <div class="form-group">
                                                 <label for="exampleInputPassword1">Contact</label>
-                                                <input type="text" class="form-control" name="contact" value="{{ (isset($data->contact) && !empty($data->contact)) ? $data->contact : '' }}" placeholder="Contact No." required>
+                                                <input type="text" class="form-control" name="contact"
+                                                    value="{{ (isset($data->contact) && !empty($data->contact)) ? $data->contact : '' }}"
+                                                    placeholder="Contact No." required>
                                             </div>
                                         </div>
                                     </div>
@@ -54,19 +61,25 @@
                                         <div class="col-12 col-md-4 col-lg-4">
                                             <div class="form-group">
                                                 <label>GST no.</label>
-                                                <input type="text" class="form-control" name="gst" value="{{ (isset($data->gst) && !empty($data->gst)) ? $data->gst : '' }}" placeholder="GST no." required>
+                                                <input type="text" class="form-control" name="gst"
+                                                    value="{{ (isset($data->gst) && !empty($data->gst)) ? $data->gst : '' }}"
+                                                    placeholder="GST no." required>
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-4 col-lg-4">
                                             <div class="form-group">
                                                 <label for="exampleInputPassword1">CIN no.</label>
-                                                <input type="text" class="form-control" name="cin" value="{{ (isset($data->cin) && !empty($data->cin)) ? $data->cin : '' }}" placeholder="CIN no." required>
+                                                <input type="text" class="form-control" name="cin"
+                                                    value="{{ (isset($data->cin) && !empty($data->cin)) ? $data->cin : '' }}"
+                                                    placeholder="CIN no." required>
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-4 col-lg-4">
                                             <div class="form-group">
                                                 <label for="exampleInputPassword1">FSSAI no.</label>
-                                                <input type="text" class="form-control" name="fssai" value="{{ (isset($data->fssai) && !empty($data->fssai)) ? $data->fssai : '' }}" placeholder="FSSAI no." required>
+                                                <input type="text" class="form-control" name="fssai"
+                                                    value="{{ (isset($data->fssai) && !empty($data->fssai)) ? $data->fssai : '' }}"
+                                                    placeholder="FSSAI no." required>
                                             </div>
                                         </div>
                                     </div>
@@ -75,7 +88,8 @@
                                         <div class="col-12 col-md-6 col-lg-6">
                                             <div class="form-group">
                                                 <label>Username</label>
-                                                <input type="text" class="form-control" name="username" placeholder="Enter Username" required>
+                                                <input type="text" class="form-control" name="username"
+                                                    placeholder="Enter Username" required>
                                                 @error('username')
                                                 <div class="text-danger">{{$message}}</div>
                                                 @enderror
@@ -84,7 +98,8 @@
                                         <div class="col-12 col-md-6 col-lg-6">
                                             <div class="form-group">
                                                 <label for="exampleInputPassword1">Passsword</label>
-                                                <input type="password" class="form-control" name="password" placeholder="Password" required>
+                                                <input type="password" class="form-control" name="password"
+                                                    placeholder="Password" required>
                                             </div>
                                         </div>
                                     </div>
@@ -93,13 +108,17 @@
                                         <div class="col-12 col-md-6 col-lg-6">
                                             <div class="form-group">
                                                 <label>Address line 1.</label>
-                                                <input type="text" class="form-control" name="address1" value="{{ (isset($data->address_line_1) && !empty($data->address_line_1)) ? $data->address_line_1 : '' }}" placeholder="Enter Address" required>
+                                                <input type="text" class="form-control" name="address1"
+                                                    value="{{ (isset($data->address_line_1) && !empty($data->address_line_1)) ? $data->address_line_1 : '' }}"
+                                                    placeholder="Enter Address" required>
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-6">
                                             <div class="form-group">
                                                 <label for="exampleInputPassword1">Address line 2.</label>
-                                                <input type="text" class="form-control" name="address2" value="{{ (isset($data->address_line_2) && !empty($data->address_line_2)) ? $data->address_line_2 : '' }}" placeholder="Enter Address" required>
+                                                <input type="text" class="form-control" name="address2"
+                                                    value="{{ (isset($data->address_line_2) && !empty($data->address_line_2)) ? $data->address_line_2 : '' }}"
+                                                    placeholder="Enter Address" required>
                                             </div>
                                         </div>
                                     </div>
@@ -119,17 +138,20 @@
                                         <div class="col-12 col-md-4 col-lg-4">
                                             <div class="form-group">
                                                 <label for="exampleInputPassword1">Pin Code</label>
-                                                <input type="text" class="form-control" name="pincode" value="{{ (isset($data->pincode) && !empty($data->pincode)) ? $data->pincode : '' }}" placeholder="pincode" required>
+                                                <input type="text" class="form-control" name="pincode"
+                                                    value="{{ (isset($data->pincode) && !empty($data->pincode)) ? $data->pincode : '' }}"
+                                                    placeholder="pincode" required>
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-4 col-lg-4">
                                             <div class="form-group">
                                                 <label for="inputState">Role</label>
-                                                <select id="inputState" name="role" class="form-control" required>
-                                                    <option value="1" @if(isset($data->role) && $data->role==1) ?
-                                                        selected="Selected" :'' @endif>Admin</option>
-                                                    <option value="2" @if(isset($data->role) && $data->role==2) ?
-                                                        selected="Selected" :'' @endif>Franchise</option>
+                                                <select id="inputState" name="state" class="form-control" required>
+                                                    @foreach($role as $info)
+                                                    <option value="{{ $info->id}}" @if(isset($data->role) &&
+                                                        $data->role==$info->id) ? Selected="Selected" :'' @endif
+                                                        >{{ $info->role }}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>

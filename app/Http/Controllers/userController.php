@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\product_master;
 use App\Models\state;
+use App\Models\role;
 use Illuminate\Validation\Rules;
 use Hash;
 
@@ -28,15 +29,17 @@ class UserController extends Controller
     public function create()
     {
         $state = state::all();
-        return view('admin.user.action')->with(['state'=>$state]);
+        $role = role::all();
+        return view('admin.user.action')->with(['state'=>$state,'role'=>$role]);
     }
 
     public function edit($id)
     {
         $state = state::all();
+        $role = role::all();
         $user = User::find($id);
         
-        return view('admin.user.action',['data'=>$user,'state'=>$state]);
+        return view('admin.user.action',['data'=>$user,'state'=>$state,'role'=>$role]);
     }
 
     public function addupdate(Request $request)

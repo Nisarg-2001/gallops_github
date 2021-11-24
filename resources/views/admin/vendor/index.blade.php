@@ -18,6 +18,8 @@
                         <div class="card">
                             <div class="card-header">
                                 <a href="{{url('vendor/add')}}" class="btn btn-primary">Add Vendor</a>
+                                <a href="" id="reload" class="btn btn-sm btn-primary float-right"
+                                    title="Refresh"><i class="fas fa-redo-alt"></i></a>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
@@ -43,7 +45,7 @@
                                                     title="Assign Product"><i class="fas fa-cart-plus"></i></a>
                                                 <a href="updatevendor/{{$info->id}}" class="btn btn-info"
                                                     title="Edit"><i class="fas fa-pencil"></i></a>
-                                                <a href="deletevendor/{{$info->id}}" class="btn btn-danger"
+                                                <a data-confirm="" data-id="{{$info->id}}" href="deletevendor/{{$info->id}}" class="btn btn-danger"
                                                     title="Delete"><i class="fas fa-trash-alt"></i></a>
                                                     
                                             </td>
@@ -66,6 +68,8 @@
     </div>
     @section('page-footer-script')
     <script src="{{ asset('/admin/assets/js/data-tables.js') }}"></script>
+    <script src="{{ asset('/admin/assets/js/sweetalert.js') }}"></script>
+
     @endsection
     @include('layouts.footer')
 </x-app-layout>

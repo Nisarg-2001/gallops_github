@@ -25,7 +25,9 @@ use App\Http\Controllers\outwardController;
 |
 */
 
-    ## DASHBOARD ROUTES ##
+Route::group(['middleware' => 'auth'], function() {
+
+## DASHBOARD ROUTES ##
 Route::get('/dashboard',[UserController::class,'dashboard'])->middleware(['auth'])->name('dashboard');
 
 
@@ -86,6 +88,7 @@ Route::get('/order/add',[orderController::class,'create']);
 Route::post('/order/post',[orderController::class,'addupdate']);
 Route::post('/order/getProduct',[orderController::class,'getProduct']);
 Route::post('/order/getTaxes',[orderController::class,'getTaxes']);
+Route::get('/order/delete/{id}',[orderController::class,'delete']);
 
 
 ##  INWARD ROUTES ##
@@ -95,6 +98,8 @@ Route::get('/inward/add',[inwardController::class,'create']);
 ##  OUTWARD ROUTES ##
 Route::get('/outward',[outwardController::class,'view']);
 Route::get('/outward/add',[outwardController::class,'create']);
+
+});
 
 
 

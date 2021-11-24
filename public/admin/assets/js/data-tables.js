@@ -17,3 +17,7 @@ $('.select2bs4').select2({
       "autoWidth": false,
       "responsive": true,
     });
+
+    $('#reload').click(function() {
+      location.reload();
+  });

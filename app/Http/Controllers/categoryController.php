@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Http\Request;
 use App\Models\category_master;
+use App\Models\sub_category_master;
+
 
 class categoryController extends Controller
 {
@@ -52,7 +54,9 @@ class categoryController extends Controller
     public function delete($id)
     {
         $category = category_master::find($id);
+        $subCategory = sub_category_master::where('category',$id);
         $category->delete();
+        $subCategory->delete();
         return redirect('category');
     }
 

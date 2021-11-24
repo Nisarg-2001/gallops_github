@@ -18,6 +18,8 @@
             <div class="card">
               <div class="card-header">
                <a href="{{url('subCategory/add')}}" class="btn btn-primary">Add SubCategory</a>
+               <a href="" id="reload" class="btn btn-sm btn-primary float-right"
+                                    title="Refresh"><i class="fas fa-redo-alt"></i></a>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -38,7 +40,7 @@
                     <td>{{$info->category}}</td>
                     <td class="text-center">
                       <a href="{{url('subCategory/edit/'.$info->id)}}" class="btn btn-info" title="Edit"><i class="fas fa-pencil" ></i></a>
-                      <a href="{{url('subCategory/delete/'.$info->id)}}" class="btn btn-danger" title="Delete"><i class="fas fa-trash-alt" ></i></a>
+                      <a data-confirm="" data-id="{{$info->id}}" href="{{url('subCategory/delete/'.$info->id)}}" class="btn btn-danger" title="Delete"><i class="fas fa-trash-alt" ></i></a>
                   </td>
                   </tr>
                  @endforeach
@@ -58,6 +60,8 @@
   </div>
   @section('page-footer-script')
     <script src="{{ asset('/admin/assets/js/data-tables.js') }}"></script>
+    <script src="{{ asset('/admin/assets/js/sweetalert.js') }}"></script>
+
     @endsection
   @include('layouts.footer')
 </x-app-layout>
