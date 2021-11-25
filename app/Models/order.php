@@ -20,4 +20,15 @@ class order extends Model
 
         return $product;
     }
+
+    public static function getOrderItemData($order_id)
+    {
+        $order = DB::table('order_items as oi')
+            ->select('oi.*', 'p.name as product_name')
+            ->leftJoin('product_masters as p', 'p.id', '=', 'oi.item_id')
+            ->where('oi.order_id', $order_id)
+            ->get();
+
+        return $order;
+    }
 }

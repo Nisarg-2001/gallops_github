@@ -85,6 +85,7 @@ Route::post('/assign_product/post',[assignController::class,'addupdate']);
 ##  ORDER ROUTES ##
 Route::get('/order',[orderController::class,'view']);
 Route::get('/order/add',[orderController::class,'create']);
+Route::get('/order/edit/{id}', [orderController::class,'edit']);
 Route::post('/order/post',[orderController::class,'addupdate']);
 Route::post('/order/getProduct',[orderController::class,'getProduct']);
 Route::post('/order/getTaxes',[orderController::class,'getTaxes']);

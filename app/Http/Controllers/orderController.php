@@ -31,26 +31,35 @@ class orderController extends Controller
         return view('admin.order.action')->with(['product'=>$product, 'taxes' => $taxes]);
     }
 
-    public function getProduct(Request $request) 
+    public function edit($id)
     {
+        // get order by id
+        $orderData = order::find($id);
+
+        // get order items by order id
+        $orderItemData = order::getOrderItemData($id);
+
+        // get all products
         $product = order::getProduct();
 
-        if($request->ajax()){
-            return response()->json($product->toArray());
-        }
+        // get all taxes
+        $taxList = tax_master::all(); 
 
-        return $product;
-    }
+        // echo "<pre>";
+        // print_r($orderData->toarray());
+        // print_r($orderItemData->toarray());
+        // print_r($taxList->toarray());
+        // exit;
+        
 
-    public function getTaxes(Request $request) 
-    {
-        $taxes = tax_master::all();
+        
 
-        if($request->ajax()){
-            return response()->json($taxes->toArray());
-        }
-
-        return $taxes;
+        return view('admin.order.action', [
+            'orderData' => $orderData,
+            'orderItemData' => $orderItemData,
+            'product' => $product,
+            'taxList' => $taxList,
+        ]);
     }
 
     public function addupdate(Request $request)
@@ -78,7 +87,7 @@ class orderController extends Controller
             
 
             // insert into orders table
-            $order = new orders;
+            $order = new order;
             $order->user_id = Auth::id();
             $order->sub_total = $request->hiddenSubTotalAmt;
             $order->tax = $jsonOrderTax;
@@ -108,6 +117,7 @@ class orderController extends Controller
         return redirect('order');
         
     }
+
     public function delete($id)
     {
         $order = order::find($id);
@@ -115,5 +125,27 @@ class orderController extends Controller
         $order->delete();
         $order_item->delete();
         return redirect('order'); 
+    }
+
+    public function getProduct(Request $request) 
+    {
+        $product = order::getProduct();
+
+        if($request->ajax()){
+            return response()->json($product->toArray());
+        }
+
+        return $product;
+    }
+
+    public function getTaxes(Request $request) 
+    {
+        $taxes = tax_master::all();
+
+        if($request->ajax()){
+            return response()->json($taxes->toArray());
+        }
+
+        return $taxes;
     }
 }

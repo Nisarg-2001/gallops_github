@@ -1,5 +1,6 @@
 var products = {};
 var taxList = {};
+var taxData = {};
 
 var i = $("table.order-table tr").length;
 
@@ -106,11 +107,6 @@ function updateTotal() {
         SubTotalAmt = parseFloat(SubTotalAmt) + parseFloat($(this).val());
     });
 
-    var taxData = {};
-    for (const key in taxList) {
-        taxData['tax-' + key] = 0;
-    }
-
     $('input[name^="taxAmount"]').each(function () {
         totalTax = parseFloat(totalTax) + parseFloat($(this).val());
 
@@ -180,6 +176,10 @@ function getAllTaxes() {
             data.forEach(function (currentValue, index, arr) {
                 taxList[currentValue.id] = currentValue;
             });
+
+            for (const key in taxList) {
+                taxData['tax-' + key] = 0;
+            }
         }
     });
 }
