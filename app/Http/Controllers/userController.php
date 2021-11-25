@@ -61,7 +61,7 @@ class UserController extends Controller
             $user->role = $request->role;
             $user->save();
             $request->session()->flash('status', 'Task was successful!');
-            return redirect('user');
+            return redirect('user')->with('success',' User Updated Successfully');
         }
         else
         {
@@ -94,13 +94,13 @@ class UserController extends Controller
             'role' => $request->role,
         ]);
         $request->session()->flash('status', 'Task was successful!');
-        return redirect('user');
+        return redirect('user')->with('success',' User Created Successfully');
         }
     }
     public function delete($id)
     {
         $user=User::find($id);
         $user->delete();
-        return redirect('user');  
+        return redirect('user')->with('danger',' User deleted Successfully');  
     }
 }

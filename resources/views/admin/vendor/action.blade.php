@@ -20,7 +20,7 @@
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <form action="{{ url('vendor/add') }}" method="post" id="userForm">
+                                <form action="{{ url('vendor/post') }}" method="post" id="userForm">
                                     @csrf
                                     <div class="row">
                                         <div class="col-12 col-md-4 col-lg-4">

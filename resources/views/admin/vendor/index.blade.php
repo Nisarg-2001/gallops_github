@@ -15,6 +15,22 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12">
+                    @if( session('success'))
+              <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert">
+                  <i class="fa fa-times"></i>
+                </button>
+                {{session('success')}}
+              </div>
+              @endif
+              @if( session('danger'))
+              <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert">
+                  <i class="fa fa-times"></i>
+                </button>
+                {{session('danger')}}
+              </div>
+            @endif
                         <div class="card">
                             <div class="card-header">
                                 <a href="{{url('vendor/add')}}" class="btn btn-primary">Add Vendor</a>
@@ -34,22 +50,24 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        <?php $c=1; ?>
                                         @foreach($data as $info)
                                         <tr>
-                                            <td>{{ $info->id }}</td>
+                                            <td>{{ $c }}</td>
                                             <td>{{ $info->name }}</td>
                                             <td>{{ $info->email }}</td>
                                             <td>{{ $info->gst }}</td>
                                             <td class="text-center">
                                                 <a href="assign_product/add?vendor={{$info->id}}" class="btn btn-warning"
                                                     title="Assign Product"><i class="fas fa-cart-plus"></i></a>
-                                                <a href="updatevendor/{{$info->id}}" class="btn btn-info"
+                                                <a href="vendor/edit/{{$info->id}}" class="btn btn-info"
                                                     title="Edit"><i class="fas fa-pencil"></i></a>
-                                                <a data-confirm="" data-id="{{$info->id}}" href="deletevendor/{{$info->id}}" class="btn btn-danger"
+                                                <a data-confirm="" data-id="{{$info->id}}" href="vendor/delete/{{$info->id}}" class="btn btn-danger"
                                                     title="Delete"><i class="fas fa-trash-alt"></i></a>
                                                     
                                             </td>
                                         </tr>
+                                        <?php $c++; ?>
                                         @endforeach
                                     </tbody>
                                 </table>

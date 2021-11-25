@@ -37,7 +37,7 @@ class sub_categoryController extends Controller
             $data->category = $request->category;
             $data->save();
             $request->session()->flash('status', 'Task was successful!');
-            return redirect('subCategory');
+            return redirect('subCategory')->with('success',' subCategory Updated Successfully');
         }
         else
         {
@@ -51,7 +51,7 @@ class sub_categoryController extends Controller
         $category->save();
         $request->session()->flash('status', 'Task was successful!');
 
-        return redirect('subCategory');
+        return redirect('subCategory')->with('success',' subCategory Added Successfully');
         }
     }
 
@@ -59,6 +59,6 @@ class sub_categoryController extends Controller
     {
         $user=sub_category_master::find($id);
         $user->delete();
-        return redirect('subCategory');  
+        return redirect('subCategory')->with('success',' subCategory deleted Successfully');
     }
 }

@@ -45,7 +45,7 @@ class vendorController extends Controller
             $data->pincode = $request->pincode;
             $data->save();
             $request->session()->flash('status', 'Task was successful!');
-            return redirect('vendors');
+            return redirect('vendors')->with('success',' Vendor Updated Successfully');
 
 
 
@@ -67,7 +67,7 @@ class vendorController extends Controller
         $vendor->pincode = $request->pincode;
         $vendor->save();
         $request->session()->flash('status', 'Task was successful!');
-        return redirect('vendors');
+        return redirect('vendors')->with('success',' Vendor Added Successfully');
         }
     }
 
@@ -75,6 +75,6 @@ class vendorController extends Controller
     {
         $user=vendor_master::find($id);
         $user->delete();
-        return redirect('vendors');  
+        return redirect('vendors')->with('danger',' Vendor Deleted Successfully');  
     }
 }

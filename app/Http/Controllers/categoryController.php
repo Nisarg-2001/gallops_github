@@ -36,7 +36,7 @@ class categoryController extends Controller
             $data->save();
 
             $request->session()->flash('status', 'Task was successful!');
-            return redirect('category');
+            return redirect('category')->with('success',' Category Updated Successfully');
         } else {
             $request->validate([
                 'title' => "required|unique:category_masters,title",
@@ -47,7 +47,7 @@ class categoryController extends Controller
             $category->description = $request->description;
             $category->save();
             $request->session()->flash('status', 'Task was successful!');
-            return redirect('category');
+            return redirect('category')->with('success',' Category Added Successfully');
         }
     }
 
@@ -57,7 +57,7 @@ class categoryController extends Controller
         $subCategory = sub_category_master::where('category',$id);
         $category->delete();
         $subCategory->delete();
-        return redirect('category');
+        return redirect('category')->with('danger',' Category Deleted Successfully');
     }
 
 }

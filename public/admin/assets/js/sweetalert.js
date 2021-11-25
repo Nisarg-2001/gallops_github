@@ -1,3 +1,5 @@
+
+
   
     $(document).ready(function(){
         $('[data-confirm]').on('click', function(e){
@@ -26,3 +28,5 @@
             });
         });
     });
+
+    

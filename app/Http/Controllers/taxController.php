@@ -37,7 +37,7 @@ class taxController extends Controller
          $tax->value = $request->value;
          $tax->save();
          $request->session()->flash('status', 'Task was successful!');
-         return redirect('tax');
+         return redirect('tax')->with('success',' Tax Updated Successfully');
        }
      else{
 
@@ -54,7 +54,7 @@ class taxController extends Controller
       $tax->value = $request->value;
       $tax->save();
       $request->session()->flash('status', 'Task was successful!');
-        return redirect('tax');
+        return redirect('tax')->with('success',' Tax Added Successfully');
      }
        
     }
@@ -63,6 +63,6 @@ class taxController extends Controller
     {
         $user=tax_master::find($id);
         $user->delete();
-        return redirect('tax');  
+        return redirect('tax')->with('danger',' Tax Deleted Successfully');  
     }
 }

@@ -86,6 +86,8 @@
     <script src="{{ asset('/admin/assets/js/common.js') }}"></script>
     <script src="{{ asset('/admin/assets/js/form-validation.js') }}"></script>
     <script src="{{ asset('/admin/assets/js/category/action.js') }}"></script>
+    <script src="{{ asset('/admin/assets/js/toastalert.js') }}"></script>
+
     @endsection
 
     @include('layouts.footer')

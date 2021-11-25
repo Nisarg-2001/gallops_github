@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout>  
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -18,7 +18,22 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">
-
+          @if( session('success'))
+              <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert">
+                  <i class="fa fa-times"></i>
+                </button>
+                {{session('success')}}
+              </div>
+              @endif
+              @if( session('danger'))
+              <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert">
+                  <i class="fa fa-times"></i>
+                </button>
+                {{session('danger')}}
+              </div>
+            @endif
 
             <div class="card">
               <div class="card-header">
@@ -61,7 +76,8 @@
                       <td><span class="badge bg-success p-2 ml-5">Completed</span></td>
                       @endif
                       <td>
-                        <a href="{{ url('order/edit/'.$info->id)}}" class="btn btn-info" title="Edit"><i class="fas fa-pencil"></i></a>
+                      <a href="{{ url('order/invoice') }}" class="btn btn-info" title="Print Invoice"><i class="fas fa-print"></i></a>
+                        <a href="{{ url('order/edit/'.$info->id)}}" class="btn btn-primary" title="Edit"><i class="fas fa-pencil"></i></a>
                         <a data-confirm="" href="{{ url('order/delete/'.$info->id)}}" data-id="{{$info->id}}" class="btn btn-danger" title="Delete"><i class="fas fa-trash-alt"></i></a>
                       </td>
 

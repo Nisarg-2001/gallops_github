@@ -72,7 +72,7 @@ class assignController extends Controller
 
             $request->session()->flash('status', 'Task was successful!');
 
-            return redirect('assign_product');
+            return redirect('assign_product')->with('success',' Assign product Updated Successfully');
         } else {
 
             $product = new assign_product;
@@ -85,7 +85,7 @@ class assignController extends Controller
 
             $request->session()->flash('status', 'Task was successful!');
 
-            return redirect('assign_product');
+            return redirect('assign_product')->with('success',' Product assign to Vendor Successfully');
         }
     }
 
@@ -143,6 +143,6 @@ class assignController extends Controller
     {
         $data = assign_product::find($id);
         $data->delete();
-        return redirect('assign_product');
+        return redirect('assign_product')->with('danger',' Assigned product deleted Successfully');
     }
 }

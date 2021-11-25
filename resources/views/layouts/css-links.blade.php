@@ -1,5 +1,7 @@
 <!-- Fonts -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
+<!-- Toastr -->
+<link rel="stylesheet" href="{{asset('/plugins/toastr/toastr.min.css')}}">
 <!-- DataTables -->
 <link rel="stylesheet" href="{{ asset('/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
   <link rel="stylesheet" href="{{ asset('/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">

@@ -15,6 +15,22 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12">
+                    @if( session('success'))
+              <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert">
+                  <i class="fa fa-times"></i>
+                </button>
+                {{session('success')}}
+              </div>
+              @endif
+              @if( session('danger'))
+              <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert">
+                  <i class="fa fa-times"></i>
+                </button>
+                {{session('danger')}}
+              </div>
+            @endif
                         <div class="card">
                             <div class="card-header">
                                 <a href="{{url('tax/add')}}" class="btn btn-primary">Add new Tax</a>
@@ -33,9 +49,12 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                    <?php $c=1; ?>
                                         @foreach($data as $info)
+                                       
                                         <tr>
-                                            <td>{{$info->id}}</td>
+                                       
+                                            <td>{{$c}}</td> 
                                             <td>{{$info->tax_name}}</td>
                                             <td>{{$info->value}}</td>
                                             <td class="text-center">
@@ -45,6 +64,7 @@
                                                     title="Delete"><i class="fas fa-trash-alt"></i></a>
                                             </td>
                                         </tr>
+                                        <?php $c=$c+1; ?>
                                         @endforeach
                                     </tbody>
                                 </table>
