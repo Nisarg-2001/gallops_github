@@ -114,7 +114,7 @@ class orderController extends Controller
 
         }
 
-        return redirect('order');
+        return redirect('order')->with('success',' Order Created Successfully');
         
     }
 
@@ -124,7 +124,12 @@ class orderController extends Controller
         $order_item = order_items::where('order_id',$id);
         $order->delete();
         $order_item->delete();
-        return redirect('order'); 
+        return redirect('order')->with('danger',' Order Deleted Successfully');
+    }
+
+    public function invoice()
+    {
+        return view('admin.order.invoice');
     }
 
     public function getProduct(Request $request) 

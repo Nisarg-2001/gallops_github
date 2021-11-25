@@ -21,3 +21,9 @@ $('.select2bs4').select2({
     $('#reload').click(function() {
       location.reload();
   });
+  var url = window.location;
+
+// for sidebar menu entirely but not cover treeview
+$('ul.nav-sidebar a').filter(function() {
+    return this.href == url;
+}).addClass('active');

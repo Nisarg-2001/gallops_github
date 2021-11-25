@@ -19,7 +19,22 @@
         <div class="row">
           <div class="col-12">
 
-
+            @if( session('success'))
+              <div class="alert bg-success alert-dismissible disabled color-pelette" role="alert">
+                <button type="button" class="close" data-dismiss="alert">
+                  <i class="fa fa-times"></i>
+                </button>
+                {{session('success')}}
+              </div>
+              @endif
+              @if( session('danger'))
+              <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert">
+                  <i class="fa fa-times"></i>
+                </button>
+                {{session('danger')}}
+              </div>
+            @endif
             <div class="card">
               <div class="card-header">
                 <a href="{{url('category/add')}}" class="btn btn-primary" title="Add Category">Add Category</a>
@@ -38,9 +53,10 @@
                     </tr>
                   </thead>
                   <tbody>
+                    <?php $c=1; ?>
                     @foreach($data as $info)
                     <tr>
-                      <td>{{$info->id}}</td>
+                      <td>{{$c}}</td>
                       <td>{{$info->title}}</td>
                       <td>{{$info->description}}</td>
                       <td class="text-center">
@@ -49,6 +65,7 @@
                       </td>
 
                     </tr>
+                    <?php $c++; ?>
                     @endforeach
                    
                 </table>
@@ -70,6 +87,7 @@
   @section('page-footer-script')
     <script src="{{ asset('/admin/assets/js/data-tables.js') }}"></script>
     <script src="{{ asset('/admin/assets/js/sweetalert.js') }}"></script>
+
     
     @endsection
 

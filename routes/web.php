@@ -90,6 +90,7 @@ Route::post('/order/post',[orderController::class,'addupdate']);
 Route::post('/order/getProduct',[orderController::class,'getProduct']);
 Route::post('/order/getTaxes',[orderController::class,'getTaxes']);
 Route::get('/order/delete/{id}',[orderController::class,'delete']);
+Route::get('/order/invoice',[orderController::class,'invoice']);
 
 
 ##  INWARD ROUTES ##

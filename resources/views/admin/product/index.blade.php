@@ -15,6 +15,22 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12">
+                    @if( session('success'))
+              <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert">
+                  <i class="fa fa-times"></i>
+                </button>
+                {{session('success')}}
+              </div>
+              @endif
+              @if( session('danger'))
+              <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert">
+                  <i class="fa fa-times"></i>
+                </button>
+                {{session('danger')}}
+              </div>
+            @endif
                         <div class="card">
                             <div class="card-header">
                                 <a href="{{url('product/add')}}" class="btn btn-primary">Add Product</a>
@@ -35,9 +51,10 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        <?php $c=1; ?>
                                         @foreach($data as $info)
                                         <tr>
-                                            <td>{{ $info->id }}</td>
+                                            <td>{{ $c }}</td>
                                             <td>{{ $info->name }}</td>
                                             <td>{{ $info->self_life }} Months</td>
                                             <td>{{ $info->price }}</td>
@@ -52,6 +69,7 @@
                                                     title="Delete"><i class="fas fa-trash-alt"></i></a>
                                             </td>
                                         </tr>
+                                        <?php $c++; ?>
                                         @endforeach
                                 </table>
                             </div>

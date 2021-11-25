@@ -15,6 +15,22 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">
+          @if( session('success'))
+              <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert">
+                  <i class="fa fa-times"></i>
+                </button>
+                {{session('success')}}
+              </div>
+              @endif
+              @if( session('danger'))
+              <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert">
+                  <i class="fa fa-times"></i>
+                </button>
+                {{session('danger')}}
+              </div>
+            @endif
             <div class="card">
             <div class="card-header">
                <a href="{{url('user/add')}}" class="btn btn-primary">Add new User</a>
@@ -34,9 +50,10 @@
                   </tr>
                   </thead>
                   <tbody>
+                    <?php $c=1; ?>
                     @foreach($user as $users)
                   <tr>
-                    <td>{{ $users->id }}</td>
+                    <td>{{ $c }}</td>
                     <td>{{ $users->name }}</td>
                     <td>{{ $users->email }}</td>
                     @if($users->role==1)
@@ -49,6 +66,7 @@
                       <a data-confirm="" data-id="{{$users->id}}" href="{{url('user/delete/'.$users->id)}}" class="btn btn-danger" title="Delete"><i class="fas fa-trash-alt" ></i></a>
                   </td>
                   </tr>
+                  <?php $c++; ?>
                   @endforeach
                   </tbody>
                 </table>

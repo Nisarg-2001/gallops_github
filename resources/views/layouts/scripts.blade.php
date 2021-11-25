@@ -15,11 +15,14 @@
 <!-- jquery-validation -->
 <script src="{{ asset('/plugins/jquery-validation/jquery.validate.min.js') }}"></script>
 <script src="{{ asset('/plugins/jquery-validation/additional-methods.min.js') }}"></script>
-
+<!-- SweetAlert2 -->
+<script src="{{ asset('plugins/sweetalert2/sweetalert2.min.js') }}"></script>
+<!-- Toastr -->
+<script src="{{ asset('plugins/toastr/toastr.min.js') }}"></script>
 <!-- SweetAlert CDN -->
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<!-- Sidebar Js -->
-<script src="{{asset('/admin/assets/js/sidebar.js')}}"></script>
+<!-- Js PDF -->
+<script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
 <!-- overlayScrollbars -->
 <script src="{{ asset('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
 <!-- DataTables  & Plugins -->

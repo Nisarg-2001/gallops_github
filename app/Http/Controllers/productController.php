@@ -77,7 +77,7 @@ class productController extends Controller
             $data->save();
             $request->session()->flash('status', 'Task was successful!');
 
-            return redirect('products');
+            return redirect('products')->with('success',' Product Updated Successfully');
         } else {
 
 
@@ -92,7 +92,7 @@ class productController extends Controller
             $product->save();
             $request->session()->flash('status', 'Task was successful!');
 
-            return redirect('products');
+            return redirect('products')->with('success',' Product Added Successfully');
         }
     }
 
@@ -103,6 +103,6 @@ class productController extends Controller
 
         $product->delete();
         $assignProduct->delete();
-        return redirect('products');
+        return redirect('products')->with('danger',' Product Deleted Successfully');
     }
 }
