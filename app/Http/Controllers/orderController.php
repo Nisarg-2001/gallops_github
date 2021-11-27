@@ -26,9 +26,9 @@ class orderController extends Controller
         $product = $this->getProduct($request);
 
         //get all taxes
-        $taxes = tax_master::all();
+        $taxList = tax_master::all();
 
-        return view('admin.order.action')->with(['product'=>$product, 'taxes' => $taxes]);
+        return view('admin.order.action')->with(['product'=>$product, 'taxList' => $taxList]);
     }
 
     public function edit($id)
