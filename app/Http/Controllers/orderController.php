@@ -43,16 +43,7 @@ class orderController extends Controller
         $product = order::getProduct();
 
         // get all taxes
-        $taxList = tax_master::all(); 
-
-        // echo "<pre>";
-        // print_r($orderData->toarray());
-        // print_r($orderItemData->toarray());
-        // print_r($taxList->toarray());
-        // exit;
-        
-
-        
+        $taxList = tax_master::all();
 
         return view('admin.order.action', [
             'orderData' => $orderData,
@@ -120,10 +111,12 @@ class orderController extends Controller
 
     public function delete($id)
     {
-        $order = order::find($id);
         $order_item = order_items::where('order_id',$id);
-        $order->delete();
         $order_item->delete();
+        
+        $order = order::find($id);
+        $order->delete();
+        
         return redirect('order')->with('danger',' Order Deleted Successfully');
     }
 

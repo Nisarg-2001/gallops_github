@@ -20,9 +20,9 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <form action="{{ url('order/post') }}" method="post" id="orderForm">
+                <form action="{{ url('admin-order/place-purhcase-order') }}" method="post" id="orderForm">
                   @csrf
-
+                  <input type="hidden" name="id" value="{{ (isset($orderData->id) && !empty($orderData->id)) ? $orderData->id : '' }}">
                   <div class="row">
                     @if((isset($orderData)))
                     @else
@@ -43,7 +43,7 @@
                     <div class="col-12 col-lg-6 col-md-6">
                       <div class="form-group">
                         <label>Expecting Delivery Date</label>
-                        <input type="date" name="exp_date" class="form-control" value="{{ (isset($orderData->order_required_date) && !empty($orderData->order_required_date)) ? $orderData->order_required_date : date('Y-m-d', strtotime('+7 day')) }}" {{ ((isset($orderData))) ? 'readonly' : '' }} />
+                        <input type="date" name="exp_date" class="form-control" value="{{ (isset($orderData->order_required_date) && !empty($orderData->order_required_date)) ? $orderData->order_required_date : date('Y-m-d', strtotime('+7 day')) }}" />
                       </div>
                     </div>
                   </div>
@@ -52,10 +52,11 @@
                     <thead>
                       <tr>
                         <th class='text-center' width="5%">No.</th>
-                        <th width="45%">Product Name</th>
+                        <th width="35%">Product Name</th>
+                        <th width="10%">Unit Price</th>
                         <th width="10%">Quantity</th>
-                        <th width="20%">Unit Price</th>
-                        <th width="20%">Amount</th>
+                        <th width="10%">Amount</th>
+                        <th width="30%">Vendor</th>
                         <!-- <th></th> -->
                       </tr>
                     </thead>
@@ -91,6 +92,20 @@
                             $taxData[$tax->id] = ((isset($taxData[$tax->id])) ? $taxData[$tax->id] : 0) + $t;
                           }
                         }
+
+                        $vendor_taxes = json_decode($orderItem->vendor_tax);
+                        $vendorTotalAmt = 0;
+                        if (!empty($vendor_taxes)) {
+                          foreach ($vendor_taxes as $tax) {
+                            $t = 0;
+                            // $t = $orderItem->vendor_price * $orderItem->qty * ($tax->value / 100);
+                            $t = $orderItem->vendor_price * 1 * ($tax->value / 100);
+                            $vendorTotalAmt += $t;
+                          }
+                          $vendorTotalAmt += ($orderItem->vendor_price * 1);
+                        }
+
+
                         @endphp
                         <td class='text-center'> {{ $i }} </td>
                         <td>
@@ -101,15 +116,25 @@
                           <input type='hidden' name='intItemID[]' id="intItemID_{{ $i }}" value="{{ $orderItem->item_id }}">
                           <input type="hidden" name="itemTax[]" id="itemTax_{{ $i }}" value="{{ $orderItem->tax }}" data-id="{{ $i }}">
                         </td>
-                        <td>
-                          <input type='number' value="{{ $orderItem->qty }}" id="Qty_{{ $i }}" name='Qty[]' class='form-control filterme' min='1' max='9999' onkeyup="updateAmount('{{ $orderItem->item_id }}', '{{ $i }}')" onchange="updateAmount('{{ $orderItem->item_id }}', '{{ $i }}')" readonly>
-                        </td>
+
                         <td>
                           <input type='text' value="{{ $orderItem->unit_price }}" id="NetPrice_{{ $i }}" name='NetPrice[]' class='form-control filterme' readonly>
                         </td>
                         <td>
+                          <input type='number' value="{{ $orderItem->qty }}" id="Qty_{{ $i }}" name='Qty[]' class='form-control filterme' min='1' max='9999' onkeyup="updateAmount('{{ $orderItem->item_id }}', '{{ $i }}')" onchange="updateAmount('{{ $orderItem->item_id }}', '{{ $i }}')" readonly>
+                        </td>
+                        <td>
                           <input type='text' value="{{ number_format($orderItem->unit_price * $orderItem->qty, 2) }}" id='Amount_{{ $i }}' name='Amount[]' class='form-control filterme' readonly>
                           <input type='hidden' name='taxAmount[]' id='taxAmount_{{ $i }}' value='{{ $totalTaxAmt }}' data-id='{{ $i }}' {{ $taxStr }}>
+                        </td>
+                        <td>
+                          <input type='hidden' name='vendorPrice[]' id='vendorPrice_{{ $i }}' value='{{ $orderItem->vendor_price }}'>
+                          <input type='hidden' name='vendorTax[]' id='vendorTax_{{ $i }}' value='{{ $orderItem->vendor_tax }}'>
+                          <select class="form-control select2" style="width: 100%;" name="vendor[]" id="vendor_{{ $i }}" data-item="{{ $orderItem->item_id }}" data-id="{{ $i }}">
+                              <option value="{{$orderItem->vendor_id}}" data-price="{{ $orderItem->vendor_price }}" data-tax="{{ $orderItem->vendor_tax }}">
+                                {{ $orderItem->vendor_name . ' (Price: ' . number_format($vendorTotalAmt, 2) . ')'}}
+                              </option>
+                        </select>
                         </td>
                         <!-- <td class='text-center'>
                           <button type="button" class="btn btn-danger btn-sm removethis">
@@ -123,7 +148,7 @@
                     </tbody>
                   </table>
 
-                  <table class="table table-bordered table-hover " id="taxTotal">
+                  <!-- <table class="table table-bordered table-hover " id="taxTotal">
                     <tr>
                       <td width="85%" align="right" style="padding-right:20px;"> <b>Sub Total (₹)</b>
                       </td>
@@ -149,15 +174,21 @@
                       </td>
                       <td width="15%" align="right"> <b><span id="TotalAmt">{{ (isset($orderData)) ? number_format($orderData->total, 2) : 0.00 }}</span></b></td>
                     </tr>
-                  </table>
+                  </table> -->
 
                   <input type="hidden" name="hiddenSubTotalAmt" id="hiddenSubTotalAmt" value="{{ (isset($orderData) && !empty($orderData->sub_total)) ? $orderData->sub_total : 0 }}">
                   <input type="hidden" name="hiddenTotalAmt" id="hiddenTotalAmt" value="{{ (isset($orderData) && !empty($orderData->total)) ? $orderData->total : 0 }}">
 
                   <div class="col-12 col-md-12 col-lg-12">
+                    <b>Branch Note: </b> <span>{{ (isset($orderData) && !empty($orderData->note)) ? $orderData->note : '-' }}</span>
+                  </div>
+
+                  <br/>
+
+                  <div class="col-12 col-md-12 col-lg-12">
                     <div class="form-group">
-                      <label for="exampleInputPassword1">Note</label>
-                      <textarea type="text" class="form-control" name="note" id="note" value="" placeholder="{{ ((isset($orderData))) ? '' : 'Enter Note...' }}" {{ ((isset($orderData))) ? 'readonly' : '' }}>{{ (isset($orderData) && !empty($orderData->note)) ? $orderData->note : '' }}</textarea>
+                      <label for="exampleInputPassword1">Vendor Note</label>
+                      <textarea type="text" class="form-control" name="note" id="note" value="" placeholder="Enter Note..."></textarea>
                       @error('name')
                       <div class="text-danger">{{$message}}</div>
                       @enderror
@@ -165,11 +196,9 @@
                   </div>
 
                   <div class="text-center">
-                    @if((isset($orderData)))
-                    @else
-                    <button type="submit" class="btn btn-primary" onClick="return check();">Place Order</button>
-                    @endif
-                    <a href="{{url('order')}}" class="btn btn-danger">Back</a>
+                    
+                    <button type="submit" class="btn btn-primary">Place Purchase Order</button>
+                    <a href="{{url('admin-order')}}" class="btn btn-danger">Back</a>
                   </div>
                 </form>
               </div>
@@ -188,7 +217,7 @@
   @section('page-footer-script')
   <script src="{{ asset('/admin/assets/js/common.js') }}"></script>
   <script src="{{ asset('/admin/assets/js/form-validation.js') }}"></script>
-  <script src="{{ asset('/admin/assets/js/order/action.js') }}"></script>
+  <script src="{{ asset('/admin/assets/js/admin_order/action.js') }}"></script>
   @endsection
   @include('layouts.footer')
 </x-app-layout>

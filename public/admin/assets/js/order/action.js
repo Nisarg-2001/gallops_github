@@ -2,7 +2,7 @@ var products = {};
 var taxList = {};
 var taxData = {};
 
-var i = $("table.order-table tr").length;
+var i = $("table.order-table tbody tr").length;
 
 $(document).ready(function () {
     getAllProducts();
@@ -19,7 +19,7 @@ $(document).ready(function () {
 });
 
 $("#product_id").change(function () {
-    count = $("table.order-table tr").length;
+    count = $("table.order-table tbody tr").length;
     itemid = $(this).val();
 
     var taxes = JSON.parse(products[itemid].tax);
@@ -61,9 +61,9 @@ $("#product_id").change(function () {
 });
 
 $("table.order-table").on('click', 'button.removethis', function (e) {
-    
+
     $(this).closest('tr').remove();
-    var ctr = $("table.order-table tr").length;
+    var ctr = $("table.order-table tbody tr").length;
 
     if (ctr == 1) {
         for (const key in taxList) {
@@ -147,9 +147,9 @@ function updateTotal() {
 }
 
 function check() {
-    count = $("table.table-list tr").length;
+    count = $("table.order-table tbody tr").length;
     if (count == '1') {
-        alert("Please select product.");
+        swal("Sorry!", "Please select any product to place your order.", "error");
         return false;
     } else {
         var r = confirm("Please press 'OK' to confirm your order.");

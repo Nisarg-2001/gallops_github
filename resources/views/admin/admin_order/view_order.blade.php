@@ -16,13 +16,14 @@
         <div class="row">
           <div class="col-12">
             <div class="card">
-              <div class="card-header">
+              <div class="card-header text-right">
+                <a href="{{url('place-purchase-order') . '/' . $orderData->id}}" class="btn btn-primary">Convert to Purchase Order</a>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <form action="{{ url('order/post') }}" method="post" id="orderForm">
+                <form action="{{ url('admin-order/updateStatus') }}" method="post" id="orderForm">
                   @csrf
-
+                  <input type="hidden" name="id" value="{{ (isset($orderData->id) && !empty($orderData->id)) ? $orderData->id : '' }}">
                   <div class="row">
                     @if((isset($orderData)))
                     @else
@@ -102,7 +103,7 @@
                           <input type="hidden" name="itemTax[]" id="itemTax_{{ $i }}" value="{{ $orderItem->tax }}" data-id="{{ $i }}">
                         </td>
                         <td>
-                          <input type='number' value="{{ $orderItem->qty }}" id="Qty_{{ $i }}" name='Qty[]' class='form-control filterme' min='1' max='9999' onkeyup="updateAmount('{{ $orderItem->item_id }}', '{{ $i }}')" onchange="updateAmount('{{ $orderItem->item_id }}', '{{ $i }}')" readonly>
+                          <input type='number' value="{{ $orderItem->qty }}" id="Qty_{{ $i }}" name='Qty_[]' class='form-control filterme' min='1' max='9999' onkeyup="updateAmount('{{ $orderItem->item_id }}', '{{ $i }}')" onchange="updateAmount('{{ $orderItem->item_id }}', '{{ $i }}')" readonly>
                         </td>
                         <td>
                           <input type='text' value="{{ $orderItem->unit_price }}" id="NetPrice_{{ $i }}" name='NetPrice[]' class='form-control filterme' readonly>
@@ -164,12 +165,30 @@
                     </div>
                   </div>
 
+                  <div class="col-6 col-md-6 col-lg-5">
+                    <div class="form-group">
+                      <label>Order Status *</label>
+                      <select class="form-control select2" style="width: 100%;" name="is_confirm" id="is_confirm">
+                        <option value="0" {{ (isset($orderData) && $orderData->is_confirm == 0) ? 'selected' : '' }}>Pending</option>
+                        <option value="1" {{ (isset($orderData) && $orderData->is_confirm == 1) ? 'selected' : '' }}>Accepted</option>
+                        <option value="2" {{ (isset($orderData) && $orderData->is_confirm == 2) ? 'selected' : '' }}>Cancelled</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="col-6 col-md-6 col-lg-5">
+                    <div class="form-group">
+                      <label>Payment Status *</label>
+                      <select class="form-control select2" style="width: 100%;" name="payment_status" id="payment_status">
+                        <option value="0" {{ (isset($orderData) && $orderData->payment_status == 0) ? 'selected' : '' }}>Pending</option>
+                        <option value="1" {{ (isset($orderData) && $orderData->payment_status == 1) ? 'selected' : '' }}>Completed</option>
+                      </select>
+                    </div>
+                  </div>
+
                   <div class="text-center">
-                    @if((isset($orderData)))
-                    @else
-                    <button type="submit" class="btn btn-primary" onClick="return check();">Place Order</button>
-                    @endif
-                    <a href="{{url('order')}}" class="btn btn-danger">Back</a>
+                    <button type="submit" class="btn btn-primary">Save Order</button>
+                    <a href="{{url('admin-order')}}" class="btn btn-danger">Back</a>
                   </div>
                 </form>
               </div>
@@ -188,7 +207,7 @@
   @section('page-footer-script')
   <script src="{{ asset('/admin/assets/js/common.js') }}"></script>
   <script src="{{ asset('/admin/assets/js/form-validation.js') }}"></script>
-  <script src="{{ asset('/admin/assets/js/order/action.js') }}"></script>
+  <!-- <script src="{{ asset('/admin/assets/js/order/action.js') }}"></script> -->
   @endsection
   @include('layouts.footer')
 </x-app-layout>

@@ -11,7 +11,8 @@ use App\Http\Controllers\assignController;
 use App\Http\Controllers\orderController;
 use App\Http\Controllers\inwardController;
 use App\Http\Controllers\outwardController;
-
+use App\Http\Controllers\adminOrderController;
+use App\Http\Controllers\purchaseOrderController;
 
 
 /*
@@ -85,12 +86,24 @@ Route::post('/assign_product/post',[assignController::class,'addupdate']);
 ##  ORDER ROUTES ##
 Route::get('/order',[orderController::class,'view']);
 Route::get('/order/add',[orderController::class,'create']);
-Route::get('/order/edit/{id}', [orderController::class,'edit']);
+Route::get('/order/{id}', [orderController::class,'edit']);
 Route::post('/order/post',[orderController::class,'addupdate']);
 Route::post('/order/getProduct',[orderController::class,'getProduct']);
 Route::post('/order/getTaxes',[orderController::class,'getTaxes']);
 Route::get('/order/delete/{id}',[orderController::class,'delete']);
 Route::get('/order/invoice',[orderController::class,'invoice']);
+
+##  ADMIN ORDER ROUTES ##
+Route::get('/admin-order',[adminOrderController::class,'view']);
+Route::get('/place-purchase-order/{id}', [adminOrderController::class,'getOrderDetails']);
+Route::post('/admin-order/updateStatus',[adminOrderController::class,'updateStatus']);
+Route::post('/admin-order/place-purhcase-order',[adminOrderController::class,'placePurchaseOrder']);
+
+## VENDOR ORDER ROUTES ##
+Route::get('/purchase-order',[purchaseOrderController::class,'view']);
+
+Route::post('/admin-order/getVendorsByProduct', [adminOrderController::class,'getVendorsByProduct']);
+Route::get('/admin-order/{id}', [adminOrderController::class,'edit']); //display same view from order controller
 
 
 ##  INWARD ROUTES ##
