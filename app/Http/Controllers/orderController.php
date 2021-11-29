@@ -46,15 +46,6 @@ class orderController extends Controller
         // get all taxes
         $taxes = tax_master::all(); 
 
-        // echo "<pre>";
-        // print_r($orderData->toarray());
-        // print_r($orderItemData->toarray());
-        // print_r($taxList->toarray());
-        // exit;
-        
-
-        
-
         return view('admin.order.action', [
             'orderData' => $orderData,
             'orderItemData' => $orderItemData,

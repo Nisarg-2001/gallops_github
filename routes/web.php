@@ -104,12 +104,16 @@ Route::get('/admin-order',[adminOrderController::class,'view']);
 Route::get('/place-purchase-order/{id}', [adminOrderController::class,'getOrderDetails']);
 Route::post('/admin-order/updateStatus',[adminOrderController::class,'updateStatus']);
 Route::post('/admin-order/place-purhcase-order',[adminOrderController::class,'placePurchaseOrder']);
+Route::get('/admin-order/{id}', [adminOrderController::class,'edit']); //display same view from order controller
+Route::post('/admin-order/getVendorsByProduct', [adminOrderController::class,'getVendorsByProduct']);
 
 ## VENDOR ORDER ROUTES ##
 Route::get('/vendor-order',[purchaseOrderController::class,'view']);
-Route::get('/purchase-order',[purchaseOrderController::class,'view']);
-Route::post('/admin-order/getVendorsByProduct', [adminOrderController::class,'getVendorsByProduct']);
-Route::get('/admin-order/{id}', [adminOrderController::class,'edit']); //display same view from order controller
+Route::get('/vendor-order/{id}',[purchaseOrderController::class,'edit']);
+// Route::get('/purchase-order',[purchaseOrderController::class,'view']);
+Route::post('/vendor-order/post', [purchaseOrderController::class,'updatePurchaseOrder']);
+
+
 
 
 ##  INWARD ROUTES ##

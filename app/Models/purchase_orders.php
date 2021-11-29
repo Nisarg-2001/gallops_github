@@ -22,4 +22,16 @@ class purchase_orders extends Model
         return $purchase_orders;
     }
 
+    public static function getOrderItemDataForPurchaseOrder($order_id)
+    {
+        $order = DB::table('purchase_order_items as oi')
+            ->select('oi.*', 'p.name as product_name')
+            ->leftJoin('purchase_orders as po', 'po.id', '=', 'oi.po_id')
+            ->leftJoin('product_masters as p', 'p.id', '=', 'oi.item_id')
+            ->where('oi.po_id', $order_id)
+            ->get();
+
+        return $order;
+    }
+
 }

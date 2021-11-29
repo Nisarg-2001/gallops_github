@@ -20,26 +20,10 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <form action="{{ url('admin-order/place-purhcase-order') }}" method="post" id="orderForm">
+                <form action="{{ url('vendor-order/post') }}" method="post" id="orderForm">
                   @csrf
                   <input type="hidden" name="id" value="{{ (isset($orderData->id) && !empty($orderData->id)) ? $orderData->id : '' }}">
                   <div class="row">
-                    @if((isset($orderData)))
-                    @else
-                    <div class="col-12 col-lg-6 col-md-6">
-                      <div class="form-group">
-                        <label>Select Product *</label>
-                        <select class="form-control select2" style="width: 100%;" name="product_id" id="product_id">
-                          <option value="">Select Product</option>
-                          @foreach($product as $p)
-                          <option value="{{$p->id}}">
-                            {{ $p->name }}
-                          </option>
-                          @endforeach
-                        </select>
-                      </div>
-                    </div>
-                    @endif
                     <div class="col-12 col-lg-6 col-md-6">
                       <div class="form-group">
                         <label>Expecting Delivery Date</label>
@@ -56,7 +40,6 @@
                         <th width="10%">Unit Price</th>
                         <th width="10%">Quantity</th>
                         <th width="10%">Amount</th>
-                        <th width="30%">Vendor</th>
                         <!-- <th></th> -->
                       </tr>
                     </thead>
@@ -93,16 +76,16 @@
                           }
                         }
 
-                        $vendor_taxes = json_decode($orderItem->vendor_tax);
+                        $vendor_taxes = json_decode($orderItem->tax);
                         $vendorTotalAmt = 0;
                         if (!empty($vendor_taxes)) {
                           foreach ($vendor_taxes as $tax) {
                             $t = 0;
-                            // $t = $orderItem->vendor_price * $orderItem->qty * ($tax->value / 100);
-                            $t = $orderItem->vendor_price * 1 * ($tax->value / 100);
+                            // $t = $orderItem->unit_price * $orderItem->qty * ($tax->value / 100);
+                            $t = $orderItem->unit_price * 1 * ($tax->value / 100);
                             $vendorTotalAmt += $t;
                           }
-                          $vendorTotalAmt += ($orderItem->vendor_price * 1);
+                          $vendorTotalAmt += ($orderItem->unit_price * 1);
                         }
 
 
@@ -127,15 +110,6 @@
                           <input type='text' value="{{ number_format($orderItem->unit_price * $orderItem->qty, 2) }}" id='Amount_{{ $i }}' name='Amount[]' class='form-control filterme' readonly>
                           <input type='hidden' name='taxAmount[]' id='taxAmount_{{ $i }}' value='{{ $totalTaxAmt }}' data-id='{{ $i }}' {{ $taxStr }}>
                         </td>
-                        <td>
-                          <input type='hidden' name='vendorPrice[]' id='vendorPrice_{{ $i }}' value='{{ $orderItem->vendor_price }}'>
-                          <input type='hidden' name='vendorTax[]' id='vendorTax_{{ $i }}' value='{{ $orderItem->vendor_tax }}'>
-                          <select class="form-control select2" style="width: 100%;" name="vendor[]" id="vendor_{{ $i }}" data-item="{{ $orderItem->item_id }}" data-id="{{ $i }}">
-                              <option value="{{$orderItem->vendor_id}}" data-price="{{ $orderItem->vendor_price }}" data-tax="{{ $orderItem->vendor_tax }}">
-                                {{ $orderItem->vendor_name . ' (Price: ' . number_format($vendorTotalAmt, 2) . ')'}}
-                              </option>
-                        </select>
-                        </td>
                         <!-- <td class='text-center'>
                           <button type="button" class="btn btn-danger btn-sm removethis">
                             <i class="fa fa-trash"></i>
@@ -148,7 +122,7 @@
                     </tbody>
                   </table>
 
-                  <!-- <table class="table table-bordered table-hover " id="taxTotal">
+                  <table class="table table-bordered table-hover " id="taxTotal">
                     <tr>
                       <td width="85%" align="right" style="padding-right:20px;"> <b>Sub Total (₹)</b>
                       </td>
@@ -174,31 +148,52 @@
                       </td>
                       <td width="15%" align="right"> <b><span id="TotalAmt">{{ (isset($orderData)) ? number_format($orderData->total, 2) : 0.00 }}</span></b></td>
                     </tr>
-                  </table> -->
+                  </table>
 
                   <input type="hidden" name="hiddenSubTotalAmt" id="hiddenSubTotalAmt" value="{{ (isset($orderData) && !empty($orderData->sub_total)) ? $orderData->sub_total : 0 }}">
                   <input type="hidden" name="hiddenTotalAmt" id="hiddenTotalAmt" value="{{ (isset($orderData) && !empty($orderData->total)) ? $orderData->total : 0 }}">
 
                   <div class="col-12 col-md-12 col-lg-12">
-                    <b>Branch Note: </b> <span>{{ (isset($orderData) && !empty($orderData->note)) ? $orderData->note : '-' }}</span>
+                    <b>Note: </b> <span>{{ (isset($orderData) && !empty($orderData->note)) ? $orderData->note : '-' }}</span>
                   </div>
 
                   <br/>
 
-                  <div class="col-12 col-md-12 col-lg-12">
+                  <div class="col-6 col-md-6 col-lg-5">
                     <div class="form-group">
-                      <label for="exampleInputPassword1">Vendor Note</label>
-                      <textarea type="text" class="form-control" name="note" id="note" value="" placeholder="Enter Note..."></textarea>
-                      @error('name')
-                      <div class="text-danger">{{$message}}</div>
-                      @enderror
+                      <label>Order Status *</label>
+                      <select class="form-control select2" style="width: 100%;" name="is_confirm" id="is_confirm">
+                        <option value="0" {{ (isset($orderData) && $orderData->is_confirm == 0) ? 'selected' : '' }}>Pending</option>
+                        <option value="1" {{ (isset($orderData) && $orderData->is_confirm == 1) ? 'selected' : '' }}>Accepted</option>
+                        <option value="2" {{ (isset($orderData) && $orderData->is_confirm == 2) ? 'selected' : '' }}>Cancelled</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="col-6 col-md-6 col-lg-5">
+                    <div class="form-group">
+                      <label>Payment Status *</label>
+                      <select class="form-control select2" style="width: 100%;" name="payment_status" id="payment_status">
+                        <option value="0" {{ (isset($orderData) && $orderData->payment_status == 0) ? 'selected' : '' }}>Pending</option>
+                        <option value="1" {{ (isset($orderData) && $orderData->payment_status == 1) ? 'selected' : '' }}>Completed</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="col-6 col-md-6 col-lg-5">
+                    <div class="form-group">
+                      <label>Dispatch Status *</label>
+                      <select class="form-control select2" style="width: 100%;" name="dispatch_status" id="dispatch_status">
+                        <option value="0" {{ (isset($orderData) && $orderData->dispatch_status == 0) ? 'selected' : '' }}>Pending</option>
+                        <option value="1" {{ (isset($orderData) && $orderData->dispatch_status == 1) ? 'selected' : '' }}>Dispatched</option>
+                      </select>
                     </div>
                   </div>
 
                   <div class="text-center">
                     
-                    <button type="submit" class="btn btn-primary">Place Purchase Order</button>
-                    <a href="{{url('admin-order')}}" class="btn btn-danger">Back</a>
+                    <button type="submit" class="btn btn-primary">Save Order</button>
+                    <a href="{{url('vendor-order')}}" class="btn btn-danger">Back</a>
                   </div>
                 </form>
               </div>
@@ -217,7 +212,7 @@
   @section('page-footer-script')
   <script src="{{ asset('/admin/assets/js/common.js') }}"></script>
   <script src="{{ asset('/admin/assets/js/form-validation.js') }}"></script>
-  <script src="{{ asset('/admin/assets/js/admin_order/action.js') }}"></script>
+
   @endsection
   @include('layouts.footer')
 </x-app-layout>

@@ -32,7 +32,6 @@ class order extends Model
         return $order;
     }
 
-
     // Functions for admin orders
     public static function getOrders()
     {
