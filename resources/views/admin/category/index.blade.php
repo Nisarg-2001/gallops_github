@@ -14,7 +14,7 @@
     <!-- /.content-header -->
 
     <!-- Main content -->
-    <section class="content mt-5">
+    <section class="content mt-5 mb-5">
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">

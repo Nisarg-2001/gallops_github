@@ -44,63 +44,6 @@
                       <div class="form-group">
                         <label>Expecting Delivery Date</label>
                         <input type="date" name="exp_date" class="form-control" value="{{ (isset($orderData->order_required_date) && !empty($orderData->order_required_date)) ? $orderData->order_required_date : date('Y-m-d', strtotime('+7 day')) }}" {{ ((isset($orderData))) ? 'readonly' : '' }} />
-<<<<<<< HEAD
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <table id="example1" class="table table-bordered table-hover order-table">
-                                        <thead>
-                                            <tr>
-                                                <th class='text-center'>No.</th>
-                                                <th>Product Name</th>
-                                                <th>Unit Price</th>
-                                                <th>Quantity</th>
-                                                <th>Amount</th>
-                                                <!-- <th></th> -->
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                          @foreach($taxes as $tax)
-                                            @php $taxData[$tax->id] = 0; @endphp
-                                          @endforeach
-
-                                          <tr>
-                                          @if(isset($orderItemData))
-                                          
-                                          @php 
-                                            $i = 1; 
-                                            $taxData = [];
-                                          @endphp
-
-                                          @foreach($orderItemData as $orderItem)
-                                            @php
-
-                                              
-                                              $taxes = json_decode($orderItem->tax);
-                                              $totalTaxAmt = 0;
-                                              $taxStr = '';
-                                              if (!empty($taxes)) {
-                                                foreach ($taxes as $tax) {
-                                                  $t = 0;
-                                                  $t = $orderItem->unit_price * $orderItem->qty * ($tax->value / 100);
-                                                  $totalTaxAmt += $t;
-                                                  $taxStr = $taxStr . ' ' . 'tax-' . $tax->id . '=' . '"' . $t . '"';
-
-                                                  $taxData[$tax->id] = ((isset($taxData[$tax->id])) ? $taxData[$tax->id] : 0) + $t;
-                                                }
-                                              }
-                                            @endphp
-                                            <td class='text-center'> {{ $i }} </td>
-                                            <td>
-
-                                              <input type='text' value=" {{ $orderItem->product_name }}" id="Item_{{ $i }}" name='Item[]' class='form-control ' readonly />
-
-
-                        <input type='hidden' name='intItemID[]' id="intItemID_{{ $i }}" value="{{ $orderItem->item_id }}">
-                        <input type="hidden" name="itemTax[]" id="itemTax_{{ $i }}" value="{{ $orderItem->tax }}" data-id="{{ $i }}">
-                        </td>
-=======
                       </div>
                     </div>
                   </div>
@@ -110,8 +53,8 @@
                       <tr>
                         <th class='text-center' width="5%">No.</th>
                         <th width="45%">Product Name</th>
-                        <th width="10%">Quantity</th>
-                        <th width="20%">Unit Price</th>
+                        <th width="10%">Unit Price</th>
+                        <th width="20%">Quantity</th>
                         <th width="20%">Amount</th>
                         <!-- <th></th> -->
                       </tr>
@@ -122,10 +65,9 @@
                       <tr>
                         @if(isset($orderItemData) && $orderItemData)
 
-                        @foreach($taxList as $tax)
+                        @foreach($taxes as $tax)
                         @php $taxData[$tax->id] = 0; @endphp
                         @endforeach
->>>>>>> 5b0b84d957d96fdf65793ba73beb154a6fbeba76
 
                         @php
                         $i = 1;
@@ -174,65 +116,6 @@
                             <i class="fa fa-trash"></i>
                           </button>
                         </td> -->
-<<<<<<< HEAD
-                        </tr>
-                        @php $i++; @endphp
-                        @endforeach
-                        @endif
-                        </tbody>
-                        </table>
-
-                        <table class="table table-bordered table-hover " id="taxTotal">
-                          <tr>
-                            <td width="85%" align="right" style="padding-right:20px;"> <b>Sub Total</b>
-                            </td>
-                            <td width="15%" align="right"> <span id="SubTotalAmt">{{ number_format(isset($orderData->sub_total), 2) }}</span></td>
-                          </tr>
-
-                          
-                          
-                          @foreach($taxes as $t)
-
-                          <tr>
-                            <input type="hidden" name="hiddenTotalTax[]" id="hiddenTotalTax_{{ $t->id }}" value="{{ $taxData[$t->id] }}">
-                            <input type="hidden" name="hiddenTaxId[]" id="hiddenTaxId_{{ $t->id }}" value="{{ $t->id }}">
-                            <input type="hidden" name="hiddenTaxName[]" id="hiddenTaxName_{{ $t->id }}" value="{{ $t->tax_name }}">
-                            <td width="85%" align="right" style="padding-right:20px;">
-                              <b>{{ $t->tax_name }}</b>
-                            </td>
-                            <td width="15%" align="right"> <b><span id="TotalSingleTax_{{ $t->id }}">{{ number_format($taxData[$t->id], 2) }}</span></b></td>
-                          </tr>
-                          @endforeach
-
-                          <tr>
-                            <td width="85%" align="right" style="padding-right:20px;"><b>Total
-                                Amount
-                                (₹)</b> </td>
-                            <td width="15%" align="right"> <b><span id="TotalAmt">{{ number_format(isset($orderData->total), 2) }}</span></b></td>
-                          </tr>
-                        </table>
-
-                        <input type="hidden" name="hiddenSubTotalAmt" id="hiddenSubTotalAmt" value="{{ (isset($orderData) && !empty($orderData->sub_total)) ? $orderData->sub_total : 0 }}">
-                        <input type="hidden" name="hiddenTotalAmt" id="hiddenTotalAmt" value="{{ (isset($orderData) && !empty($orderData->total)) ? $orderData->total : 0 }}">
-
-                        <div class="col-12 col-md-12 col-lg-12">
-                          <div class="form-group">
-                            <label for="exampleInputPassword1">Note</label>
-                            <textarea type="text" class="form-control" name="note" id="note" value="" placeholder="Enter Note...">{{ (isset($orderData) && !empty($orderData->note)) ? $orderData->note : '' }}</textarea>
-                            @error('name')
-                            <div class="text-danger">{{$message}}</div>
-                            @enderror
-                          </div>
-                        </div>
-
-                        <div class="text-center">
-                        @if((isset($orderData)))
-                        @else
-                          <button type="submit" class="btn btn-primary">Place Order</button>
-                        @endif
-                          <a href="{{url('order')}}" class="btn btn-danger">Back</a>
-                        </div>
-=======
                       </tr>
                       @php $i++; @endphp
                       @endforeach
@@ -247,14 +130,14 @@
                       <td width="15%" align="right"> <span id="SubTotalAmt">{{ (isset($orderData)) ? number_format($orderData->sub_total, 2) : 0.00 }}</span></td>
                     </tr>
 
-                    @foreach($taxList as $t)
+                    @foreach($taxes as $t)
 
                     <tr>
                       <input type="hidden" name="hiddenTotalTax[]" id="hiddenTotalTax_{{ $t->id }}" value="{{ (isset($taxData)) ? $taxData[$t->id] : 0 }}">
                       <input type="hidden" name="hiddenTaxId[]" id="hiddenTaxId_{{ $t->id }}" value="{{ $t->id }}">
-                      <input type="hidden" name="hiddenTaxName[]" id="hiddenTaxName_{{ $t->id }}" value="{{ $t->tax_name }}">
+                      <input type="hidden" name="hiddenTaxName[]" id="hiddenTaxName_{{ $t->id }}" value="{{ (isset($t->name)) ? $t->name : $t->tax_name }}">
                       <td width="85%" align="right" style="padding-right:20px;">
-                        <b>{{ $t->tax_name }} (₹)</b>
+                        <b>{{ (isset($t->name)) ? $t->name : $t->tax_name }} (₹)</b>
                       </td>
                       <td width="15%" align="right"> <b><span id="TotalSingleTax_{{ $t->id }}">{{ (isset($taxData)) ? number_format($taxData[$t->id], 2) : 0.00 }}</span></b></td>
                     </tr>
@@ -288,7 +171,6 @@
                     @endif
                     <a href="{{url('order')}}" class="btn btn-danger">Back</a>
                   </div>
->>>>>>> 5b0b84d957d96fdf65793ba73beb154a6fbeba76
                 </form>
               </div>
               <!-- /.card-body -->

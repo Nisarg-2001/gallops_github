@@ -11,7 +11,7 @@
     </div>
     <!-- /.content-header -->
     <!-- Main content -->
-    <section class="content mt-5">
+    <section class="content mt-5 mb-5">
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">
@@ -56,11 +56,7 @@
                     <td>{{ $c }}</td>
                     <td>{{ $users->name }}</td>
                     <td>{{ $users->email }}</td>
-                    @if($users->role==1)
-                    <td> Admin</td>
-                    @else
-                    <td>Franchise</td>
-                    @endif
+                    <td>{{ $users->rolename }}</td>
                     <td class="text-center">
                       <a href="{{url('user/edit/'.$users->id)}}" class="btn btn-info" title="Edit"><i class="fas fa-pencil" ></i></a>
                       <a data-confirm="" data-id="{{$users->id}}" href="{{url('user/delete/'.$users->id)}}" class="btn btn-danger" title="Delete"><i class="fas fa-trash-alt" ></i></a>

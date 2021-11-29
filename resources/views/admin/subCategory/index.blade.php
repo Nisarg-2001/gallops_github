@@ -11,7 +11,7 @@
     </div>
     <!-- /.content-header -->
     <!-- Main content -->
-    <section class="content mt-5">
+    <section class="content mt-5 mb-5">
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">
@@ -54,7 +54,7 @@
                   <tr>
                     <td>{{$c}}</td>
                     <td>{{$info->sub_category}}</td>
-                    <td>{{$info->category}}</td>
+                    <td>{{$info->parent}}</td>
                     <td class="text-center">
                       <a href="{{url('subCategory/edit/'.$info->id)}}" class="btn btn-info" title="Edit"><i class="fas fa-pencil" ></i></a>
                       <a data-confirm="" data-id="{{$info->id}}" href="{{url('subCategory/delete/'.$info->id)}}" class="btn btn-danger" title="Delete"><i class="fas fa-trash-alt" ></i></a>

@@ -11,7 +11,7 @@
     </div>
     <!-- /.content-header -->
     <!-- Main content -->
-    <section class="content mt-5">
+    <section class="content mt-5 mb-5">
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">
@@ -32,7 +32,7 @@
                       <div class="form-group">
                       <label>Select Product </label>
                         <select class="form-control select2" style="width: 100%;" name="product_id" id="product_id">
-                          <option value="">Select Product</option>
+                          <option value="" >Select Product</option>
                           @foreach($product as $p)
                           <option value="{{$p->id}}" {{ (isset($data->product_id) && $data->product_id == $p->id ) ? 'selected' : '' }} {{(Request::get("product")) ? 'selected' : ''}}>{{ $p->name }}</option>
                           @endforeach

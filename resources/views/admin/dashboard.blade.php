@@ -22,7 +22,7 @@
             <!-- small box -->
             <div class="small-box bg-primary">
               <div class="inner">
-                <h3>{{ $product }}</h3>
+                <h3>{{ $products }}</h3>
 
                 <p>Products</p>
               </div>
@@ -84,7 +84,110 @@
         <!-- Main row -->
        
         <!-- /.row (main row) -->
-      </div><!-- /.container-fluid -->
+      <div class="row">
+        <div class="col-8">
+       <!-- TABLE: LATEST ORDERS -->
+       <div class="card">
+              <div class="card-header border-transparent">
+                <h3 class="card-title">Latest Orders</h3>
+
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn btn-tool" data-card-widget="remove">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body p-0">
+                <div class="table-responsive">
+                  <table class="table m-0">
+                    <thead>
+                    <tr>
+                      <th>Order ID</th>
+                      <th>Total</th>
+                      <th>Status</th>
+                      <th>Payments</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                      @foreach($order as $info)
+                    <tr>
+                      <td>{{ $info->id }}</td>
+                      <td>{{ $info->total }}</td>
+                      @if($info->is_confirm==0)
+                      <td><span class="badge bg-warning p-2 ml-5">Pending</span></td>
+                      @elseif($info->is_confirm==1)
+                      <td><span class="badge bg-success p-2 ml-5">Accepted</span></td>
+                      @else
+                      <td><span class="badge bg-danger p-2 ml-5">Cancelled</span></td>
+                      @endif
+
+                      @if($info->payment_status==0)
+                      <td><span class="badge bg-warning p-2 ml-5">Pending</span></td>
+                      @else
+                      <td><span class="badge bg-success p-2 ml-5">Completed</span></td>
+                      @endif
+                    </tr>
+                    @endforeach
+                    </tbody>
+                  </table>
+                </div>
+                <!-- /.table-responsive -->
+              </div>
+              <!-- /.card-body -->
+              <div class="card-footer clearfix">
+                <a href="{{ url('order/add') }}" class="btn btn-sm btn-primary float-left">Place New Order</a>
+                <a href="{{ url('/order') }}" class="btn btn-sm btn-info float-right">View All Orders</a>
+              </div>
+              <!-- /.card-footer -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <div class="col-4">
+          <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Products</h3>
+
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn btn-tool" data-card-widget="remove">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body p-0">
+                <ul class="products-list product-list-in-card pl-2 pr-2">
+                @foreach($product as $data)  
+                <li class="item">
+                    <div class="">
+                      <a class="product-title text-dark"><b>{{ $data->name }}</b>
+                        <span class="badge badge-success p-2 float-right"><strong>{{ $data->self_life }}&nbsp;</strong>Months</span></a>
+                      <span class="product-description">
+                        {{ $data->alias }}
+                      </span>
+                    </div>
+                  </li>
+                  @endforeach
+                  <!-- /.item -->
+                </ul>
+              </div>
+              <!-- /.card-body -->
+              <div class="card-footer text-center">
+                <a href="{{ url('products') }}" class=" btn btn-info">View All Products</a>
+              </div>
+              <!-- /.card-footer -->
+            </div>
+            <!-- /.card -->
+          </div>
+          </div>
+            <!-- /.row -->
+            </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
   </div>

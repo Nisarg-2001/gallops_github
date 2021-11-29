@@ -11,14 +11,14 @@ use App\Http\Controllers\assignController;
 use App\Http\Controllers\orderController;
 use App\Http\Controllers\inwardController;
 use App\Http\Controllers\outwardController;
-<<<<<<< HEAD
+use App\Http\Controllers\roleController;
 use App\Http\Controllers\userOrderController;
-
-
-=======
 use App\Http\Controllers\adminOrderController;
 use App\Http\Controllers\purchaseOrderController;
->>>>>>> 5b0b84d957d96fdf65793ba73beb154a6fbeba76
+
+
+
+
 
 
 /*
@@ -106,8 +106,8 @@ Route::post('/admin-order/updateStatus',[adminOrderController::class,'updateStat
 Route::post('/admin-order/place-purhcase-order',[adminOrderController::class,'placePurchaseOrder']);
 
 ## VENDOR ORDER ROUTES ##
+Route::get('/vendor-order',[purchaseOrderController::class,'view']);
 Route::get('/purchase-order',[purchaseOrderController::class,'view']);
-
 Route::post('/admin-order/getVendorsByProduct', [adminOrderController::class,'getVendorsByProduct']);
 Route::get('/admin-order/{id}', [adminOrderController::class,'edit']); //display same view from order controller
 
@@ -127,6 +127,12 @@ Route::get('/return',function(){
 
 });
 
+## ROLES ROUTES ##
+Route::get('/role',[roleController::class,'view']);
+Route::get('/role/add',[roleController::class,'create']);
+Route::post('/role/post',[roleController::class,'addupdate']);
+Route::get('/role/edit/{id}',[roleController::class,'edit']);
+Route::get('/role/delete/{id}',[roleController::class,'delete']);
 
 ##  FRANCHISE ROUTES    ##
 Route::get('/user/dashboard/',function(){

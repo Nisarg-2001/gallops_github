@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\product_master;
 use App\Models\state;
 use App\Models\role;
+use App\Models\order;
 use Illuminate\Validation\Rules;
 use Hash;
 use DB;
@@ -17,13 +18,15 @@ class UserController extends Controller
     public function dashboard()
     {
         $user = User::all()->count();
-        $product = product_master::all()->count();
-        return view('admin.dashboard')->with(['user'=>$user,'product'=>$product]);
+        $products = product_master::all()->count();
+        $product = product_master::all();
+        $order = order::all();
+        return view('admin.dashboard')->with(['user'=>$user,'product'=>$product,'products'=>$products,'order'=>$order]);
     }
 
     public function view()
     {
-        $user = DB::table('users')->paginate(10);
+        $user = DB::table('users')->join('roles', 'users.role', '=', 'roles.id')->select('users.*', 'roles.role as rolename')->paginate(10);
         return view('admin.user.index',['user'=>$user]);
 
     }

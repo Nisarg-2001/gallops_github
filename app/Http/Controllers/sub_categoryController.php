@@ -12,7 +12,7 @@ class sub_categoryController extends Controller
 {
     public function view()
     {
-        $data = DB::table('sub_category_masters')->paginate(10);
+        $data = DB::table('sub_category_masters as sc')->join('category_masters as c', 'sc.category', '=', 'c.id')->select('sc.*', 'c.title as parent')->paginate(10);
         return view('admin.subCategory.index',['data'=>$data]); 
     }
 

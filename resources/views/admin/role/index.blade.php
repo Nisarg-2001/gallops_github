@@ -16,7 +16,7 @@
                 <div class="row">
                     <div class="col-12">
                     @if( session('success'))
-              <div class="alert alert-success alert-dismissible" role="alert" id="">
+              <div class="alert alert-success alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert">
                   <i class="fa fa-times"></i>
                 </button>
@@ -33,7 +33,7 @@
             @endif
                         <div class="card">
                             <div class="card-header">
-                                <a href="{{url('product/add')}}" class="btn btn-primary">Add Product</a>
+                                <a href="{{url('role/add')}}" class="btn btn-primary">Add new Role</a>
                                 <a href="" id="reload" class="btn btn-sm btn-primary float-right"
                                     title="Refresh"><i class="fas fa-redo-alt"></i></a>
                             </div>
@@ -43,34 +43,28 @@
                                     <thead>
                                         <tr>
                                             <th>ID</th>
-                                            <th>Product Name</th>
-                                            <th>Product Self Life</th>
-                                            <th>Price</th>
-                                            <th>Unit</th>
+                                            <th>ROLE</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php $c=1; ?>
+                                    <?php $c=1; ?>
                                         @foreach($data as $info)
+                                       
                                         <tr>
-                                            <td>{{ $c }}</td>
-                                            <td>{{ $info->name }}</td>
-                                            <td>{{ $info->self_life }} Months</td>
-                                            <td>{{ $info->price }}</td>
-                                            <td>{{ $info->unit}}</td>
+                                       
+                                            <td>{{$c}}</td> 
+                                            <td>{{$info->role}}</td>
                                             <td class="text-center">
-                                                <a href="assign_product/add?product={{$info->id}}"
-                                                    class="btn btn-warning" title="Assign Vendor"><i
-                                                        class="fas fa-user-plus"></i></a>
-                                                <a href="{{url('product/edit/'.$info->id)}}" class="btn btn-info"
+                                                <a href="{{url('role/edit/'.$info->id)}}" class="btn btn-info"
                                                     title="Edit"><i class="fas fa-pencil"></i></a>
-                                                <a data-confirm="" data-id="{{$info->id}}" href="{{url('product/delete/'.$info->id)}}" class="btn btn-danger"
+                                                <a data-confirm="" data-id="{{$info->id}}" href="{{url('role/delete/'.$info->id)}}" class="btn btn-danger"
                                                     title="Delete"><i class="fas fa-trash-alt"></i></a>
                                             </td>
                                         </tr>
-                                        <?php $c++; ?>
+                                        <?php $c=$c+1; ?>
                                         @endforeach
+                                    </tbody>
                                 </table>
                             </div>
                             <!-- /.card-body -->

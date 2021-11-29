@@ -27,9 +27,9 @@ class orderController extends Controller
         $product = $this->getProduct($request);
 
         //get all taxes
-        $taxList = tax_master::all();
+        $taxes = tax_master::all();
 
-        return view('admin.order.action')->with(['product'=>$product, 'taxList' => $taxList]);
+        return view('admin.order.action')->with(['product'=>$product, 'taxes' => $taxes]);
     }
 
     public function edit($id)
@@ -44,7 +44,6 @@ class orderController extends Controller
         $product = order::getProduct();
 
         // get all taxes
-<<<<<<< HEAD
         $taxes = tax_master::all(); 
 
         // echo "<pre>";
@@ -55,9 +54,6 @@ class orderController extends Controller
         
 
         
-=======
-        $taxList = tax_master::all();
->>>>>>> 5b0b84d957d96fdf65793ba73beb154a6fbeba76
 
         return view('admin.order.action', [
             'orderData' => $orderData,

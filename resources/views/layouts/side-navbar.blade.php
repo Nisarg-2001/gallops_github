@@ -147,6 +147,17 @@
                         </p>
                     </a>
                 </li>
+
+                <li class="nav-item menu">
+                    <a href="{{ url('/role') }}" class="nav-link">
+                        <i class="nav-icon fas fa-user-tag"></i>
+                        <p>
+                            Roles
+
+                        </p>
+                    </a>
+                </li>
+
                 @endif
                 @if(Auth::user()->role==2)
                 <li class="nav-item menu">
