@@ -101,6 +101,24 @@
                 </li>
 
                 <li class="nav-item menu">
+                    <a href="{{ url('/admin-order') }}" class="nav-link ">
+                        <i class="nav-icon fas fa-clipboard-list"></i>
+                        <p>
+                            Admin Orders
+                        </p>
+                    </a>
+                </li>
+
+                <li class="nav-item menu">
+                    <a href="{{ url('/vendor-order') }}" class="nav-link ">
+                        <i class="nav-icon fas fa-clipboard-list"></i>
+                        <p>
+                            Vendor Orders
+                        </p>
+                    </a>
+                </li>
+
+                <li class="nav-item menu">
                     <a href="{{ url('/inward') }}" class="nav-link">
                         <i class="nav-icon fas fa-dolly"></i>
                         <p>

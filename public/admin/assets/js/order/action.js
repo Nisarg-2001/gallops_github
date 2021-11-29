@@ -2,7 +2,7 @@ var products = {};
 var taxList = {};
 var taxData = {};
 
-var i = $("table.order-table tr").length;
+var i = $("table.order-table tbody tr").length;
 
 $(document).ready(function () {
     getAllProducts();
@@ -19,7 +19,7 @@ $(document).ready(function () {
 });
 
 $("#product_id").change(function () {
-    count = $("table.order-table tr").length;
+    count = $("table.order-table tbody tr").length;
     itemid = $(this).val();
 
     var taxes = JSON.parse(products[itemid].tax);
@@ -43,7 +43,7 @@ $("#product_id").change(function () {
 
     row += "<td><input type='text' value='" + products[itemid].price + "' id='NetPrice_" + i + "' name='NetPrice[]' class='form-control filterme' readonly></td>";
 
-    row += "<td><input type='number' value='1' id='Qty_" + i + "' name='Qty[]' class='form-control filterme' min='1' max='9999'  onkeyup=updateAmount(" + itemid + ',' + i + ") onchange=updateAmount(" + itemid + ',' + i + ")></td>";
+    row += "<td><input type='number' value='1' id='Qty_" + i + "' name='Qty[]' class='form-control filterme' min='1' max='9999'  onkeyup=updateAmount(" + itemid + ',' + i + ", 'cd') onchange=updateAmount(" + itemid + ',' + i + ",'ab')></td>";
 
     row += "<td><input type='text' value='" + products[itemid].price + "' id='Amount_" + i + "' name='Amount[]' class='form-control filterme' readonly><input type='hidden' name='taxAmount[]'  id='taxAmount_" + i + "' value='" + totalTaxAmt + "' data-id='" + i + "' " + taxStr + "></td>";
 
@@ -60,20 +60,30 @@ $("#product_id").change(function () {
     i++;
 });
 
-$('table.order-table').on('click', 'a.removethis', function (e) {
+$("table.order-table").on('click', 'button.removethis', function (e) {
+
     $(this).closest('tr').remove();
-    var ctr = $("table.order-table tr").length;
+    var ctr = $("table.order-table tbody tr").length;
 
     if (ctr == 1) {
+        for (const key in taxList) {
+            taxData['tax-' + key] = 0;
+        }
+        for (const key in taxList) {
+            $("#hiddenTotalTax_" + key).val((taxData['tax-' + key]).toFixed(2));
+            $("#TotalSingleTax_" + key).html((taxData['tax-' + key]).toFixed(2));
+        }
         $("#taxTotal").hide();
     } else {
         updateTotal();
     }
+
+    // updateTotal();
 });
 
 
 
-function updateAmount(itemid, id) {
+function updateAmount(itemid, id, e) {
 
     let unitprice = $("#NetPrice_" + id).val();
     let qty = $("#Qty_" + id).val();
@@ -124,17 +134,22 @@ function updateTotal() {
 
     var TotalAmt = parseFloat(SubTotalAmt) + parseFloat(totalTax);
 
-    $("#SubTotalAmt").html(SubTotalAmt.toFixed(2));
-    $("#hiddenSubTotalAmt").val(SubTotalAmt.toFixed(2));
+    $("#SubTotalAmt").html(parseFloat(SubTotalAmt).toFixed(2));
+    $("#hiddenSubTotalAmt").val(parseFloat(SubTotalAmt).toFixed(2));
 
     $("#TotalAmt").html(TotalAmt.toFixed(2));
     $("#hiddenTotalAmt").val(TotalAmt.toFixed(2));
+
+    // reset tax
+    for (const key in taxList) {
+        taxData['tax-' + key] = 0;
+    }
 }
 
 function check() {
-    count = $("table.table-list tr").length;
+    count = $("table.order-table tbody tr").length;
     if (count == '1') {
-        alert("Please select product.");
+        swal("Sorry!", "Please select any product to place your order.", "error");
         return false;
     } else {
         var r = confirm("Please press 'OK' to confirm your order.");
@@ -177,6 +192,7 @@ function getAllTaxes() {
                 taxList[currentValue.id] = currentValue;
             });
 
+            // reset tax
             for (const key in taxList) {
                 taxData['tax-' + key] = 0;
             }

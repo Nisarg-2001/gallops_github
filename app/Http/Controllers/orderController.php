@@ -27,9 +27,9 @@ class orderController extends Controller
         $product = $this->getProduct($request);
 
         //get all taxes
-        $taxes = tax_master::all();
+        $taxList = tax_master::all();
 
-        return view('admin.order.action')->with(['product'=>$product, 'taxes' => $taxes]);
+        return view('admin.order.action')->with(['product'=>$product, 'taxList' => $taxList]);
     }
 
     public function edit($id)
@@ -44,6 +44,7 @@ class orderController extends Controller
         $product = order::getProduct();
 
         // get all taxes
+<<<<<<< HEAD
         $taxes = tax_master::all(); 
 
         // echo "<pre>";
@@ -54,6 +55,9 @@ class orderController extends Controller
         
 
         
+=======
+        $taxList = tax_master::all();
+>>>>>>> 5b0b84d957d96fdf65793ba73beb154a6fbeba76
 
         return view('admin.order.action', [
             'orderData' => $orderData,
@@ -121,10 +125,12 @@ class orderController extends Controller
 
     public function delete($id)
     {
-        $order = order::find($id);
         $order_item = order_items::where('order_id',$id);
-        $order->delete();
         $order_item->delete();
+        
+        $order = order::find($id);
+        $order->delete();
+        
         return redirect('order')->with('danger',' Order Deleted Successfully');
     }
 

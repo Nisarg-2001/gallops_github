@@ -36,7 +36,6 @@ class categoryController extends Controller
             $data->description = $request->description;
             $data->save();
 
-            $request->session()->flash('status', 'Task was successful!');
             return redirect('category')->with('success',' Category Updated Successfully');
         } else {
             $request->validate([
@@ -47,7 +46,7 @@ class categoryController extends Controller
             $category->title = $request->title;
             $category->description = $request->description;
             $category->save();
-            $request->session()->flash('status', 'Task was successful!');
+            
             return redirect('category')->with('success',' Category Added Successfully');
         }
     }
