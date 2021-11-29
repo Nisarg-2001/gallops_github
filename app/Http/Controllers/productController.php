@@ -8,7 +8,7 @@ use App\Models\tax_master;
 use App\Models\category_master;
 use App\Models\sub_category_master;
 use App\Models\product_master;
-use App\Models\assign_master;
+use App\Models\assign_product;
 
 use DB;
 
@@ -18,7 +18,7 @@ class productController extends Controller
     public function view()
     {
         $product = DB::table('product_masters as p')->join('assign_products as ap', 'p.id', '=', 'ap.product_id')
-        ->select('p.*', 'ap.price')->where('ap.is_default', '=', '1')->get();
+        ->select('p.*', 'ap.price')->where('ap.is_default', '=', '1')->paginate(10);
         //$data = product_master::all();
         return view('admin.product.index', ['data' => $product]);
     }
@@ -99,7 +99,7 @@ class productController extends Controller
     public function delete($id)
     {
         $product = product_master::find($id);
-        $assignProduct = assign_master::where('product_id',$id);
+        $assignProduct = assign_product::where('product_id',$id);
 
         $product->delete();
         $assignProduct->delete();

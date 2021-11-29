@@ -9,6 +9,8 @@ use App\Models\state;
 use App\Models\role;
 use Illuminate\Validation\Rules;
 use Hash;
+use DB;
+
 
 class UserController extends Controller
 {
@@ -21,7 +23,7 @@ class UserController extends Controller
 
     public function view()
     {
-        $user = User::all();
+        $user = DB::table('users')->paginate(10);
         return view('admin.user.index',['user'=>$user]);
 
     }

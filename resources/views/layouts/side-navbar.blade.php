@@ -14,11 +14,12 @@
             <ul class="nav nav-pills nav-sidebar flex-column"  role="menu" data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-                <li class="nav-item ">
-                    <a class="nav-link ">
+               @if(Auth::user()->role==1) 
+               <li class="nav-item ">
+                    <a class="nav-link" href="{{ url('dashboard') }}">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
-                            User Dashboard
+                            Home
                         </p>
                     </a>
                 </li>
@@ -120,7 +121,7 @@
                 </li>
 
                 <li class="nav-item menu">
-                    <a href="{{ url('/orders') }}" class="nav-link">
+                    <a href="{{ url('/return') }}" class="nav-link">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
                             Returned Goods
@@ -128,6 +129,49 @@
                         </p>
                     </a>
                 </li>
+                @endif
+                @if(Auth::user()->role==2)
+                <li class="nav-item menu">
+                    <a href="{{ url('/user/dashboard') }}" class="nav-link">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                            Home
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item menu">
+                    <a href="{{ url('/user/order') }}" class="nav-link">
+                        <i class="nav-icon fas fa-clipboard-list"></i>
+                        <p>
+                            Orders
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item menu">
+                    <a href="{{ url('/user/inward') }}" class="nav-link">
+                        <i class="nav-icon fas fa-dolly"></i>
+                        <p>
+                            Inwards
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item menu">
+                    <a href="{{ url('/user/outward') }}" class="nav-link">
+                        <i class="nav-icon fas fa-dolly"></i>
+                        <p>
+                            Outwards
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item menu">
+                    <a href="{{ url('/user/report') }}" class="nav-link">
+                        <i class="nav-icon far fa-file-chart-line"></i>
+                        <p>
+                            Reports
+                        </p>
+                    </a>
+                </li>
+                @endif
 
             </ul>
         </nav>

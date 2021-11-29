@@ -7,13 +7,14 @@ use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Http\Request;
 use App\Models\category_master;
 use App\Models\sub_category_master;
+use Illuminate\Support\Facades\DB;
 
 
 class categoryController extends Controller
 {
     public function view()
     {
-        $data = category_master::all();
+        $data = DB::table('category_masters')->paginate(10);
         return view('admin.category.index', ['data' => $data]);
     }
 

@@ -60,12 +60,12 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                          @foreach($taxList as $tax)
+                                          @foreach($taxes as $tax)
                                             @php $taxData[$tax->id] = 0; @endphp
                                           @endforeach
 
                                           <tr>
-                                          @if($orderItemData)
+                                          @if(isset($orderItemData))
                                           
                                           @php 
                                             $i = 1; 
@@ -126,12 +126,12 @@
                           <tr>
                             <td width="85%" align="right" style="padding-right:20px;"> <b>Sub Total</b>
                             </td>
-                            <td width="15%" align="right"> <span id="SubTotalAmt">{{ number_format($orderData->sub_total, 2) }}</span></td>
+                            <td width="15%" align="right"> <span id="SubTotalAmt">{{ number_format(isset($orderData->sub_total), 2) }}</span></td>
                           </tr>
 
-                          @php 
                           
-                          @foreach($taxList as $t)
+                          
+                          @foreach($taxes as $t)
 
                           <tr>
                             <input type="hidden" name="hiddenTotalTax[]" id="hiddenTotalTax_{{ $t->id }}" value="{{ $taxData[$t->id] }}">
@@ -148,7 +148,7 @@
                             <td width="85%" align="right" style="padding-right:20px;"><b>Total
                                 Amount
                                 (₹)</b> </td>
-                            <td width="15%" align="right"> <b><span id="TotalAmt">{{ number_format($orderData->total, 2) }}</span></b></td>
+                            <td width="15%" align="right"> <b><span id="TotalAmt">{{ number_format(isset($orderData->total), 2) }}</span></b></td>
                           </tr>
                         </table>
 

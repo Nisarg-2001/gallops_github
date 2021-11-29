@@ -11,6 +11,8 @@ use App\Http\Controllers\assignController;
 use App\Http\Controllers\orderController;
 use App\Http\Controllers\inwardController;
 use App\Http\Controllers\outwardController;
+use App\Http\Controllers\userOrderController;
+
 
 
 
@@ -28,7 +30,7 @@ use App\Http\Controllers\outwardController;
 Route::group(['middleware' => 'auth'], function() {
 
 ## DASHBOARD ROUTES ##
-Route::get('/dashboard',[UserController::class,'dashboard'])->middleware(['auth'])->name('dashboard');
+Route::get('/dashboard',[UserController::class,'dashboard'])->name('dashboard');
 
 
 
@@ -101,6 +103,23 @@ Route::get('/inward/add',[inwardController::class,'create']);
 Route::get('/outward',[outwardController::class,'view']);
 Route::get('/outward/add',[outwardController::class,'create']);
 
+## RETURN GOODS ## 
+Route::get('/return',function(){
+    return view('admin.return_goods.index');
+});
+
+});
+
+
+##  FRANCHISE ROUTES    ##
+Route::get('/user/dashboard/',function(){
+    return view('user.dashboard');
+});
+Route::get('/user/order/',[userOrderController::class,'view']);
+
+## VENDOR SCREEN ROUTES ##
+Route::get('vendor/dashboard',function(){
+    return view('vendors.dashboard');
 });
 
 

@@ -6,12 +6,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\category_master;
 use App\Models\sub_category_master;
+use DB;
 
 class sub_categoryController extends Controller
 {
     public function view()
     {
-        $data = sub_category_master::all();
+        $data = DB::table('sub_category_masters')->paginate(10);
         return view('admin.subCategory.index',['data'=>$data]); 
     }
 

@@ -6,12 +6,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\tax_master;
 use Illuminate\Validation\Rules;
+use DB;
 
 class taxController extends Controller
 {
     public function view()
     {
-      $data = tax_master::all();
+      $data = DB::table('tax_masters')->paginate(10);
       return view('admin.tax.index',['data'=>$data]);
     }
 

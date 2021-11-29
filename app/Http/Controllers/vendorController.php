@@ -6,12 +6,14 @@ use App\Models\vendor_master;
 use App\Models\state;
 use Illuminate\Http\Request;
 use Hash;
+use DB;
+
 
 class vendorController extends Controller
 {
     public function view()
     {
-        $data = vendor_master::all();
+        $data = DB::table('vendor_masters')->paginate(10);
         return view('admin.vendor.index',['data'=>$data]);
     }
 

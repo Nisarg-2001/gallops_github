@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\tax_master;
 use App\Models\order_items;
 use Auth;
+use DB;
 
 
 
@@ -17,7 +18,7 @@ class orderController extends Controller
 
     public function view()
     {
-        $order = order::all();
+        $order = DB::table('orders')->paginate(10);
         return view('admin.order.index')->with(['data'=>$order]);
     }
 
@@ -43,7 +44,7 @@ class orderController extends Controller
         $product = order::getProduct();
 
         // get all taxes
-        $taxList = tax_master::all(); 
+        $taxes = tax_master::all(); 
 
         // echo "<pre>";
         // print_r($orderData->toarray());
@@ -58,7 +59,7 @@ class orderController extends Controller
             'orderData' => $orderData,
             'orderItemData' => $orderItemData,
             'product' => $product,
-            'taxList' => $taxList,
+            'taxes' => $taxes,
         ]);
     }
 

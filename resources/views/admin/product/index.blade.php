@@ -16,7 +16,7 @@
                 <div class="row">
                     <div class="col-12">
                     @if( session('success'))
-              <div class="alert alert-success alert-dismissible" role="alert">
+              <div class="alert alert-success alert-dismissible" role="alert" id="">
                 <button type="button" class="close" data-dismiss="alert">
                   <i class="fa fa-times"></i>
                 </button>
