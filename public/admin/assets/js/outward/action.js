@@ -6,7 +6,6 @@ var i = $("table.order-table tbody tr").length;
 
 $(document).ready(function () {
     getAllProducts();
-    getAllTaxes();
 });
 
 $(document).ready(function () {
@@ -22,19 +21,7 @@ $("#product_id").change(function () {
     count = $("table.order-table tbody tr").length;
     itemid = $(this).val();
 
-    var taxes = JSON.parse(products[itemid].tax);
-    var totalTaxAmt = 0;
-    var taxStr = "";
-
-    if (taxes.length > 0) {
-        taxes.forEach(function (currentValue, index, arr) {
-            let t = 0;
-            t = ((products[itemid].price * currentValue.value) / 100);
-            totalTaxAmt += t;
-
-            taxStr = taxStr + ' ' + 'tax-' + currentValue.id + '=' + '"' + t + '"';
-        });
-    }
+    
 
 
     var row = "<tr style='background-color: #f9f9f9;'><td class='text-center'>" + i + "</td>";
@@ -56,88 +43,13 @@ $("#product_id").change(function () {
 $("table.order-table").on('click', 'button.removethis', function (e) {
 
     $(this).closest('tr').remove();
-    var ctr = $("table.order-table tbody tr").length;
 
-    if (ctr == 1) {
-        for (const key in taxList) {
-            taxData['tax-' + key] = 0;
-        }
-        for (const key in taxList) {
-            $("#hiddenTotalTax_" + key).val((taxData['tax-' + key]).toFixed(2));
-            $("#TotalSingleTax_" + key).html((taxData['tax-' + key]).toFixed(2));
-        }
-        $("#taxTotal").hide();
-    } else {
-        updateTotal();
-    }
-
+  
     // updateTotal();
 });
 
 
 
-function updateAmount(itemid, id, e) {
-
-    let unitprice = $("#NetPrice_" + id).val();
-    let qty = $("#Qty_" + id).val();
-    let amount = qty * unitprice;
-
-    $("#Amount_" + id).val(amount.toFixed(2));
-
-    //update tax amount
-    let taxes = JSON.parse($("#itemTax_" + id).val());
-    let tax_amount = 0;
-
-    if (taxes.length > 0) {
-        taxes.forEach(function (currentValue, index, arr) {
-            let t = 0;
-            t = (amount * currentValue.value) / 100;
-            tax_amount += t;
-            $("#taxAmount_" + id).attr('tax-' + currentValue.id, t);
-        });
-        $("#taxAmount_" + id).val(tax_amount.toFixed(2));
-    }
-
-    updateTotal();
-}
-
-function updateTotal() {
-    var SubTotalAmt = '0';
-    var TotalAmt = 0;
-    var totalTax = 0;
-
-    $('input[name^="Amount"]').each(function () {
-        SubTotalAmt = parseFloat(SubTotalAmt) + parseFloat($(this).val());
-    });
-
-    $('input[name^="taxAmount"]').each(function () {
-        totalTax = parseFloat(totalTax) + parseFloat($(this).val());
-
-        for (const key in taxList) {
-            let t = $(this).attr('tax-' + key);
-            taxData['tax-' + key] += parseFloat(t);
-        };
-    });
-
-    //calculate tax
-    for (const key in taxList) {
-        $("#hiddenTotalTax_" + key).val((taxData['tax-' + key]).toFixed(2));
-        $("#TotalSingleTax_" + key).html((taxData['tax-' + key]).toFixed(2));
-    }
-
-    var TotalAmt = parseFloat(SubTotalAmt) + parseFloat(totalTax);
-
-    $("#SubTotalAmt").html(parseFloat(SubTotalAmt).toFixed(2));
-    $("#hiddenSubTotalAmt").val(parseFloat(SubTotalAmt).toFixed(2));
-
-    $("#TotalAmt").html(TotalAmt.toFixed(2));
-    $("#hiddenTotalAmt").val(TotalAmt.toFixed(2));
-
-    // reset tax
-    for (const key in taxList) {
-        taxData['tax-' + key] = 0;
-    }
-}
 
 function check() {
     count = $("table.order-table tbody tr").length;
@@ -170,25 +82,3 @@ function getAllProducts() {
     });
 }
 
-function getAllTaxes() {
-    $.ajax({
-        url: APP_URL + 'order/getTaxes',
-        type: 'POST',
-        beforeSend: function () {
-            $("#orderForm").find('input[type=submit]').attr('disabled', true);
-        },
-        complete: function () {
-            $("#orderForm").find('input[type=submit]').attr('disabled', false);
-        },
-        success: function (data) {
-            data.forEach(function (currentValue, index, arr) {
-                taxList[currentValue.id] = currentValue;
-            });
-
-            // reset tax
-            for (const key in taxList) {
-                taxData['tax-' + key] = 0;
-            }
-        }
-    });
-}
