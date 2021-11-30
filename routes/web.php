@@ -123,6 +123,13 @@ Route::get('/inward/add',[inwardController::class,'create']);
 ##  OUTWARD ROUTES ##
 Route::get('/outward',[outwardController::class,'view']);
 Route::get('/outward/add',[outwardController::class,'create']);
+Route::get('/outward/{id}', [outwardController::class,'edit']);
+Route::post('/outward/post',[outwardController::class,'addupdate']);
+Route::post('/order/getProduct',[outwardController::class,'getProduct']);
+Route::post('/order/getTaxes',[outwardController::class,'getTaxes']);
+Route::get('/order/delete/{id}',[orderController::class,'delete']);
+Route::get('/outward/invoice',[outwardController::class,'invoice']);
+
 
 ## RETURN GOODS ## 
 Route::get('/return',function(){
@@ -145,8 +152,8 @@ Route::get('/user/dashboard/',function(){
 Route::get('/user/order/',[userOrderController::class,'view']);
 
 ## VENDOR SCREEN ROUTES ##
-Route::get('vendor/dashboard',function(){
-    return view('vendors.dashboard');
+Route::get('invoice',function(){
+    return view('admin.order.invoice');
 });
 
 

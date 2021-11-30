@@ -29,18 +29,42 @@
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                     <tr>
-                      <th>Order ID</th>
-                      <th>Vendor Name</th>
-                      <th>Date of Receive</th>
-                      <th>Qty</th>
+                      <th>Outward ID</th>
+                      <th>Person Name</th>
+                      <th>Date of Issue</th>
+                      <th>Order Status</th>
+                      <th>Payment Status</th>
                       <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                  
+                    @foreach($data as $info)
+                    <tr>
+                      <td>{{ $info->id }}</td>
+                      <td>{{ $info->person_name }}</td>
+                      <td>{{ date('d M Y', strtotime($info->issue_date)) }}</td>
+                      @if($info->is_confirm==0)
+                      <td><span class="badge bg-warning p-2 ml-5">Pending</span></td>
+                      @elseif($info->is_confirm==1)
+                      <td><span class="badge bg-success p-2 ml-5">Accepted</span></td>
+                      @else
+                      <td><span class="badge bg-danger p-2 ml-5">Cancelled</span></td>
+                      @endif
 
-                   
-                  
+                      @if($info->payment_status==0)
+                      <td><span class="badge bg-warning p-2 ml-5">Pending</span></td>
+                      @else
+                      <td><span class="badge bg-success p-2 ml-5">Completed</span></td>
+                      @endif
+                      <td>
+                        <a href="{{ url('outward/invoice') }}" class="btn btn-info" title="Print Invoice"><i class="fas fa-print"></i></a>
+                        <a href="{{ url('outward/'.$info->id)}}" class="btn btn-primary" title="View"><i class="fas fa-eye"></i></a>
+                        <!-- <a data-confirm="" href="{{ url('order/delete/'.$info->id)}}" data-id="{{$info->id}}" class="btn btn-danger" title="Delete"><i class="fas fa-trash-alt"></i></a> -->
+                      </td>
+
+                    </tr>
+                    @endforeach
+                  </tbody> 
                 </table>
               </div>
               <!-- /.card-body -->
