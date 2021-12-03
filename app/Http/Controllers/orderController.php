@@ -3,15 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\order;
-use App\Models\User;
-use App\Models\tax_master;
 use App\Models\order_items;
+use App\Models\tax_master;
 use Auth;
 use DB;
-
-
+use Illuminate\Http\Request;
 
 class orderController extends Controller
 {
@@ -19,7 +16,7 @@ class orderController extends Controller
     public function view()
     {
         $order = DB::table('orders')->paginate(10);
-        return view('admin.order.index')->with(['data'=>$order]);
+        return view('admin.order.index')->with(['data' => $order]);
     }
 
     public function create(Request $request)
@@ -29,7 +26,7 @@ class orderController extends Controller
         //get all taxes
         $taxes = tax_master::all();
 
-        return view('admin.order.action')->with(['product'=>$product, 'taxes' => $taxes]);
+        return view('admin.order.action')->with(['product' => $product, 'taxes' => $taxes]);
     }
 
     public function edit($id)
@@ -44,7 +41,7 @@ class orderController extends Controller
         $product = order::getProduct();
 
         // get all taxes
-        $taxes = tax_master::all(); 
+        $taxes = tax_master::all();
 
         return view('admin.order.action', [
             'orderData' => $orderData,
@@ -66,17 +63,15 @@ class orderController extends Controller
                 $taxIds = $request->hiddenTaxId;
                 $taxName = $request->hiddenTaxName;
                 $taxValue = $request->hiddenTotalTax;
-    
+
                 foreach ($taxIds as $key => $value) {
                     $taxData[$key]['id'] = $value;
                     $taxData[$key]['name'] = $taxName[$key];
                     $taxData[$key]['value'] = $taxValue[$key];
                 }
             }
-    
-            $jsonOrderTax = json_encode($taxData);
 
-            
+            $jsonOrderTax = json_encode($taxData);
 
             // insert into orders table
             $order = new order;
@@ -106,19 +101,19 @@ class orderController extends Controller
 
         }
 
-        return redirect('order')->with('success',' Order Created Successfully');
-        
+        return redirect('order')->with('success', ' Order Created Successfully');
+
     }
 
     public function delete($id)
     {
-        $order_item = order_items::where('order_id',$id);
+        $order_item = order_items::where('order_id', $id);
         $order_item->delete();
-        
+
         $order = order::find($id);
         $order->delete();
-        
-        return redirect('order')->with('danger',' Order Deleted Successfully');
+
+        return redirect('order')->with('danger', ' Order Deleted Successfully');
     }
 
     public function invoice()
@@ -126,25 +121,39 @@ class orderController extends Controller
         return view('admin.order.invoice');
     }
 
-    public function getProduct(Request $request) 
+    public function getProduct(Request $request)
     {
         $product = order::getProduct();
 
-        if($request->ajax()){
+        if ($request->ajax()) {
             return response()->json($product->toArray());
         }
 
         return $product;
     }
 
-    public function getTaxes(Request $request) 
+    public function getTaxes(Request $request)
     {
         $taxes = tax_master::all();
 
-        if($request->ajax()){
+        if ($request->ajax()) {
             return response()->json($taxes->toArray());
         }
 
         return $taxes;
+    }
+
+    public function report()
+    {
+        $order = DB::table('orders')->paginate(10);
+        $product = order::getProduct();
+        return view('admin.order.report')->with(['data' => $order,'product'=>$product]);
+    }
+
+    public function order_item_report()
+    {
+        $order = DB::table('orders')->paginate(10);
+        $product = order::getProduct();
+        return view('admin.order.report')->with(['data' => $order,'product'=>$product]);
     }
 }

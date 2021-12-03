@@ -11,11 +11,11 @@
 
         <!-- Sidebar Menu -->
         <nav class="mt-2">
-            <ul class="nav nav-pills nav-sidebar flex-column"  role="menu" data-accordion="false">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-               @if(Auth::user()->role==1) 
-               <li class="nav-item ">
+                @if(Auth::user()->role==1)
+                <li class="nav-item ">
                     <a class="nav-link" href="{{ url('dashboard') }}">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
@@ -133,9 +133,38 @@
                         <i class="nav-icon fas fa-dolly"></i>
                         <p>
                             Outwards
-
                         </p>
                     </a>
+                </li>
+
+                <li class="nav-item menu">
+                    <a href="{{url('reports')}}" class="nav-link">
+                        <i class="nav-icon fas fa-file-chart-line"></i>
+                        <p>
+                            Reports
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{url('report/order')}}" class="nav-link">
+                                <i class="far fa-file-invoice nav-icon"></i>
+                                <p>Orders</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{url('report/purchase-order')}}" class="nav-link">
+                                <i class="far fa-file-invoice nav-icon"></i>
+                                <p>Purchase order</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{url('report/order-item')}}" class="nav-link">
+                                <i class="far fa-file-invoice nav-icon"></i>
+                                <p>Order Items</p>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
 
                 <li class="nav-item menu">

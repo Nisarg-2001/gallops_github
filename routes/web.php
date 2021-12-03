@@ -129,11 +129,18 @@ Route::post('/order/getProduct',[outwardController::class,'getProduct']);
 Route::get('/order/delete/{id}',[orderController::class,'delete']);
 Route::get('/outward/invoice',[outwardController::class,'invoice']);
 
+## REPORTS ROUTES   ##
+Route::get('/report/order',[orderController::class,'report']);
+Route::get('/report/purchase-order',[purchaseOrderController::class,'report']);
+Route::get('/report/order-item',[orderController::class,'order_item_report']);
+
 
 ## RETURN GOODS ## 
 Route::get('/return',function(){
     return view('admin.return_goods.index');
 });
+
+Route::post('/resetpassword',[UserController::class,'resetPassword']);
 
 });
 
@@ -143,6 +150,7 @@ Route::get('/role/add',[roleController::class,'create']);
 Route::post('/role/post',[roleController::class,'addupdate']);
 Route::get('/role/edit/{id}',[roleController::class,'edit']);
 Route::get('/role/delete/{id}',[roleController::class,'delete']);
+
 
 ##  FRANCHISE ROUTES    ##
 Route::get('/user/dashboard/',function(){

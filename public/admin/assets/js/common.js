@@ -19,3 +19,10 @@ function getParameterByName(name, url = window.location.href) {
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, ' '));
 }
+
+var url = window.location;
+
+// for sidebar menu entirely but not cover treeview
+$('ul.nav-sidebar a').filter(function() {
+    return this.href == url;
+}).addClass('active');

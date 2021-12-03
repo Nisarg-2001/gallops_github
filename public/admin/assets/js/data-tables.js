@@ -27,3 +27,6 @@ $('.select2bs4').select2({
 $('ul.nav-sidebar a').filter(function() {
     return this.href == url;
 }).addClass('active');
+$('ul.treeview-menu a').filter(function() {
+  return this.href == url;
+}).parentsUntil(".sidebar-menu > .treeview-menu").siblings().removeClass('active menu-open').end().addClass('active menu-open');

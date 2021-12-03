@@ -108,4 +108,24 @@ class UserController extends Controller
         $user->delete();
         return redirect('user')->with('danger',' User deleted Successfully');  
     }
+
+    public function resetPassword(Request $request)
+    {
+        $data=User::find($request->id);
+        $c_password = Hash::make($request->ctpass);
+        if($data->password == $c_password )
+        {
+            $data->password = Hash::make($request->pass);
+            dd('done');
+            $data->save();
+            
+            return redirect('/login')->with('success','Password Reset Successfully');
+        }
+        else
+        {
+            return redirect('/login')->with('success','Password does not match our records');
+        }
+        
+
+    }
 }

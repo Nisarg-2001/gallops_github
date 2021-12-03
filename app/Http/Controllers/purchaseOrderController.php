@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\order;
 use App\Models\User;
 use App\Models\tax_master;
+use App\Models\vendor_master;
 use App\Models\order_items;
 use App\Models\purchase_orders;
 use App\Models\purchase_order_items;
@@ -50,5 +51,12 @@ class purchaseOrderController extends Controller
 
         return redirect('vendor-order')->with('success',' Order Updated Successfully');
 
+    }
+
+    public function report()
+    {
+        $data = purchase_orders::getPurchaseOrders();
+        $vendor = vendor_master::all();
+        return view('admin.purchase_order.report', ['data' => $data,'vendor'=>$vendor]);
     }
 }
