@@ -10,6 +10,7 @@ use App\Models\tax_master;
 use App\Models\outward_master;
 use App\Models\order_items;
 use App\Models\outward_item;
+use App\Models\branch_item_stocks;
 use Auth;
 use DB;
 
@@ -26,7 +27,13 @@ class outwardController extends Controller
 
     public function create(Request $request)
     {
-        $product = $this->getProduct($request);
+        $branch_id = Auth::id();
+        $product = branch_item_stocks::getOutwardStock($branch_id);
+        echo "<pre>";
+        print_r($product);
+        echo "</pre>";
+        exit;
+
 
         //get all taxes
         $taxes = tax_master::all();
@@ -101,14 +108,14 @@ class outwardController extends Controller
         return view('admin.order.invoice');
     }
 
-    public function getProduct(Request $request) 
-    {
-        $product = outward_master::getProduct();
+    // public function getProduct(Request $request) 
+    // {
+    //     $product = outward_master::getProduct();
 
-        if($request->ajax()){
-            return response()->json($product->toArray());
-        }
+    //     if($request->ajax()){
+    //         return response()->json($product->toArray());
+    //     }
 
-        return $product;
-    }
+    //     return $product;
+    // }
 }

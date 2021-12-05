@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\userController;
 use App\Http\Controllers\taxController;
 use App\Http\Controllers\categoryController;
 use App\Http\Controllers\sub_categoryController;
@@ -35,17 +35,17 @@ use App\Http\Controllers\purchaseOrderController;
 Route::group(['middleware' => 'auth'], function() {
 
 ## DASHBOARD ROUTES ##
-Route::get('/dashboard',[UserController::class,'dashboard'])->name('dashboard');
+Route::get('/dashboard',[userController::class,'dashboard'])->name('dashboard');
 
 
 
 
 ## USER ROUTES ##
-Route::get('/user',[UserController::class,'view']);
-Route::get('/user/add',[UserController::class, 'create']);
-Route::post('/user/post', [UserController::class, 'addupdate']);
-Route::get('/user/edit/{id}',[UserController::class, 'edit']);
-Route::get('/user/delete/{id}',[UserController::class, 'delete']);
+Route::get('/user',[userController::class,'view']);
+Route::get('/user/add',[userController::class, 'create']);
+Route::post('/user/post', [userController::class, 'addupdate']);
+Route::get('/user/edit/{id}',[userController::class, 'edit']);
+Route::get('/user/delete/{id}',[userController::class, 'delete']);
 
 ## TAX Routes ##
 Route::get('/tax',[taxController::class,'view']);
@@ -119,6 +119,9 @@ Route::post('/vendor-order/post', [purchaseOrderController::class,'updatePurchas
 ##  INWARD ROUTES ##
 Route::get('/inward',[inwardController::class,'view']);
 Route::get('/inward/add',[inwardController::class,'create']);
+Route::post('/inward/store',[inwardController::class,'store']);
+Route::post('/inward/getProductByVendorId',[inwardController::class,'getProductByVendorId']);
+
 
 ##  OUTWARD ROUTES ##
 Route::get('/outward',[outwardController::class,'view']);
@@ -140,7 +143,7 @@ Route::get('/return',function(){
     return view('admin.return_goods.index');
 });
 
-Route::post('/resetpassword',[UserController::class,'resetPassword']);
+Route::post('/resetpassword',[userController::class,'resetPassword']);
 
 });
 

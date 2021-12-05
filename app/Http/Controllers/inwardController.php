@@ -6,12 +6,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\product_master;
 use App\Models\vendor_master;
-use App\Models\inward_master;
-
+use App\Models\inward_orders;
+use App\Models\inward_order_items;
+use App\Models\branch_item_stocks;
+use Auth;
 
 class inwardController extends Controller
 {
-    
+
     public function view()
     {
         return view('admin.inward.index');
@@ -19,8 +21,68 @@ class inwardController extends Controller
 
     public function create()
     {
-        $product = product_master::all();
+        // $product = product_master::all();
         $vendor = vendor_master::all();
-        return view('admin.inward.action')->with(['product'=>$product,'vendor'=>$vendor]);
+        return view('admin.inward.action')->with([
+            'vendor' => $vendor,
+            // 'product' => $product,
+        ]);
+    }
+
+    public function getProductByVendorId(Request $request)
+    {
+        $vendor_id = $request->vendor_id;
+        $product = inward_orders::getProductByVendorId($vendor_id);
+
+        return response()->json($product);
+    }
+
+    public function store(Request $request)
+    {
+        $branch_id = Auth::id();
+
+        // insert into inward_orders table
+        $order = new inward_orders;
+        $order->user_id = $branch_id;
+        $order->vendor_id = $request->vendor;
+        $order->order_no = $request->order;
+        $order->vendor_bill_no = $request->billno;
+        $order->received_date = date('Y-m-d', strtotime($request->dateofreceive));
+        $order->save();
+
+        $order_id = $order->id;
+
+        // insert into orde_items table
+        $itemData = [];
+        foreach ($request->product_id as $key => $value) {
+            $itemData[] = [
+                'inward_id' => $order_id,
+                'product_id' => $request->product_id[$key],
+                'qty' => $request->qty[$key],
+                'batch_no' => $request->batch_number[$key],
+                'packaging_month' => date('Y-m-d', strtotime($request->monthYear[$key])),
+            ];
+        }
+
+        inward_order_items::insert($itemData);
+
+        //update stock
+        foreach ($request->product_id as $key => $value) {
+            $stock = branch_item_stocks::where('branch_id', $branch_id)
+                ->where('product_id', $request->product_id[$key])
+                ->first();
+            if ($stock) {
+                $stock->qty = $stock->qty + $request->qty[$key];
+                $stock->save();
+            } else {
+                $stock = new branch_item_stocks;
+                $stock->branch_id = $branch_id;
+                $stock->product_id = $request->product_id[$key];
+                $stock->qty = $request->qty[$key];
+                $stock->save();
+            }
+        }
+
+        return redirect('inward')->with('success', 'Products Added Successfully');
     }
 }

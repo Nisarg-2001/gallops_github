@@ -1,14 +1,23 @@
 var i = 1;
 
-$('#outwardForm').validate({
+$('#inwardForm').validate({
     rules: {
-        person_name: {
+        vendor_id: {
+            required: true,
+        },
+        order: {
             required: true,
             xssProtection: true
         },
-        "date_of_issue": {
+        // "tax_value[]": {
+
+        // },
+        "billno": {
             required: true,
             xssProtection: true
+        },
+        "dateofreceive": {
+            required: true,
         },
     },
     messages: {
@@ -32,12 +41,12 @@ $('#outwardForm').validate({
 
 
 
-$(document).on('change', '#product_id', function () {
+$(document).on('change', '#vendor_id', function () {
     let vendor_id = $(this).val();
     if (vendor_id) {
         $('#vendor').val(vendor_id);
-        $("#vendor_id").select2({disabled:'readonly'});
-        
+        $("#vendor_id").select2({ disabled: 'readonly' });
+
         $.ajax({
             url: APP_URL + 'inward/getProductByVendorId',
             type: 'POST',
@@ -65,7 +74,7 @@ $(document).on('change', '#product_id', function () {
         });
     } else {
         $('#inwardProductData').hide();
-        $("#vendor_id").select2({disabled:false});
+        $("#vendor_id").select2({ disabled: false });
         $('#vendor').val('');
         $('#changeVendor').hide();
     }
@@ -112,12 +121,14 @@ function addInwardProduct() {
 
     let packaging_year = $('#packaging_year option:selected').val();
 
+    let packaging_date = '01-' + packaging_month + '-' + packaging_year;
+
     let row = '<tr id="row_' + product_id + '">';
     row += '<td>' + i + '<input type="hidden" name="product_id[]" value="' + product_id + '"></td>';
     row += '<td>' + product_name + '</td>';
     row += '<td>' + qty + '<input type="hidden" name="qty[]" value="' + qty + '"></td>';
     row += '<td>' + unit + '<input type="hidden" name="unit[]" value="' + unit + '"></td>';
-    row += '<td>' + packaging_month_text + '-' + packaging_year + '<input type="hidden" name="monthYear[]" value="' + packaging_month + '-' + packaging_year + '"></td>';
+    row += '<td>' + packaging_month_text + '-' + packaging_year + '<input type="hidden" name="monthYear[]" value="' + packaging_date + '"></td>';
     row += '<td>' + batch_number + '<input type="hidden" name="batch_number[]" value="' + batch_number + '"></td>';
     row += '<td><button type="button" class="btn btn-danger btn-sm removethis" title="Remove"><i class="fa fa-trash"></i></button></td>';
     row += "</tr>";
@@ -125,5 +136,5 @@ function addInwardProduct() {
     $("table.inward-table").append(row);
 
     i++;
-    
+
 }
