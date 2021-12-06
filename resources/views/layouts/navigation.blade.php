@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100 fixed-top">
+<nav x-data="{ open: false }" class="bg-white border-b border-gray-100 fixed-top" style="height:80px;">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -120,25 +120,35 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form method="post" id="userForm" action="{{ url('resetpassword') }}">
+                <form method="post" id="resetForm" action="{{ url('resetpassword') }}">
                     @csrf
                     <div class="col-12">
                         <div class="form-group">
                             <label>Current Password *</label>
                             <input type="hidden" class="form-control" name="id" value="{{ Auth::user()->id }}">
-                            <input type="password" class="form-control" name="ctpass" id="title" placeholder="current password" required>
+                            <input type="password" class="form-control" name="ctpass"  placeholder="current password" required>
+                            @error('ctpass')
+                            <div class="text-danger">{{$message}}</div>
+                            @enderror
                         </div>
+                        
                     </div>
                     <div class="col-12">
                         <div class="form-group">
                             <label>New Password</label>
-                            <input type="password" class="form-control" name="pass" id="title" placeholder="new password" required>
+                            <input type="password" class="form-control" name="pass"  placeholder="new password" required>
+                            @error('pass')
+                            <div class="text-danger">{{$message}}</div>
+                            @enderror
                         </div>
                     </div>
                     <div class="col-12">
                         <div class="form-group">
                             <label>Confirm Password</label>
-                            <input type="password" class="form-control" name="cnpass" id="title" placeholder="confirm password" required>
+                            <input type="password" class="form-control" name="cnpass"  placeholder="confirm password" required>
+                            @error('cnpass')
+                            <div class="text-danger">{{$message}}</div>
+                            @enderror
                         </div>
                     </div>
                     
@@ -151,5 +161,4 @@
         </div>
     </div>
 </div>
-<script src="{{ asset('/admin/assets/js/sweetalert.js') }}"></script>
-<script src="{{ asset('/admin/assets/js/user/action.js') }}"></script>
+

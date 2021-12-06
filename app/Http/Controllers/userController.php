@@ -11,7 +11,7 @@ use App\Models\order;
 use Illuminate\Validation\Rules;
 use Hash;
 use DB;
-
+use Auth;
 
 class UserController extends Controller
 {
@@ -111,19 +111,23 @@ class UserController extends Controller
 
     public function resetPassword(Request $request)
     {
+        $request->validate([
+            'ctpass' => ['required'],
+            'pass' => ['required'],
+            'cnpass' => ['required'],['confirmed:pass'],
+        ]);
+
         $data=User::find($request->id);
-        $c_password = Hash::make($request->ctpass);
-        if($data->password == $c_password )
+        if(!Hash::check($request->ctpass,$data->password))
         {
-            $data->password = Hash::make($request->pass);
-            dd('done');
-            $data->save();
+            return back()->with('danger','Password does not match our records');
             
-            return redirect('/login')->with('success','Password Reset Successfully');
         }
         else
         {
-            return redirect('/login')->with('success','Password does not match our records');
+            $data->password = Hash::make($request->pass);
+            $data->save();
+            return back()->with('success','Password Reset Successfully');
         }
         
 

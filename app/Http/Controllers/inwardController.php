@@ -10,13 +10,19 @@ use App\Models\inward_orders;
 use App\Models\inward_order_items;
 use App\Models\branch_item_stocks;
 use Auth;
+use DB;
 
 class inwardController extends Controller
 {
 
     public function view()
     {
-        return view('admin.inward.index');
+        $inward = DB::table('inward_orders as io')
+        ->join('vendor_masters as v', 'io.vendor_id', '=', 'v.id')
+        ->join('inward_order_items as iot', 'io.id', '=', 'iot.inward_id')
+        ->select('io.*', 'v.name', 'iot.*')
+        ->paginate(10);
+        return view('admin.inward.index',['inward'=>$inward]);
     }
 
     public function create()

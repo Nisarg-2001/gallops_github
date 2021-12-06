@@ -1,9 +1,7 @@
 <x-guest-layout>
     <x-auth-card>
-        <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
+    <x-slot name="logo">
+           <h1>Hello</h1>
         </x-slot>
 
         <!-- Session Status -->
@@ -14,7 +12,7 @@
 
         <form method="POST" action="{{ route('login') }}">
             @csrf
-
+           
             <!-- Email Address -->
             <div>
                 <x-label for="email" :value="__('Email')" />

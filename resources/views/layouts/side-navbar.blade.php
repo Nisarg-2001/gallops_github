@@ -1,7 +1,9 @@
 <aside class="main-sidebar sidebar-dark-primary">
     <!-- Brand Logo -->
-    <a href="#" class="brand-link bg-white" style="height:65px;">
-        <span class=" ml-5 brand-text text-dark font-weight-bold fixed">GALLOPS</span>
+    <a href="#" class="brand-link bg-white" style="height:80px;">
+        <span class=" ml-5 brand-text text-dark font-weight-bold fixed">
+            <img src="{{asset('/dist/img/gallops.png')}}" alt="Gallops Logo" class="brand mx-auto my-auto" height="auto" width="90px">
+        </span>
     </a>
 
     <!-- Sidebar -->
@@ -61,11 +63,32 @@
                         </p>
                     </a>
                 </li>
+
+                <li class="nav-item menu">
+                    <a href="{{ url('/unit') }}" class="nav-link">
+                        <i class="nav-icon fas fa-list-ul"></i>
+                        <p>
+                            Unit of Measurement
+
+                        </p>
+                    </a>
+                </li>
+
                 <li class="nav-item menu">
                     <a href="{{ url('/products') }}" class="nav-link">
                         <i class="nav-icon fas fa-box"></i>
                         <p>
                             Products
+
+                        </p>
+                    </a>
+                </li>
+
+                <li class="nav-item menu">
+                    <a href="{{ url('/productshelflife') }}" class="nav-link">
+                        <i class="nav-icon fas fa-box"></i>
+                        <p>
+                            Product Shelf Life
 
                         </p>
                     </a>

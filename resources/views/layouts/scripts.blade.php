@@ -7,8 +7,7 @@
 
 
 <!-- Bootstrap 4 -->
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+<script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <!-- Select2 -->
 <script src="{{ asset('/plugins/select2/js/select2.full.min.js') }}"></script>
 <!-- Sweet Alert -->
@@ -25,6 +24,8 @@
 <!-- Js PDF -->
 <script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
 <!-- overlayScrollbars -->
+<script src="{{ asset('/admin/assets/js/sweetalert.js') }}"></script>
+<script src="{{ asset('/admin/assets/js/reset-password/action.js') }}"></script>
 <script src="{{ asset('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
 <!-- DataTables  & Plugins -->
 <script src="{{ asset('/plugins/datatables/jquery.dataTables.min.js') }}"></script>

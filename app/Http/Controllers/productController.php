@@ -8,6 +8,8 @@ use App\Models\tax_master;
 use App\Models\category_master;
 use App\Models\sub_category_master;
 use App\Models\product_master;
+use App\Models\unit_master;
+use App\Models\shelf_life;
 use App\Models\assign_product;
 
 use DB;
@@ -18,7 +20,9 @@ class productController extends Controller
     public function view()
     {
         $product = DB::table('product_masters as p')->join('assign_products as ap', 'p.id', '=', 'ap.product_id')
-        ->select('p.*', 'ap.price')->where('ap.is_default', '=', '1')->paginate(10);
+        ->join('shelf_lives as sl', 'p.self_life', '=', 'sl.id')
+        ->join('unit_masters as u', 'p.unit', '=', 'u.id')
+        ->select('p.*', 'ap.price','sl.label','u.unit')->where('ap.is_default', '=', '1')->paginate(10);
         //$data = product_master::all();
         return view('admin.product.index', ['data' => $product]);
     }
@@ -28,8 +32,11 @@ class productController extends Controller
         $taxData = tax_master::all();
         $category = category_master::all();
         $sub_category = sub_category_master::all();
+        $psl = shelf_life::all();
+        $unit = unit_master::all();
 
-        return view('admin.product.action', ['taxData' => $taxData, 'category' => $category, 'sub_category' => $sub_category]);
+        return view('admin.product.action', ['taxData' => $taxData, 'category' => $category, 'sub_category' => $sub_category, 'psl' => $psl,
+        'unit' => $unit]);
     }
 
     public function edit($id)
@@ -38,12 +45,16 @@ class productController extends Controller
         $taxData = tax_master::all();
         $category = category_master::all();
         $sub_category = sub_category_master::all();
+        $psl = shelf_life::all();
+        $unit = unit_master::all();
 
         return view('admin.product.action', [
             'data' => $data,
             'taxData' => $taxData, 
             'category' => $category, 
-            'sub_category' => $sub_category
+            'sub_category' => $sub_category,
+            'psl' => $psl,
+            'unit' => $unit,
         ]);
     }
 

@@ -126,7 +126,7 @@
                                         <div class="col-12 col-md-4 col-lg-4">
                                             <div class="form-group">
                                                 <label>State</label>
-                                                <select id="inputState" name="state" class="form-control" required>
+                                                <select name="state" class="form-control" required>
                                                     @foreach($state as $info)
                                                     <option value="{{ $info->id}}" @if(isset($data->state) &&
                                                         $data->state==$info->id) ? Selected="Selected" :'' @endif
@@ -146,7 +146,7 @@
                                         <div class="col-12 col-md-4 col-lg-4">
                                             <div class="form-group">
                                                 <label for="inputState">Role</label>
-                                                <select id="inputState" name="role" class="form-control" required>
+                                                <select name="role" class="form-control" required>
                                                     @foreach($role as $info)
                                                     <option value="{{ $info->id}}" @if(isset($data->role) &&
                                                         $data->role==$info->id) ? Selected="Selected" :'' @endif

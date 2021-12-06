@@ -20,7 +20,7 @@
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <form action="{{ url('vendor/post') }}" method="post" id="userForm">
+                                <form action="{{ url('vendor/post') }}" method="post" id="vendorForm">
                                     @csrf
                                     <div class="row">
                                         <div class="col-12 col-md-4 col-lg-4">
@@ -106,7 +106,7 @@
                                         <div class="col-12 col-md-4 col-lg-4">
                                             <div class="form-group">
                                                 <label>State</label>
-                                                <select id="inputState" name="state" class="form-control" required>
+                                                <select name="state" class="form-control" required>
                                                     @foreach($state as $info)
                                                     <option value="{{ $info->id}}" @if(isset($data->state) &&
                                                         $data->state==$info->id) ? selected="Selected" :'' @endif
@@ -143,7 +143,7 @@
     @section('page-footer-script')
     <script src="{{ asset('/admin/assets/js/common.js') }}"></script>
     <script src="{{ asset('/admin/assets/js/form-validation.js') }}"></script>
-    <script src="{{ asset('/admin/assets/js/user/action.js') }}"></script>
+    <script src="{{ asset('/admin/assets/js/vendor/action.js') }}"></script>
     @endsection
     @include('layouts.footer')
 </x-app-layout>

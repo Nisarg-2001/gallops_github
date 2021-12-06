@@ -45,11 +45,10 @@
                     <div class="col-12 col-md-4 col-lg-4">
                       <div class="form-group">
                         <label for="exampleInputPassword1">Product Self Life</label>
-                        <select id="inputState" name="life" class="form-control" required>
-                          <option value="3" @if(isset($data->self_life)==3) ? selected="Selected" :'' @endif >3 Months</option>
-                          <option value="6" @if(isset($data->self_life)==6) ? selected="Selected" :'' @endif>6 Months</option>
-                          <option value="9" @if(isset($data->self_life)==9) ? selected="Selected" :'' @endif>9 Months</option>
-                          <option value="12" @if(isset($data->self_life)==12) ? selected="Selected" :'' @endif>12 Months</option>
+                        <select name="life" class="form-control" required>
+                        @foreach($psl as $info)
+                          <option value="{{ $info->id}}" @if(isset($data->self_life)==$info->id) ? selected="Selected" :'' @endif>{{ $info->label }}</option>
+                          @endforeach
                         </select>
                       </div>
                     </div>
@@ -58,7 +57,7 @@
                     <div class="col-12 col-md-4 col-lg-4">
                       <div class="form-group">
                         <label>Category</label>
-                        <select id="inputState" name="category" class="form-control" required>
+                        <select name="category" class="form-control" required>
                           @foreach($category as $info)
                           <option value="{{ $info->id}}" @if(isset($data->category)==$info->id) ? selected="Selected" :'' @endif>{{ $info->title }}</option>
                           @endforeach
@@ -68,7 +67,7 @@
                     <div class="col-12 col-md-4 col-lg-4">
                       <div class="form-group">
                         <label for="exampleInputPassword1">Sub category</label>
-                        <select id="inputState" name="subcategory" class="form-control" required>
+                        <select name="subcategory" class="form-control" required>
                           @foreach($sub_category as $info)
                           <option value="{{ $info->id}}" @if(isset($data->sub_category)==$info->id) ? selected="Selected" :'' @endif>{{ $info->sub_category }}</option>
                           @endforeach
@@ -78,9 +77,10 @@
                     <div class="col-12 col-md-4 col-lg-4">
                       <div class="form-group">
                         <label for="exampleInputPassword1">Unit Of Measurement</label>
-                        <select id="inputState" name="unit" class="form-control" required>
-                          <option value="kg" @if(isset($data->unit)=='kg') ? selected="Selected" :'' @endif>Kgs.</option>
-                          <option value="ltr" @if(isset($data->unit)=='ltr') ? selected="Selected" :'' @endif>Ltrs.</option>
+                        <select name="unit" class="form-control" required>
+                        @foreach($unit as $info)
+                          <option value="{{ $info->id}}" @if(isset($data->unit)==$info->id) ? selected="Selected" :'' @endif>{{ $info->unit }}</option>
+                          @endforeach
                         </select>
                       </div>
                     </div>

@@ -18,11 +18,27 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">
+          @if( session('success'))
+              <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert">
+                  <i class="fa fa-times"></i>
+                </button>
+                {{session('success')}}
+              </div>
+              @endif
+              @if( session('danger'))
+              <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert">
+                  <i class="fa fa-times"></i>
+                </button>
+                {{session('danger')}}
+              </div>
+            @endif
 
 
             <div class="card">
               <div class="card-header">
-                <a href="{{ url('inward/add') }}" class="btn btn-primary"> Add Inward</a>
+                <a href="{{ url('unit/add') }}" class="btn btn-primary"> Add Unit</a>
                 <a href="" id="reload" class="btn btn-sm btn-primary float-right"
                                     title="Refresh"><i class="fas fa-redo-alt"></i></a>
               </div>
@@ -31,35 +47,27 @@
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                     <tr>
-                      <th>Order No.</th>
-                      <th>Vendor Name</th>
-                      <th>Date of Receive</th>
-                      <th>Qty</th>
-                      <th>Batch No.</th>
+                      <th>ID</th>
+                      <th>Unit</th>
                       <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                    @foreach($inward as $info)
+                    @foreach($unit as $info)
                     <tr>
-                      <td>{{$info->order_no}}</td>
-                      <td>{{$info->name}}</td>
-                      <td>{{date('d M Y', strtotime($info->received_date))}}</td>
-                      <td>{{$info->qty}}</td>
-                      <td>{{$info->batch_no}}</td>
-                      <td class="text-center">
-                        <a href="{{url('product/edit/'.$info->id)}}" class="btn btn-info"
-                            title="Edit"><i class="fas fa-pencil"></i></a>
-                        <a data-confirm="" data-id="{{$info->id}}" href="{{url('product/delete/'.$info->id)}}" class="btn btn-danger"
-                            title="Delete"><i class="fas fa-trash-alt"></i></a>
-                      </td>
+                        <td>{{ $info->id }}</td>
+                        <td>{{ $info->unit }}</td>
+                        <td class="text-center">
+                            <a href="{{url('unit/edit/'.$info->id)}}" class="btn btn-info"
+                                title="Edit"><i class="fas fa-pencil"></i></a>
+                            <a data-confirm="" data-id="{{$info->id}}" href="{{url('unit/delete/'.$info->id)}}" class="btn btn-danger"
+                                title="Delete"><i class="fas fa-trash-alt"></i></a>
+                        </td>
                     </tr>
                     @endforeach
-                  </tbody>
-                  
 
                    
-                  
+                  </tbody>
                 </table>
               </div>
               <!-- /.card-body -->
@@ -77,6 +85,7 @@
   </div>
   @section('page-footer-script')
     <script src="{{ asset('/admin/assets/js/data-tables.js') }}"></script>
+    <script src="{{ asset('/admin/assets/js/sweetalert.js') }}"></script>
   @endsection
   @include('layouts.footer')
 

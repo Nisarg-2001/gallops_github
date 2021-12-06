@@ -17,52 +17,50 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3>Add Tax</h3>
+                                <h3>Add Product Shelf Life</h3>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <form action="{{ url('tax/post') }}" method="post" id="taxForm">
+                                <form action="{{ url('productshelflife/post') }}" method="post" id="pslForm">
                                     @csrf
                                     <div class="row">
-                                        <div class="col-12 col-md-4 col-lg-4">
+                                        <div class="col-12 col-md-6 col-lg-6">
                                             <div class="form-group">
-                                                <label>Tax Name</label>
-                                                <input type="hidden" name="id" value="{{(isset($tax->id) && !empty($tax->id)) ? $tax->id : ''}}">
-                                                <input type="text" class="form-control" name="name" value="{{(isset($tax->tax_name) && !empty($tax->tax_name)) ? $tax->tax_name : ''}}" aria-describedby="emailHelp" placeholder="Enter Tax Name">
-                                                @error('name')
+                                                <label>Product Shelf Life Label</label>
+                                                <p>('for eg. 12 months')</p>
+                                                <input type="hidden" name="id" value="{{(isset($psl->id) && !empty($psl->id)) ? $psl->id : ''}}">
+                                                <input type="text" class="form-control" name="label" value="{{(isset($psl->label) && !empty($psl->label)) ? $psl->label : ''}}" aria-describedby="emailHelp" placeholder="Enter ShelfLife Label">
+                                                @error('label')
+                                                <div class="text-danger">{{$message}}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 col-md-3 col-lg-3">
+                                            <div class="form-group">
+                                                <label>Month</label>
+                                                
+                                                <input type="number" class="form-control" name="month" value="{{(isset($psl->month) && !empty($psl->month)) ? $psl->month : '12'}}" aria-describedby="emailHelp">
+                                                @error('month')
                                                 <div class="text-danger">{{$message}}</div>
                                                 @enderror
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-3 col-lg-3">
                                             <div class="form-group">
-                                                <label>Tax type</label>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="type" @if(isset($tax->type) && $tax->type=='percentage') ?
-                                                    checked="Checked"
-                                                    :"" @endif value="percentage" id="flexRadioDefault1">
-                                                    <label class="form-check-label mr-5" for="flexRadioDefault1">
-                                                        Percentage
-                                                    </label>
-                                                    <input class="form-check-input" type="radio" name="type" @if(isset($tax->type) && $tax->type=='amount') ?
-                                                    checked="Checked"
-                                                    :"" @endif value="amount" id="flexRadioDefault2" >
-                                                    <label class="form-check-label" for="flexRadioDefault2">
-                                                        Fixed Amount
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-4">
-                                            <div class="form-group">
-                                                <label for="exampleInputPassword1">Value</label>
-                                                <input type="number" class="form-control" name="value" step="0.01" value="{{(isset($tax->value) && !empty($tax->value)) ? $tax->value : ''}}" placeholder="Enter tax value">
+                                                <label>Year</label>
+                                                
+                                                <input type="number" class="form-control" name="year" value="{{(isset($psl->year) && !empty($psl->year)) ? $psl->year : '1'}}" aria-describedby="emailHelp">
+                                                @error('year')
+                                                <div class="text-danger">{{$message}}</div>
+                                                @enderror
                                             </div>
                                         </div>
                                     </div>
                                     <div class="text-center">
                                         <button type="submit" class="btn btn-primary ">Submit</button>
-                                        <a href="{{url('tax')}}" class="btn btn-danger">Cancel</a>
+                                        <a href="{{url('productshelflife')}}" class="btn btn-danger">Cancel</a>
                                     </div>
                                 </form>
                             </div>

@@ -56,7 +56,7 @@
                                         <tr>
                                             <td>{{ $c }}</td>
                                             <td>{{ $info->name }}</td>
-                                            <td>{{ $info->self_life }} Months</td>
+                                            <td>{{ $info->label }}</td>
                                             <td>{{ $info->price }}</td>
                                             <td>{{ $info->unit}}</td>
                                             <td class="text-center">

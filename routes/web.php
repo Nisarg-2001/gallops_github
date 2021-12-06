@@ -5,7 +5,9 @@ use App\Http\Controllers\userController;
 use App\Http\Controllers\taxController;
 use App\Http\Controllers\categoryController;
 use App\Http\Controllers\sub_categoryController;
+use App\Http\Controllers\unitController;
 use App\Http\Controllers\productController;
+use App\Http\Controllers\shelflifeController;
 use App\Http\Controllers\vendorController;
 use App\Http\Controllers\assignController;
 use App\Http\Controllers\orderController;
@@ -68,12 +70,26 @@ Route::post('/subCategory/post',[sub_categoryController::class,'addupdate']);
 Route::get('/subCategory/edit/{id}',[sub_categoryController::class,'edit']);
 Route::get('/subCategory/delete/{id}',[sub_categoryController::class,'delete']);
 
+## UNIT OF MEASUREMENT ROUTES ##
+Route::get('/unit',[unitController::class,'view']);
+Route::get('/unit/add',[unitController::class,'create']);
+Route::post('/unit/post',[unitController::class,'addupdate']);
+Route::get('/unit/edit/{id}',[unitController::class,'edit']);
+Route::get('/unit/delete/{id}',[unitController::class,'delete']);
+
 ## PRODUCT ROUTES ##
 Route::get('/products',[productController::class,'view']);
 Route::get('/product/add',[productController::class,'create']);
 Route::post('/product/post',[productController::class,'addupdate']);
 Route::get('/product/edit/{id}',[productController::class,'edit']);
 Route::get('/product/delete/{id}',[productController::class,'delete']);
+
+## PRODUCT SHELF LIFE ROUTES ##
+Route::get('/productshelflife',[shelflifeController::class,'view']);
+Route::get('/productshelflife/add',[shelflifeController::class,'create']);
+Route::post('/productshelflife/post',[shelflifeController::class,'addupdate']);
+Route::get('/productshelflife/edit/{id}',[shelflifeController::class,'edit']);
+Route::get('/productshelflife/delete/{id}',[shelflifeController::class,'delete']);
 
 ## VENDOR ROUTES ##
 Route::get('/vendors', [vendorController::class,'view']);
@@ -127,9 +143,9 @@ Route::post('/inward/getProductByVendorId',[inwardController::class,'getProductB
 Route::get('/outward',[outwardController::class,'view']);
 Route::get('/outward/add',[outwardController::class,'create']);
 Route::get('/outward/{id}', [outwardController::class,'edit']);
+Route::post('/order/getProduct',[orderController::class,'getProduct']);
 Route::post('/outward/post',[outwardController::class,'addupdate']);
-Route::post('/order/getProduct',[outwardController::class,'getProduct']);
-Route::get('/order/delete/{id}',[orderController::class,'delete']);
+Route::get('/outward/delete/{id}',[orderController::class,'delete']);
 Route::get('/outward/invoice',[outwardController::class,'invoice']);
 
 ## REPORTS ROUTES   ##
