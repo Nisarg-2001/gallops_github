@@ -34,6 +34,30 @@ class User extends Authenticatable
         'role',
     ];
 
+    public function isAdmin()
+{
+    if($this->role === 1)
+    { 
+        return true; 
+    } 
+    else 
+    { 
+        return false; 
+    }
+}
+
+public function status()
+{
+    if($this->status === 1)
+    { 
+        return true; 
+    } 
+    else 
+    { 
+        return redirect('login');
+    }
+}
+
     /**
      * The attributes that should be hidden for serialization.
      *

@@ -33,8 +33,11 @@ use App\Http\Controllers\purchaseOrderController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::group(['middleware' => 'auth'], function() {
+
+
+Route::group(['middleware' => 'role'], function(){
+
 
 ## DASHBOARD ROUTES ##
 Route::get('/dashboard',[userController::class,'dashboard'])->name('dashboard');
@@ -163,6 +166,7 @@ Route::post('/resetpassword',[userController::class,'resetPassword']);
 
 });
 
+
 ## ROLES ROUTES ##
 Route::get('/role',[roleController::class,'view']);
 Route::get('/role/add',[roleController::class,'create']);
@@ -172,16 +176,26 @@ Route::get('/role/delete/{id}',[roleController::class,'delete']);
 
 
 ##  FRANCHISE ROUTES    ##
-Route::get('/user/dashboard/',function(){
-    return view('user.dashboard');
+
+    Route::get('/user/dashboard/',function(){
+        return view('user.dashboard');
+    });
+Route::get('/user/order',[userOrderController::class,'view']);
+Route::get('/order/add',[orderController::class,'create']);
+Route::get('/order/{id}', [orderController::class,'edit']);
+Route::post('/order/post',[orderController::class,'addupdate']);
+Route::post('/order/getProduct',[orderController::class,'getProduct']);
+Route::post('/order/getTaxes',[orderController::class,'getTaxes']);
+Route::get('/order/delete/{id}',[orderController::class,'delete']);
+Route::get('/order/invoice',[orderController::class,'invoice']);
+
+    
 });
-Route::get('/user/order/',[userOrderController::class,'view']);
 
 ## VENDOR SCREEN ROUTES ##
 Route::get('invoice',function(){
     return view('admin.order.invoice');
 });
-
 
 
 

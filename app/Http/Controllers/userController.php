@@ -64,6 +64,7 @@ class UserController extends Controller
             $user->state = $request->state;
             $user->pincode = $request->pincode;
             $user->role = $request->role;
+            $user->status = $request->status;
             $user->save();
             $request->session()->flash('status', 'Task was successful!');
             return redirect('user')->with('success',' User Updated Successfully');
