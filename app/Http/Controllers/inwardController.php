@@ -21,6 +21,7 @@ class inwardController extends Controller
         ->join('vendor_masters as v', 'io.vendor_id', '=', 'v.id')
         ->join('inward_order_items as iot', 'io.id', '=', 'iot.inward_id')
         ->select('io.*', 'v.name', 'iot.*')
+        ->where('user_id',Auth::user()->id)
         ->paginate(10);
         return view('admin.inward.index',['inward'=>$inward]);
     }
@@ -89,6 +90,27 @@ class inwardController extends Controller
             }
         }
 
-        return redirect('inward')->with('success', 'Products Added Successfully');
+        return redirect('user/inward')->with('success', 'Products Added Successfully');
+    }
+    public function report(Request $request)
+    {
+        if(isset($request))
+        {
+            $vendor = vendor_master::all();
+            $inward = DB::table('inward_order_items as iot')
+            ->join('product_masters as p', 'iot.product_id', '=', 'p.id')
+            ->join('inward_orders as io', 'iot.inward_id', '=', 'io.id')
+            ->select('iot.*', 'io.*', 'p.name')
+            ->whereBetween('io.created_at', [$request->from, $request->to])
+            ->where([['io.vendor_id', '=', $request->vendor_id],['io.user_id', '=', $request->id]])
+            ->paginate(10);
+            return view('admin.inward.report')->with(['inward'=>$inward,'vendor'=>$vendor]);
+        }
+        else
+        {
+            $vendor= vendor_master::all();
+            return view('admin.inward.report')->with(['vendor'=>$vendor]);
+        }
+       
     }
 }

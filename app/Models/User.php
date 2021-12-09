@@ -45,6 +45,17 @@ class User extends Authenticatable
         return false; 
     }
 }
+public function isUser()
+{
+    if($this->role == 2)
+    { 
+        return true; 
+    } 
+    else 
+    { 
+        return false; 
+    }
+}
 
 public function status()
 {
@@ -54,7 +65,7 @@ public function status()
     } 
     else 
     { 
-        return redirect('login');
+        return false;
     }
 }
 

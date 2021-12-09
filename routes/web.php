@@ -36,7 +36,7 @@ use App\Http\Controllers\purchaseOrderController;
 Route::group(['middleware' => 'auth'], function() {
 
 
-Route::group(['middleware' => 'role'], function(){
+Route::group(['middleware' => 'admin'], function(){
 
 
 ## DASHBOARD ROUTES ##
@@ -109,14 +109,14 @@ Route::post('/assign_product/getTax',[assignController::class,'getTax']);
 Route::post('/assign_product/post',[assignController::class,'addupdate']);
 
 ##  ORDER ROUTES ##
-Route::get('/order',[orderController::class,'view']);
-Route::get('/order/add',[orderController::class,'create']);
-Route::get('/order/{id}', [orderController::class,'edit']);
-Route::post('/order/post',[orderController::class,'addupdate']);
-Route::post('/order/getProduct',[orderController::class,'getProduct']);
-Route::post('/order/getTaxes',[orderController::class,'getTaxes']);
-Route::get('/order/delete/{id}',[orderController::class,'delete']);
-Route::get('/order/invoice',[orderController::class,'invoice']);
+//Route::get('/order',[orderController::class,'view']);
+// Route::get('/order/add',[orderController::class,'create']);
+// Route::get('/order/{id}', [orderController::class,'edit']);
+// Route::post('/order/post',[orderController::class,'addupdate']);
+// Route::post('/order/getProduct',[orderController::class,'getProduct']);
+// Route::post('/order/getTaxes',[orderController::class,'getTaxes']);
+// Route::get('/order/delete/{id}',[orderController::class,'delete']);
+// Route::get('/order/invoice',[orderController::class,'invoice']);
 
 ##  ADMIN ORDER ROUTES ##
 Route::get('/admin-order',[adminOrderController::class,'view']);
@@ -177,10 +177,17 @@ Route::get('/role/delete/{id}',[roleController::class,'delete']);
 
 ##  FRANCHISE ROUTES    ##
 
-    Route::get('/user/dashboard/',function(){
+Route::group(['prefix' => 'user'], function(){
+Route::group(['middleware' => 'user'],function(){
+
+
+
+
+    Route::get('/dashboard/',function(){
         return view('user.dashboard');
     });
-Route::get('/user/order',[userOrderController::class,'view']);
+##  FRANCHISE  -- ORDERS    ##
+Route::get('/order',[orderController::class,'view']);
 Route::get('/order/add',[orderController::class,'create']);
 Route::get('/order/{id}', [orderController::class,'edit']);
 Route::post('/order/post',[orderController::class,'addupdate']);
@@ -189,9 +196,26 @@ Route::post('/order/getTaxes',[orderController::class,'getTaxes']);
 Route::get('/order/delete/{id}',[orderController::class,'delete']);
 Route::get('/order/invoice',[orderController::class,'invoice']);
 
-    
-});
+##  FRANCHISE --  INWARDS ##
+Route::get('/inward',[inwardController::class,'view']);
+Route::get('/inward/add',[inwardController::class,'create']);
+Route::post('/inward/store',[inwardController::class,'store']);
+Route::get('/product/edit/{id}',[productController::class,'edit']);
+Route::post('/inward/getProductByVendorId',[inwardController::class,'getProductByVendorId']);
 
+##  FRANCHISE --    OUTWARDS  ##
+Route::get('/outward',[outwardController::class,'view']);
+
+## FRANCHISE    --  REPORTS   ##
+Route::get('/report/order',[orderController::class,'report']);
+Route::post('/report/order',[orderController::class,'report']);
+Route::get('/report/inward',[inwardController::class,'report']);
+Route::post('/report/inward',[inwardController::class,'report']);
+Route::get('/report/outward',[outwardController::class,'report']);
+Route::post('/report/outward',[outwardController::class,'report']); 
+});  
+});
+});
 ## VENDOR SCREEN ROUTES ##
 Route::get('invoice',function(){
     return view('admin.order.invoice');

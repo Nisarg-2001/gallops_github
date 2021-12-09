@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Auth;
 
-class userrole
+class admin
 {
     /**
      * Handle an incoming request.
@@ -24,7 +24,10 @@ class userrole
                 return $next($request);
             }
             else
+            {
                 return redirect('user/dashboard');
+            }
+                
         }
     }
 }
