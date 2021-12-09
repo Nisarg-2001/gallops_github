@@ -107,26 +107,6 @@ class outwardController extends Controller
         return view('admin.order.invoice');
     }
 
-    public function report(Request $request)
-    {
-        if(isset($request))
-        {
-            $outward = DB::table('outward_items as oi')
-            ->join('product_masters as p', 'oi.product_id', '=', 'p.id')
-            ->join('outward_masters as om', 'oi.outward_id', '=', 'om.id')
-            ->select('oi.*', 'p.name', 'om.*')
-            ->whereBetween('om.created_at',[$request->from, $request->to])
-            ->where('om.user_id', $request->id)
-            ->paginate(10);
-            return view('admin.outward.report')->with(['outward'=>$outward]);
-        }
-        else
-        {
-            return view('admin.outward.report');
-        }
-        
-    }
-
     // public function getProduct(Request $request) 
     // {
     //     $product = outward_master::getProduct();

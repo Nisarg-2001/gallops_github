@@ -48,7 +48,7 @@ $(document).on('change', '#vendor_id', function () {
         $("#vendor_id").select2({ disabled: 'readonly' });
 
         $.ajax({
-            url: APP_URL + 'user/inward/getProductByVendorId',
+            url: APP_URL + 'inward/getProductByVendorId',
             type: 'POST',
             data: {
                 vendor_id: vendor_id,

@@ -22,7 +22,7 @@
 
             <div class="card">
               <div class="card-header">
-                <a href="{{ url('user/inward/add') }}" class="btn btn-primary"> Add Inward</a>
+                <a href="{{ url('inward/add') }}" class="btn btn-primary"> Add Inward</a>
                 <a href="" id="reload" class="btn btn-sm btn-primary float-right"
                                     title="Refresh"><i class="fas fa-redo-alt"></i></a>
               </div>
@@ -48,9 +48,9 @@
                       <td>{{$info->qty}}</td>
                       <td>{{$info->batch_no}}</td>
                       <td class="text-center">
-                        <a href="{{url('user/product/edit/'.$info->id)}}" class="btn btn-info"
+                        <a href="{{url('product/edit/'.$info->id)}}" class="btn btn-info"
                             title="Edit"><i class="fas fa-pencil"></i></a>
-                        <a data-confirm="" data-id="{{$info->id}}" href="{{url('user/product/delete/'.$info->id)}}" class="btn btn-danger"
+                        <a data-confirm="" data-id="{{$info->id}}" href="{{url('product/delete/'.$info->id)}}" class="btn btn-danger"
                             title="Delete"><i class="fas fa-trash-alt"></i></a>
                       </td>
                     </tr>

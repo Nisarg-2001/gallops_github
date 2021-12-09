@@ -14,7 +14,7 @@
     <!-- /.content-header -->
 
     <!-- Main content -->
-    <section class="content mt-3">
+    <section class="content">
       <div class="container-fluid">
         <!-- Small boxes (Stat box) -->
         <div class="row">

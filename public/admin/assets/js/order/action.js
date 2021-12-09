@@ -161,7 +161,7 @@ function check() {
 
 function getAllProducts() {
     $.ajax({
-        url: APP_URL + 'user/order/getProduct',
+        url: APP_URL + 'order/getProduct',
         type: 'POST',
         beforeSend: function () {
             $("#orderForm").find('input[type=submit]').attr('disabled', true);
@@ -179,7 +179,7 @@ function getAllProducts() {
 
 function getAllTaxes() {
     $.ajax({
-        url: APP_URL + 'user/order/getTaxes',
+        url: APP_URL + 'order/getTaxes',
         type: 'POST',
         beforeSend: function () {
             $("#orderForm").find('input[type=submit]').attr('disabled', true);

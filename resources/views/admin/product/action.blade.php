@@ -24,7 +24,7 @@
                   @csrf
                   <input type="hidden" name="id" value="{{ (isset($data->id) && !empty($data->id)) ? $data->id : '' }}">
                   <div class="row">
-                    <div class="col-12 col-md-3 col-lg-3">
+                    <div class="col-12 col-md-4 col-lg-4">
                       <div class="form-group">
                         <label>Product Name</label>
                         <input type="text" class="form-control" name="name" value="{{ (isset($data->name) && !empty($data->name)) ? $data->name : '' }}" placeholder="Enter Product Name" required>
@@ -33,7 +33,7 @@
                         @enderror
                       </div>
                     </div>
-                    <div class="col-12 col-md-3 col-lg-3">
+                    <div class="col-12 col-md-4 col-lg-4">
                       <div class="form-group">
                         <label>Alias name</label>
                         <input type="text" class="form-control" name="alias" value="{{ (isset($data->alias) && !empty($data->alias)) ? $data->alias : '' }}" placeholder="Alias Name" required>
@@ -42,38 +42,19 @@
                         @enderror
                       </div>
                     </div>
-                    <div class="col-12 col-md-3 col-lg-3">
+                    <div class="col-12 col-md-4 col-lg-4">
                       <div class="form-group">
-                        <label>Product Code</label>
-                        <input type="number" class="form-control" name="code" value="{{ (isset($data->alias) && !empty($data->alias)) ? $data->alias : '' }}" placeholder="Product Code" required>
-                        @error('code')
-                        <div class="text-danger">{{$message}}</div>
-                        @enderror
+                        <label for="exampleInputPassword1">Product Self Life</label>
+                        <select name="life" class="form-control" required>
+                        @foreach($psl as $info)
+                          <option value="{{ $info->id}}" @if(isset($data->self_life)==$info->id) ? selected="Selected" :'' @endif>{{ $info->label }}</option>
+                          @endforeach
+                        </select>
                       </div>
                     </div>
-                    <div class="col-12 col-md-3 col-lg-3">
-                    <div class="form-group">
-                        <label>HSN no.</label>
-                        <input type="text" class="form-control" name="hsn" value="{{ (isset($data->alias) && !empty($data->alias)) ? $data->alias : '' }}" placeholder="Hsn no." required>
-                        @error('hsn')
-                        <div class="text-danger">{{$message}}</div>
-                        @enderror
-                      </div>
-                      </div>
-                    
                   </div>
                   <div class="row">
-                        <div class="col-12 col-md-3 col-lg-3">
-                          <div class="form-group">
-                            <label for="exampleInputPassword1">Product Self Life</label>
-                            <select name="life" class="form-control" required>
-                            @foreach($psl as $info)
-                              <option value="{{ $info->id}}" @if(isset($data->self_life)==$info->id) ? selected="Selected" :'' @endif>{{ $info->label }}</option>
-                              @endforeach
-                            </select>
-                          </div>
-                        </div>
-                    <div class="col-12 col-md-3 col-lg-3">
+                    <div class="col-12 col-md-4 col-lg-4">
                       <div class="form-group">
                         <label>Category</label>
                         <select name="category" class="form-control" required>
@@ -83,7 +64,7 @@
                         </select>
                       </div>
                     </div>
-                    <div class="col-12 col-md-3 col-lg-3">
+                    <div class="col-12 col-md-4 col-lg-4">
                       <div class="form-group">
                         <label for="exampleInputPassword1">Sub category</label>
                         <select name="subcategory" class="form-control" required>
@@ -93,7 +74,7 @@
                         </select>
                       </div>
                     </div>
-                    <div class="col-12 col-md-3 col-lg-3">
+                    <div class="col-12 col-md-4 col-lg-4">
                       <div class="form-group">
                         <label for="exampleInputPassword1">Unit Of Measurement</label>
                         <select name="unit" class="form-control" required>

@@ -20,7 +20,7 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <form action="{{ url('user/order/post') }}" method="post" id="orderForm">
+                <form action="{{ url('order/post') }}" method="post" id="orderForm">
                   @csrf
 
                   <div class="row">
@@ -169,7 +169,7 @@
                     @else
                     <button type="submit" class="btn btn-primary" onClick="return check();">Place Order</button>
                     @endif
-                    <a href="{{url('user/order')}}" class="btn btn-danger">Back</a>
+                    <a href="{{url('order')}}" class="btn btn-danger">Back</a>
                   </div>
                 </form>
               </div>

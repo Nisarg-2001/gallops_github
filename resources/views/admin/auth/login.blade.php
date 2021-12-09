@@ -15,14 +15,6 @@
 
 <!-- Validation Errors -->
 <x-auth-validation-errors class="mb-4" :errors="$errors" />
-@if( session('danger'))
-              <div class="alert alert-danger alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert">
-                  <i class="fa fa-times"></i>
-                </button>
-                {{session('danger')}}
-              </div>
-            @endif
       <form action="{{ route('login') }}" method="POST">
       @csrf
         <div class="input-group mb-3">

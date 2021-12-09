@@ -20,7 +20,7 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <form action="{{ url('user/inward/store') }}" method="post" id="inwardForm">
+                <form action="{{ url('inward/store') }}" method="post" id="inwardForm">
                   @csrf
                   <input type="hidden" name="id" value="{{ (isset($data->id) && !empty($data->id)) ? $data->id : '' }}">
                   <input type="hidden" name="vendor" id="vendor" value="">
@@ -166,7 +166,7 @@
                   <div class="text-center">
 
                     <button type="submit" class="btn btn-primary ">Submit</button>
-                    <a href="{{url('user/inward')}}" class="btn btn-danger">Cancel</a>
+                    <a href="{{url('inward')}}" class="btn btn-danger">Cancel</a>
 
                   </div>
                 </form>

@@ -15,8 +15,8 @@ class orderController extends Controller
 
     public function view()
     {
-        $order = DB::table('orders')->where('user_id',Auth::user()->id)->paginate(10);
-        return view('user.order.index')->with(['data'=>$order]);
+        $order = DB::table('orders')->paginate(10);
+        return view('admin.order.index')->with(['data' => $order]);
     }
 
     public function create(Request $request)
@@ -101,7 +101,7 @@ class orderController extends Controller
 
         }
 
-        return redirect('user/order')->with('success', ' Order Created Successfully');
+        return redirect('order')->with('success', ' Order Created Successfully');
 
     }
 
@@ -113,7 +113,7 @@ class orderController extends Controller
         $order = order::find($id);
         $order->delete();
 
-        return redirect('user/order')->with('danger', ' Order Deleted Successfully');
+        return redirect('order')->with('danger', ' Order Deleted Successfully');
     }
 
     public function invoice()
@@ -143,25 +143,11 @@ class orderController extends Controller
         return $taxes;
     }
 
-    public function report(Request $request)
+    public function report()
     {
-        if(isset($request->from) && isset($request->to))
-        {
-            $tax= tax_master::all();
-            $order = DB::table('orders as o')
-            ->join('order_items as oi', 'o.id', '=', 'oi.order_id')
-            ->select('o.*','o.created_at as created', 'oi.*')
-            ->whereBetween('o.created_at', [$request->from, $request->to])
-            ->where('o.user_id','=', $request->id)
-            ->paginate(10);
-            return view('admin.order.report')->with(['order' => $order,'tax'=>$tax]);
-        }
-        else
-        {
-            $tax= tax_master::all();
-            return view('admin.order.report')->with(['tax'=>$tax]);
-        }
-       
+        $order = DB::table('orders')->paginate(10);
+        $product = order::getProduct();
+        return view('admin.order.report')->with(['data' => $order,'product'=>$product]);
     }
 
     public function order_item_report()
