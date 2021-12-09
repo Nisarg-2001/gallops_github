@@ -65,7 +65,7 @@ $(document).on('change', '#vendor_id', function () {
                     $('#changeVendor').show();
                     let options = '<option value="">Select Product</option>';
                     $.each(data, function (key, value) {
-                        options += '<option value="' + value.id + '" data-unit="' + value.unit + '">' + value.name + '</option>';
+                        options += '<option value="' + value.id + '" data-unit="' + value.unit_name + '">' + value.name + '</option>';
                     });
                     $('#product_id').html(options);
                     $('.select2').select2();

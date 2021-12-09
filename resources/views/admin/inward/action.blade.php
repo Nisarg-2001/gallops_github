@@ -92,7 +92,7 @@
 
                       <div class="col-12 col-lg-4 col-md-4">
                         <div class="form-group">
-                          <label for="exampleInputPassword1">Quantity</label>
+                          <label for="qty">Quantity</label>
                           <input type="number" class="form-control" name="qty" id="qty" value="1" placeholder="Quantity" min="1" max="9999">
                           @error('quantity')
                           <div class="text-danger">{{$message}}</div>
@@ -101,7 +101,7 @@
                       </div>
                       <div class="col-12 col-lg-2 col-md-2">
                         <div class="form-group">
-                          <label for="exampleInputPassword1">Packaging Month</label>
+                          <label for="packaging_month">Packaging Month</label>
                           <select class="form-control select2" name="packaging_month" id="packaging_month" id="packaging_month">
                             @for($i = 1; $i <= 12; $i++) <option value="{{$i}}">{{date('M', strtotime('01-'.$i.'-'.date('Y')))}}</option>
                               @endfor

@@ -29,11 +29,10 @@ class outwardController extends Controller
     {
         $branch_id = Auth::id();
         $product = branch_item_stocks::getOutwardStock($branch_id);
-        echo "<pre>";
-        print_r($product);
-        echo "</pre>";
-        exit;
-
+        // echo "<pre>";
+        // print_r($product);
+        // echo "</pre>";
+        // exit;
 
         //get all taxes
         $taxes = tax_master::all();
