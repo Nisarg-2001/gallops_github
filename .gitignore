@@ -1,2 +1,21 @@
+<<<<<<< HEAD
 /.vscode
 .env
+||||||| empty tree
+=======
+/node_modules
+/public/hot
+/public/storage
+/storage/*.key
+/vendor
+.env
+.env.backup
+.phpunit.result.cache
+docker-compose.override.yml
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
+/.idea
+/.vscode
+>>>>>>> 20f41e7e14f4bb05b1d616d3acdbd21a741e026d
