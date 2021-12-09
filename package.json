@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
     "private": true,
     "scripts": {
@@ -25,3 +26,24 @@
         "sweetalert": "^2.1.2"
     }
 }
+||||||| empty tree
+=======
+{
+    "private": true,
+    "scripts": {
+        "dev": "npm run development",
+        "development": "mix",
+        "watch": "mix watch",
+        "watch-poll": "mix watch -- --watch-options-poll=1000",
+        "hot": "mix watch --hot",
+        "prod": "npm run production",
+        "production": "mix --production"
+    },
+    "devDependencies": {
+        "axios": "^0.21",
+        "laravel-mix": "^6.0.6",
+        "lodash": "^4.17.19",
+        "postcss": "^8.1.14"
+    }
+}
+>>>>>>> 20f41e7e14f4bb05b1d616d3acdbd21a741e026d
