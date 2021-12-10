@@ -8,6 +8,7 @@ $('#outwardForm').validate({
         },
         "date_of_issue": {
             required: true,
+            xssProtection: true
         },
     },
     messages: {
@@ -32,16 +33,46 @@ $('#outwardForm').validate({
 
 
 $(document).on('change', '#product_id', function () {
-    let product_id = $(this).val();
-    if (product_id) {
-        $('#outwardProductData').show();
+    let vendor_id = $(this).val();
+    if (vendor_id) {
+        $('#vendor').val(vendor_id);
+        $("#vendor_id").select2({disabled:'readonly'});
+        
+        $.ajax({
+            url: APP_URL + 'inward/getProductByVendorId',
+            type: 'POST',
+            data: {
+                vendor_id: vendor_id,
+            },
+            beforeSend: function () {
+                $("#inwardForm").find('input[type=submit]').attr('disabled', true);
+            },
+            complete: function () {
+                $("#inwardForm").find('input[type=submit]').attr('disabled', false);
+            },
+            success: function (data) {
+                if (data) {
+                    $('#inwardProductData').show();
+                    $('#changeVendor').show();
+                    let options = '<option value="">Select Product</option>';
+                    $.each(data, function (key, value) {
+                        options += '<option value="' + value.id + '" data-unit="' + value.unit + '">' + value.name + '</option>';
+                    });
+                    $('#product_id').html(options);
+                    $('.select2').select2();
+                }
+            }
+        });
     } else {
-        $('#outwardProductData').hide();
+        $('#inwardProductData').hide();
+        $("#vendor_id").select2({disabled:false});
+        $('#vendor').val('');
+        $('#changeVendor').hide();
     }
 });
 
 
-$(document).on('click', '#addOutwardProduct', function () {
+$(document).on('click', '#addInwardProduct', function () {
     if ($('#product_id').val() == '') {
         alert('Please select product.');
         return false;
@@ -52,44 +83,46 @@ $(document).on('click', '#addOutwardProduct', function () {
         return false;
     }
 
-    let qty = $('#qty').val();
-    let avl_qty = $('#product_id option:selected').attr('data-qty');
-
-    if (qty > avl_qty) {
-        alert("Please enter quantity less than available quanity.");
+    if (!$('#batch_number').val()) {
+        alert('Please enter batch number.');
         return false;
     }
 
-
-    addOutwardProduct();
+    addInwardProduct();
 
     return false;
 });
 
 
-$("table.outward-table").on('click', 'button.removethis', function (e) {
+$("table.inward-table").on('click', 'button.removethis', function (e) {
 
     $(this).closest('tr').remove();
     i--;
 });
 
-function addOutwardProduct() {
+function addInwardProduct() {
     let product_id = $('#product_id').val();
-    let product_name = $('#product_id option:selected').attr('data-pname');
+    let product_name = $('#product_id option:selected').text();
     let unit = $('#product_id option:selected').attr('data-unit');
     let qty = $('#qty').val();
-    let batch_number = $('#product_id option:selected').attr('data-batch');
+    let batch_number = $('#batch_number').val();
+
+    let packaging_month_text = $('#packaging_month option:selected').text();
+    let packaging_month = $('#packaging_month option:selected').val();
+
+    let packaging_year = $('#packaging_year option:selected').val();
 
     let row = '<tr id="row_' + product_id + '">';
     row += '<td>' + i + '<input type="hidden" name="product_id[]" value="' + product_id + '"></td>';
     row += '<td>' + product_name + '</td>';
     row += '<td>' + qty + '<input type="hidden" name="qty[]" value="' + qty + '"></td>';
     row += '<td>' + unit + '<input type="hidden" name="unit[]" value="' + unit + '"></td>';
+    row += '<td>' + packaging_month_text + '-' + packaging_year + '<input type="hidden" name="monthYear[]" value="' + packaging_month + '-' + packaging_year + '"></td>';
     row += '<td>' + batch_number + '<input type="hidden" name="batch_number[]" value="' + batch_number + '"></td>';
     row += '<td><button type="button" class="btn btn-danger btn-sm removethis" title="Remove"><i class="fa fa-trash"></i></button></td>';
     row += "</tr>";
 
-    $("table.outward-table").append(row);
+    $("table.inward-table").append(row);
 
     i++;
     

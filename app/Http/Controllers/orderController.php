@@ -101,7 +101,7 @@ class orderController extends Controller
 
         }
 
-        return redirect('order')->with('success', ' Order Created Successfully');
+        return redirect('user/order')->with('success', ' Order Created Successfully');
 
     }
 
@@ -113,7 +113,7 @@ class orderController extends Controller
         $order = order::find($id);
         $order->delete();
 
-        return redirect('order')->with('danger', ' Order Deleted Successfully');
+        return redirect('user/order')->with('danger', ' Order Deleted Successfully');
     }
 
     public function invoice()
@@ -143,17 +143,33 @@ class orderController extends Controller
         return $taxes;
     }
 
-    public function report()
+    public function report(Request $request)
     {
-        $order = DB::table('orders')->paginate(10);
-        $product = order::getProduct();
-        return view('admin.order.report')->with(['data' => $order,'product'=>$product]);
+        if(isset($request))
+        {
+            $order = DB::table('order_items as oi')
+            ->join('orders as o', 'oi.order_id', '=', 'o.id')
+            ->select('o.*', 'oi.*', 'o.created_at as created')
+            ->whereBetween('o.created_at', [$request->from,$request->to])
+            ->where('o.user_id', $request->id)
+            ->paginate(10);
+            $tax = tax_master::all();
+            return view('admin.order.report')->with(['order' => $order,'tax'=>$tax]);
+        }
+        else
+        {
+            $tax = tax_master::all();
+            return view('admin.order.report')->with(['tax'=>$tax]);
+        }
+            
+        
     }
 
     public function order_item_report()
     {
         $order = DB::table('orders')->paginate(10);
         $product = order::getProduct();
+        
         return view('admin.order.report')->with(['data' => $order,'product'=>$product]);
     }
 }

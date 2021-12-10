@@ -156,6 +156,21 @@
                                             </div>
                                         </div>
                                     </div>
+                                    @if(isset($data))
+                                    <div class="col-12 col-md-4 col-lg-4">
+                                            <div class="form-group">
+                                                <label for="inputState">Status</label>
+                                                <select name="status" class="form-control" required>
+                                                    <option value="1" @if(isset($data->status) &&
+                                                        $data->status==1) ? Selected="Selected" :'' @endif
+                                                        >Active</option>
+                                                        <option value="0" @if(isset($data->status) &&
+                                                        $data->status==0) ? Selected="Selected" :'' @endif
+                                                        >Deactivate</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        @endif
                                     <div class="text-center">
                                         <button type="submit" class="btn btn-primary ">Submit</button>
                                         <a href="{{url('user')}}" class="btn btn-danger">Cancel</a>

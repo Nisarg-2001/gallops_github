@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\product_master;
 use App\Models\vendor_master;
+use App\Models\tax_master;
 use App\Models\inward_orders;
 use App\Models\inward_order_items;
 use App\Models\branch_item_stocks;
@@ -89,6 +90,27 @@ class inwardController extends Controller
             }
         }
 
-        return redirect('inward')->with('success', 'Products Added Successfully');
+        return redirect('user/inward')->with('success', 'Products Added Successfully');
+    }
+    public function report(Request $request)
+    {   if(isset($request))
+        {
+            $inward = DB::table('inward_order_items as iot')
+            ->join('inward_orders as io', 'iot.inward_id', '=', 'io.id')
+            ->join('product_masters as p', 'iot.product_id', '=', 'p.id')
+            ->select('iot.*', 'io.*', 'p.name')
+            ->whereBetween('io.created_at', [$request->from,$request->to])
+            ->where('io.vendor_id', $request->vendor_id)
+            ->where('io.user_id', $request->id)
+            ->paginate(10);
+            $vendor = vendor_master::all();
+            return view('admin.inward.report')->with(['inward' => $inward,'vendor'=>$vendor]);
+        }
+        else
+        {
+            return view('admin.inward.report');
+        }
+            
+       
     }
 }

@@ -65,16 +65,6 @@
                 </li>
 
                 <li class="nav-item menu">
-                    <a href="{{ url('/unit') }}" class="nav-link">
-                        <i class="nav-icon fas fa-list-ul"></i>
-                        <p>
-                            Unit of Measurement
-
-                        </p>
-                    </a>
-                </li>
-
-                <li class="nav-item menu">
                     <a href="{{ url('/products') }}" class="nav-link">
                         <i class="nav-icon fas fa-box"></i>
                         <p>
@@ -85,21 +75,10 @@
                 </li>
 
                 <li class="nav-item menu">
-                    <a href="{{ url('/productshelflife') }}" class="nav-link">
-                        <i class="nav-icon fas fa-box"></i>
-                        <p>
-                            Product Shelf Life
-
-                        </p>
-                    </a>
-                </li>
-
-                <li class="nav-item menu">
                     <a href="{{ url('/vendors') }}" class="nav-link">
                         <i class="nav-icon fas fa-people-carry"></i>
                         <p>
                             Vendors
-
                         </p>
                     </a>
                 </li>
@@ -113,33 +92,71 @@
                     </a>
                 </li>
 
+                <li class="nav-item menu">
+                    <a class="nav-link ">
+                        <i class="nav-icon fas fa-cog"></i>
+                        <p>
+                            More Settings
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview" >
+                        <li class="nav-item menu">
+                        <a href="{{ url('/unit') }}" class="nav-link">
+                            <i class="nav-icon fas fa-list-ul"></i>
+                            <p>
+                                Unit of Measurement
+                            </p>
+                        </a>
+                        </li>
+                        <li class="nav-item menu">
+                            <a href="{{ url('/productshelflife') }}" class="nav-link">
+                                <i class="nav-icon fas fa-box"></i>
+                                <p>
+                                    Product Shelf Life
+                                </p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                
+
+               
+
+                
+
 
                 <li class="nav-item menu">
-                    <a href="{{ url('/order') }}" class="nav-link ">
+                    <a  class="nav-link ">
                         <i class="nav-icon fas fa-clipboard-list"></i>
                         <p>
                             Orders
+                            <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item menu">
+                        <a href="{{ url('/admin-order') }}" class="nav-link ">
+                            <i class="nav-icon fas fa-file-edit"></i>
+                            <p>
+                                Admin Orders
+                            </p>
+                        </a>
+                        </li>
+
+                        <li class="nav-item menu">
+                            <a href="{{ url('/vendor-order') }}" class="nav-link ">
+                                <i class="nav-icon fas fa-file-edit"></i>
+                                <p>
+                                    Vendor Orders
+                                </p>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
 
-                <li class="nav-item menu">
-                    <a href="{{ url('/admin-order') }}" class="nav-link ">
-                        <i class="nav-icon fas fa-clipboard-list"></i>
-                        <p>
-                            Admin Orders
-                        </p>
-                    </a>
-                </li>
-
-                <li class="nav-item menu">
-                    <a href="{{ url('/vendor-order') }}" class="nav-link ">
-                        <i class="nav-icon fas fa-clipboard-list"></i>
-                        <p>
-                            Vendor Orders
-                        </p>
-                    </a>
-                </li>
+                
 
                 <li class="nav-item menu">
                     <a href="{{ url('/inward') }}" class="nav-link">
@@ -245,12 +262,33 @@
                     </a>
                 </li>
                 <li class="nav-item menu">
-                    <a href="{{ url('/user/report') }}" class="nav-link">
-                        <i class="nav-icon far fa-file-chart-line"></i>
+                    <a href="{{url('user/reports')}}" class="nav-link">
+                        <i class="nav-icon fas fa-file-chart-line"></i>
                         <p>
                             Reports
+                            <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{url('user/report/order')}}" class="nav-link">
+                                <i class="far fa-file-invoice nav-icon"></i>
+                                <p>Order Report</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{url('user/report/inward')}}" class="nav-link">
+                                <i class="far fa-file-invoice nav-icon"></i>
+                                <p>Inward Report</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{url('user/report/outward')}}" class="nav-link">
+                                <i class="far fa-file-invoice nav-icon"></i>
+                                <p>Outward Report</p>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 @endif
 
