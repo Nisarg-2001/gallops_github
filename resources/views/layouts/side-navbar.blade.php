@@ -16,7 +16,7 @@
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-                @if(Auth::user()->role==1)
+               @if(Auth::check())   @if(Auth::user()->role==1)
                 <li class="nav-item ">
                     <a class="nav-link" href="{{ url('dashboard') }}">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -291,7 +291,26 @@
                     </ul>
                 </li>
                 @endif
+                @else
 
+                <!-- VENDORS SIDE-BAR -->
+                <li class="nav-item menu">
+                    <a class="nav-link" href="{{ url('vendor/dashboard') }}">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                            Home
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item menu">
+                    <a class="nav-link" href="{{ url('vendor/order') }}">
+                        <i class="nav-icon fas fa-cart-plus"></i>
+                        <p>
+                            My Orders
+                        </p>
+                    </a>
+                </li>
+                @endif
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

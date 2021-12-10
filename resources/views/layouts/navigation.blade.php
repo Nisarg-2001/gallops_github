@@ -16,7 +16,8 @@
                     <x-slot name="trigger">
                         <button
                             class="flex  text-md font-bold text-gray-700 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
-                            <div margin-left="200px">{{ Auth::user()->name }}</div>
+                            @if(Auth::check())<div margin-left="200px">{{ Auth::user()->name }}</div>
+                            @else<div margin-left="200px">{{ session()->get('vname')  }}</div>@endif
 
                             <div class="ml-1">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
@@ -86,8 +87,9 @@
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
             <div class="px-4">
-                <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
-                <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+                @if(Auth::check())<div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
+                @else<div margin-left="200px">{{ session()->get('vname')  }}</div>@endif
+                @if(Auth::check())<div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>@endif
             </div>
 
             <div class="mt-3 space-y-1">
@@ -120,6 +122,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+            @if(Auth::check())
                 <form method="post" id="resetForm" action="{{ url('resetpassword') }}">
                     @csrf
                     <div class="col-12">
@@ -156,6 +159,7 @@
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                         
                 </form>
+                @endif
             </div>
            
         </div>

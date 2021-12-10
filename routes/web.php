@@ -222,10 +222,19 @@ Route::post('/report/outward',[outwardController::class,'report']);
 });  
 });
 });
+
+
+
 ## VENDOR SCREEN ROUTES ##
-Route::get('invoice',function(){
-    return view('admin.order.invoice');
+
+Route::group(['prefix' => 'vendor'], function(){
+    Route::get('/login',[vendorController::class,'login']);
+    Route::post('/login',[vendorController::class,'login']);
+    Route::get('/dashboard',[vendorController::class,'home']);
+    Route::get('/order',[vendorController::class,'order']);
+
 });
+
 
 
 
