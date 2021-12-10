@@ -6,11 +6,39 @@ use App\Models\vendor_master;
 use App\Models\state;
 use Illuminate\Http\Request;
 use Hash;
+use Session;
 use DB;
 
 
 class vendorController extends Controller
 {
+    public function login(Request $request)
+    {
+        if(isset($request->email))
+        {
+            $email =$request->input('email');
+            $password =$request->input('password');
+            $user = vendor_master::where('email',$email)->first();
+            if(!$user || !Hash::check($password,$user->password))
+            {
+                return back()->with('danger', 'Password does not match our records');
+            }
+            else
+            {
+                Session::put('vname',$user->name);
+                Session::put('vid',$user->id);
+                return redirect('vendor/dashboard');
+            }
+                
+        }
+        else
+            return view('vendors.login');
+    }
+    public function home()
+    {
+    
+        return view('vendors.dashboard');
+    }
     public function view()
     {
         $data = DB::table('vendor_masters')->paginate(10);
@@ -70,6 +98,18 @@ class vendorController extends Controller
         $vendor->save();
         $request->session()->flash('status', 'Task was successful!');
         return redirect('vendors')->with('success',' Vendor Added Successfully');
+        }
+    }
+
+    public function order(Request $request)
+    {
+        if(isset($request))
+        {
+            return view('vendors.order');
+        }
+        else
+        {
+            return view('vendors.order');
         }
     }
 

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Auth;
 
 class User extends Authenticatable
 {
@@ -44,6 +45,20 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    public function isAdmin()
+    {
+        if($this->role == 1)
+            return true;
+        else
+            return false;
+    }
+    public function isUser()
+    {
+        if($this->role == 2)
+            return true;
+        else
+            return false;
+    }
     /**
      * The attributes that should be cast.
      *

@@ -11,10 +11,9 @@
     </div>
     <div class="card-body">
          <!-- Session Status -->
-         <x-auth-session-status class="mb-4" :status="session('status')" />
+         
 
 <!-- Validation Errors -->
-<x-auth-validation-errors class="mb-4" :errors="$errors" />
 @if( session('danger'))
               <div class="alert alert-danger alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert">
@@ -23,7 +22,7 @@
                 {{session('danger')}}
               </div>
             @endif
-      <form action="{{ route('login') }}" method="POST">
+      <form action="{{url('vendor/login')}}" method="POST">
       @csrf
         <div class="input-group mb-3">
           <input type="email" name="email" class="form-control" placeholder="Email" required autofocus>

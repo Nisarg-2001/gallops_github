@@ -20,7 +20,7 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <form action="{{ url('inward/store') }}" method="post" id="inwardForm">
+                <form action="{{ url('user/inward/store') }}" method="post" id="inwardForm">
                   @csrf
                   <input type="hidden" name="id" value="{{ (isset($data->id) && !empty($data->id)) ? $data->id : '' }}">
                   <input type="hidden" name="vendor" id="vendor" value="">
@@ -92,7 +92,7 @@
 
                       <div class="col-12 col-lg-4 col-md-4">
                         <div class="form-group">
-                          <label for="qty">Quantity</label>
+                          <label for="exampleInputPassword1">Quantity</label>
                           <input type="number" class="form-control" name="qty" id="qty" value="1" placeholder="Quantity" min="1" max="9999">
                           @error('quantity')
                           <div class="text-danger">{{$message}}</div>
@@ -101,7 +101,7 @@
                       </div>
                       <div class="col-12 col-lg-2 col-md-2">
                         <div class="form-group">
-                          <label for="packaging_month">Packaging Month</label>
+                          <label for="exampleInputPassword1">Packaging Month</label>
                           <select class="form-control select2" name="packaging_month" id="packaging_month" id="packaging_month">
                             @for($i = 1; $i <= 12; $i++) <option value="{{$i}}">{{date('M', strtotime('01-'.$i.'-'.date('Y')))}}</option>
                               @endfor
@@ -166,7 +166,7 @@
                   <div class="text-center">
 
                     <button type="submit" class="btn btn-primary ">Submit</button>
-                    <a href="{{url('inward')}}" class="btn btn-danger">Cancel</a>
+                    <a href="{{url('user/inward')}}" class="btn btn-danger">Cancel</a>
 
                   </div>
                 </form>

@@ -80,6 +80,8 @@ class productController extends Controller
             $data = product_master::find($request->id);
             $data->name = $request->name;
             $data->alias = $request->alias;
+            $data->code = $request->code;
+            $data->hsn = $request->hsn;
             $data->self_life = $request->life;
             $data->category = $request->category;
             $data->sub_category = $request->subcategory;
@@ -95,6 +97,8 @@ class productController extends Controller
             $product = new product_master;
             $product->name = $request->name;
             $product->alias = $request->alias;
+            $product->code = $request->code;
+            $product->hsn = $request->hsn;
             $product->self_life = $request->life;
             $product->category = $request->category;
             $product->sub_category = $request->subcategory;
