@@ -76,6 +76,7 @@ class inwardController extends Controller
         foreach ($request->product_id as $key => $value) {
             $stock = branch_item_stocks::where('branch_id', $branch_id)
                 ->where('product_id', $request->product_id[$key])
+                ->where('batch_no', $request->batch_number[$key])
                 ->first();
             if ($stock) {
                 $stock->qty = $stock->qty + $request->qty[$key];
@@ -85,6 +86,7 @@ class inwardController extends Controller
                 $stock->branch_id = $branch_id;
                 $stock->product_id = $request->product_id[$key];
                 $stock->qty = $request->qty[$key];
+                $stock->batch_no = $request->batch_number[$key];
                 $stock->save();
             }
         }

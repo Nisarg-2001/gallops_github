@@ -55,12 +55,11 @@ $(document).on('click', '#addOutwardProduct', function () {
     let qty = $('#qty').val();
     let avl_qty = $('#product_id option:selected').attr('data-qty');
 
-    if (qty > avl_qty) {
+    if (parseInt(qty) > parseInt(avl_qty)) {
         alert("Please enter quantity less than available quanity.");
         return false;
     }
-
-
+    
     addOutwardProduct();
 
     return false;

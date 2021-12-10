@@ -22,7 +22,7 @@ class outwardController extends Controller
     public function view()
     {
         $outward = DB::table('outward_masters')->paginate(10);
-        return view('admin.outward.index')->with(['data'=>$outward]);
+        return view('admin.outward.index')->with(['data' => $outward]);
     }
 
     public function create(Request $request)
@@ -37,7 +37,7 @@ class outwardController extends Controller
         //get all taxes
         $taxes = tax_master::all();
 
-        return view('admin.outward.action')->with(['product'=>$product, 'taxes' => $taxes]);
+        return view('admin.outward.action')->with(['product' => $product, 'taxes' => $taxes]);
     }
 
     public function edit($id)
@@ -60,46 +60,63 @@ class outwardController extends Controller
 
     public function addupdate(Request $request)
     {
+
+        $branch_id = Auth::id();
         $param = $request->all();
-        if (!empty($request->Item)) {         
+
+        if (!empty($request->product_id)) {
 
             // insert into outward_masters table
             $outward = new outward_master;
-            $outward->user_id = Auth::id();
-            $outward->person_name = $request->name;
-            $outward->issue_date = $request->dateofissue;
+            $outward->user_id = $branch_id;
+            $outward->person_name = $request->person_name;
+            $outward->issue_date = date('Y-m-d', strtotime($request->date_of_issue));
+            $outward->note = $request->note;
             $outward->save();
 
             $outward_id = $outward->id;
 
+
+
             // insert into outward_items table
             $itemData = [];
-            foreach ($request->Item as $key => $value) {
+            foreach ($request->product_id as $key => $value) {
                 $param['Item'] = $value;
                 $itemData[] = [
                     'outward_id' => $outward_id,
-                    'item_id' => $request->intItemID[$key],
-                    'qty' => $request->Qty[$key],
+                    'product_id' => $request->product_id[$key],
+                    'qty' => $request->qty[$key],
+                    'batch_no' => $request->batch_number[$key],
                 ];
             }
 
             outward_item::insert($itemData);
 
+            //update branch stock
+            foreach ($request->product_id as $key => $value) {
+                $stock = branch_item_stocks::where('branch_id', $branch_id)
+                    ->where('product_id', $request->product_id[$key])
+                    ->where('batch_no', $request->batch_number[$key])
+                    ->first();
+                if ($stock) {
+                    $stock->qty = $stock->qty - $request->qty[$key];
+                    $stock->save();
+                }
+            }
         }
 
-        return redirect('outward')->with('success',' Outward Created Successfully');
-        
+        return redirect('outward')->with('success', ' Outward Created Successfully');
     }
 
     public function delete($id)
     {
-        $outward_item = outward_item::where('outward_id',$id);
+        $outward_item = outward_item::where('outward_id', $id);
         $outward_item->delete();
-        
+
         $outward = outward_master::find($id);
         $outward->delete();
-        
-        return redirect('outward')->with('danger',' Outward Deleted Successfully');
+
+        return redirect('outward')->with('danger', ' Outward Deleted Successfully');
     }
 
     public function invoice()
