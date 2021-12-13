@@ -12,6 +12,7 @@ use App\Models\order_items;
 use App\Models\purchase_orders;
 use App\Models\purchase_order_items;
 use Auth;
+use DB;
 
 
 
@@ -53,10 +54,37 @@ class purchaseOrderController extends Controller
 
     }
 
-    public function report()
+    public function report(Request $request)
     {
-        $data = purchase_orders::getPurchaseOrders();
-        $vendor = vendor_master::all();
-        return view('admin.purchase_order.report', ['data' => $data,'vendor'=>$vendor]);
+        if(isset($request))
+        {
+            if(!isset($request->vendor_id) || $request->vendor_id=='all')
+            {
+                $order = DB::table('purchase_orders as po')
+                ->join('vendor_masters as vm', 'vm.id', '=', 'po.vendor_id')
+                ->select('po.*', 'vm.name')
+                ->whereBetween('po.created_at', [$request->from, $request->to])
+                ->paginate(10);
+                $vendor = vendor_master::all();
+                return view('admin.purchase_order.report', ['data' => $order,'vendor'=>$vendor]);
+            }
+            else
+            {
+                $order = DB::table('purchase_orders as po')
+                ->join('vendor_masters as vm', 'vm.id', '=', 'po.vendor_id')
+                ->select('po.*', 'vm.name')
+                ->whereBetween('po.created_at', [$request->from, $request->to])
+                ->where('vm.id', $request->vendor_id)
+                ->paginate(10);
+                $vendor = vendor_master::all();
+                return view('admin.purchase_order.report', ['data' => $order,'vendor'=>$vendor]);
+            }
+        }
+        else
+        {
+            $vendor = vendor_master::all();
+            return view('admin.purchase_order.report', ['vendor'=>$vendor]);
+        }
+        
     }
 }

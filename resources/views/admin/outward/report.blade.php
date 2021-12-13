@@ -37,8 +37,35 @@
 
                         <div class="card">
                             <div class="card-header">
-                                <form method="POST" action="{{url('user/report/outward/')}}" >
+                            <h3 class="card-header mb-3 text-center">Outward Report</h3>
+                                <form method="POST" action="{{url('report/outward/')}}" >
                                     @csrf
+                                    <div class="row">
+                                <div class="col-6 col-lg-3 col-md-3">
+                                    <div class="form-group">
+                                        <label>Select Branch</label>
+                                        <select class="form-control select2" name="user_id" >
+                                        <option value="">Select Franchise</option>
+                                        @foreach($branch as $b)
+                                        <option value="{{$b->id}}">{{ $b->name }}</option>
+                                        @endforeach
+                                        <option value="all">All Franchise</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-lg-3 col-md-3">
+                                    <div class="form-group">
+                                        <label>Select Person </label>
+                                        <select class="form-control select2" name="person" >
+                                        <option value="">Select person</option>
+                                        @foreach($person as $p)
+                                        <option value="{{$p->person_name}}">{{ $p->person_name }}</option>
+                                        @endforeach
+                                        <option value="all">All Person</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                </div>
                                 <div class="row">
                                     <div class="col-12 col-lg-3 col-md-3">
                                         <div class="form-group">
@@ -67,12 +94,13 @@
                                 <table id="example1" class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
-                                            <th>Outward ID</th>
-                                            <th>Person name</th>
-                                            <th>Product</th>
+                                            <th>Outward No.</th>
+                                            <th>Branch Name</th>
+                                            <th>Person Name</th>
+                                            <th>Item id</th>
+                                            <th>Qty</th>
+                                            <th>Batch No.</th>
                                             <th>Issued Date</th>
-                                            <th>Quantity</th>
-                                            <th>batch no.</th>
                                             <th>Note</th>
                                         </tr>
                                     </thead>
@@ -80,12 +108,13 @@
                                     @if(isset($outward))
                                     @foreach($outward as $info)
                                     <tr>
-                                    <td>{{$info->outward_id}}</td>
+                                    <td>{{$info->id}}</td>
+                                    <td>{{$info->uname}}</td>
                                     <td>{{$info->person_name}}</td>
-                                    <td>{{$info->name}}</td>
-                                    <td>{{ date('d M Y', strtotime($info->issue_date)) }}</td>
+                                    <td>{{$info->product_id}}</td>
                                     <td>{{$info->qty}}</td>
                                     <td>{{$info->batch_no}}</td>
+                                    <td>{{ date('d M Y', strtotime($info->issue_date)) }}</td>
                                     <td>{{$info->note}}</td>
                                     </tr>
                                     @endforeach

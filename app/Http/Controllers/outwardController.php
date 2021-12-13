@@ -8,6 +8,7 @@ use App\Models\order;
 use App\Models\User;
 use App\Models\tax_master;
 use App\Models\outward_master;
+use App\Models\vendor_master;
 use App\Models\order_items;
 use App\Models\outward_item;
 use App\Models\branch_item_stocks;
@@ -122,18 +123,37 @@ class outwardController extends Controller
     {
         if(isset($request))
         {
-            $outward = DB::table('outward_items as oi')
-            ->join('outward_masters as om', 'oi.outward_id', '=', 'om.id')
-            ->join('product_masters as p', 'oi.product_id', '=', 'p.id')
-            ->select('oi.*', 'om.*','p.name')
-            ->whereBetween('om.created_at', [$request->from,$request->to])
-            ->where('om.user_id', $request->id)
-            ->paginate(10);
-            return view('admin.outward.report')->with(['outward' => $outward]);
+            if((!isset($request->user_id) || !isset($request->person)) || ($request->user_id=='all' || $request->person=='all'))
+            {
+                $outward = DB::table('outward_masters as om')
+                ->join('outward_items as oi', 'oi.outward_id', '=', 'om.id')
+                ->join('users as u', 'u.id', '=', 'om.user_id')
+                ->select('om.*','oi.product_id','oi.qty','oi.batch_no', 'u.name as uname')
+                ->whereBetween('om.created_at', [$request->from,$request->to])
+                ->paginate(10);
+                $person = outward_master::all();
+                $branch = User::where('role', '=', 2)->get();
+                return view('admin.outward.report')->with(['outward' => $outward,'person'=>$person, 'branch'=>$branch]);
+            }
+            else
+            {
+                $outward = DB::table('outward_masters as om')
+                ->join('outward_items as oi', 'oi.outward_id', '=', 'om.id')
+                ->join('users as u', 'u.id', '=', 'om.user_id')
+                ->select('om.*','oi.product_id','oi.qty','oi.batch_no', 'u.name as uname')
+                ->whereBetween('om.created_at', [$request->from,$request->to])
+                ->where('om.user_id', $request->user_id)
+                ->paginate(10);
+                $person = outward_master::all();
+                $branch = User::where('role', '=', 2)->get();
+                return view('admin.outward.report')->with(['outward' => $outward,'person'=>$person, 'branch'=>$branch]);
+            }
+            
         }
         else
+        {
             return view('admin.outward.report');
-        
+        }
     }
 
     public function invoice()

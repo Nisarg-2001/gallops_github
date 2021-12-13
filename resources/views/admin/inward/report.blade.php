@@ -37,17 +37,31 @@
 
                         <div class="card">
                             <div class="card-header">
-                                <form method="POST" action="{{url('user/report/inward/')}}" >
+                            <h3 class="card-header mb-3 text-center">Inward Report</h3>
+                                <form method="POST" action="{{url('/report/inward/')}}" >
                                     @csrf
                                 <div class="row">
-                                <div class="col-6 col-lg-6 col-md-6">
+                                <div class="col-6 col-lg-3 col-md-3">
                                     <div class="form-group">
-                                        <label>Select Vendor *</label>
+                                        <label>Select Branch</label>
+                                        <select class="form-control select2" name="user_id" >
+                                        <option value="">Select Franchise</option>
+                                        @foreach($branch as $b)
+                                        <option value="{{$b->id}}">{{ $b->name }}</option>
+                                        @endforeach
+                                        <option value="all">All Franchise</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-lg-3 col-md-3">
+                                    <div class="form-group">
+                                        <label>Select Vendor </label>
                                         <select class="form-control select2" name="vendor_id" >
                                         <option value="">Select Vendor</option>
                                         @foreach($vendor as $v)
                                         <option value="{{$v->id}}">{{ $v->name }}</option>
                                         @endforeach
+                                        <option value="all">All Vendors</option>
                                         </select>
                                     </div>
                                 </div>
@@ -80,28 +94,28 @@
                                 <table id="example1" class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
-                                            <th>Inward ID</th>
+                                            <th>Inward no.</th>
                                             <th>Order no.</th>
+                                            <th>Branch</th>
                                             <th>Vendor Bill no.</th>
+                                            <th>Vendor</th>
+                                            <th>Item id</th>
+                                            <th>Qty</th>
                                             <th>Received on</th>
-                                            <th>Product</th>
-                                            <th>Quantity</th>
-                                            <th>Batch no.</th>
-                                            <th>Packaging Month</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                     @if(isset($inward))
                                     @foreach($inward as $info)
                                     <tr>
-                                    <td>{{$info->inward_id}}</td>
+                                    <td>{{$info->id}}</td>
                                     <td>{{$info->order_no}}</td>
+                                    <td>{{$info->uname}}</td>
                                     <td>{{$info->vendor_bill_no}}</td>
-                                    <td>{{ date('d M Y', strtotime($info->received_date)) }}</td>
-                                    <td>{{$info->name}}</td>
+                                    <td>{{$info->vname}}</td>
+                                    <td>{{$info->product_id}}</td>
                                     <td>{{$info->qty}}</td>
-                                    <td>{{$info->batch_no}}</td>
-                                    <td>{{date('M Y', strtotime($info->packaging_month))}}</td>
+                                    <td>{{ date('d M Y', strtotime($info->received_date)) }}</td>
                                     </tr>
                                     @endforeach
                                     @endif

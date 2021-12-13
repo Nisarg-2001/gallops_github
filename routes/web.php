@@ -17,6 +17,7 @@ use App\Http\Controllers\roleController;
 use App\Http\Controllers\userOrderController;
 use App\Http\Controllers\adminOrderController;
 use App\Http\Controllers\purchaseOrderController;
+use App\Http\Controllers\returnController;
 
 
 
@@ -109,14 +110,14 @@ Route::post('/assign_product/getTax',[assignController::class,'getTax']);
 Route::post('/assign_product/post',[assignController::class,'addupdate']);
 
 ##  ORDER ROUTES ##
-//Route::get('/order',[orderController::class,'view']);
-// Route::get('/order/add',[orderController::class,'create']);
-// Route::get('/order/{id}', [orderController::class,'edit']);
-// Route::post('/order/post',[orderController::class,'addupdate']);
-// Route::post('/order/getProduct',[orderController::class,'getProduct']);
-// Route::post('/order/getTaxes',[orderController::class,'getTaxes']);
-// Route::get('/order/delete/{id}',[orderController::class,'delete']);
-// Route::get('/order/invoice',[orderController::class,'invoice']);
+Route::get('/order',[orderController::class,'view']);
+Route::get('/order/add',[orderController::class,'create']);
+Route::get('/order/{id}', [orderController::class,'edit']);
+Route::post('/order/post',[orderController::class,'addupdate']);
+Route::post('/order/getProduct',[orderController::class,'getProduct']);
+Route::post('/order/getTaxes',[orderController::class,'getTaxes']);
+Route::get('/order/delete/{id}',[orderController::class,'delete']);
+Route::get('/order/invoice',[orderController::class,'invoice']);
 
 ##  ADMIN ORDER ROUTES ##
 Route::get('/admin-order',[adminOrderController::class,'view']);
@@ -153,14 +154,21 @@ Route::get('/outward/invoice',[outwardController::class,'invoice']);
 
 ## REPORTS ROUTES   ##
 Route::get('/report/order',[orderController::class,'report']);
+Route::post('/report/order',[orderController::class,'report']);
 Route::get('/report/purchase-order',[purchaseOrderController::class,'report']);
-Route::get('/report/order-item',[orderController::class,'order_item_report']);
+Route::post('/report/purchase-order',[purchaseOrderController::class,'report']);
+Route::get('/report/inward',[inwardController::class,'report']);
+Route::post('/report/inward',[inwardController::class,'report']);
+Route::get('/report/outward',[outwardController::class,'report']);
+Route::post('/report/outward',[outwardController::class,'report']);
 
 
 ## RETURN GOODS ## 
-Route::get('/return',function(){
-    return view('admin.return_goods.index');
-});
+Route::get('/return',[returnController::class,'view']);
+Route::get('/return/add',[returnController::class,'create']);
+
+
+
 
 Route::post('/resetpassword',[userController::class,'resetPassword']);
 
@@ -226,13 +234,16 @@ Route::post('/report/outward',[outwardController::class,'report']);
 
 
 ## VENDOR SCREEN ROUTES ##
-
 Route::group(['prefix' => 'vendor'], function(){
-    Route::get('/login',[vendorController::class,'login']);
-    Route::post('/login',[vendorController::class,'login']);
-    Route::get('/dashboard',[vendorController::class,'home']);
-    Route::get('/order',[vendorController::class,'order']);
-
+Route::get('/login',[vendorController::class,'login']);
+Route::post('/login',[vendorController::class,'login']);
+Route::group(['middleware' => 'vendor'], function(){
+Route::get('/dashboard',[vendorController::class,'home']);
+Route::get('/order',[vendorController::class,'order']);
+Route::post('/order',[vendorController::class,'order']);
+Route::get('/vieworder/{id}',[orderController::class,'view']);
+Route::get('/vendor-order/{id}',[purchaseOrderController::class,'edit']);
+});
 });
 
 

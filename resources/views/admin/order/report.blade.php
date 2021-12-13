@@ -37,20 +37,35 @@
 
                         <div class="card">
                             <div class="card-header">
-                                <form method="POST" action="{{url('user/report/order/')}}" >
+                            <h3 class="card-header mb-3 text-center">Order Report</h3>
+                                <form method="POST" action="{{url('report/order')}}" >
                                     @csrf
                                 <div class="row">
                                     <div class="col-12 col-lg-3 col-md-3">
                                         <div class="form-group">
                                             <label>From</label>
                                             <input type="hidden" name="id" class="form-control" value="{{Auth::user()->id}}" />
-                                            <input type="date" name="from" class="form-control" />
+                                            <input type="date" name="from" class="form-control" required/>
                                         </div>
                                     </div>
                                     <div class="col-12 col-lg-3 col-md-3">
                                         <div class="form-group">
                                             <label>To</label>
-                                            <input type="date" name="to" class="form-control" />
+                                            <input type="date" name="to" class="form-control" required/>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-lg-3 col-md-3">
+                                        <div class="form-group">
+                                            <label>Select Branch</label>
+                                            <select class="form-control select2" style="width: 100%;" name="branch_id" >
+                                            <option value="">Select Franchise</option>
+                                            @foreach($branch as $b)
+                                            <option value="{{$b->id}}">
+                                                {{ $b->name }}
+                                            </option>
+                                            @endforeach
+                                            <option value="all">All Branches</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="col-12 col-lg-1 col-md-1">
@@ -59,6 +74,7 @@
                                         <input type="submit" class="btn btn-primary form-control" value="Generate">
                                         </div>
                                     </div>
+                                    
                                 </div>
                             </div>
                             </form>
@@ -67,11 +83,10 @@
                                 <table id="example1" class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
-                                            <th>Order ID</th>
-                                            <th>sub Total</th>
-                                            @foreach($tax as $data)
-                                            <th>{{$data->tax_name}}</th>
-                                            @endforeach
+                                            <th>Order No.</th>
+                                            <th>Branch name</th>
+                                            <th>Item</th>
+                                            <th>Qty</th>
                                             <th>Total</th>
                                             <th>Expecting Delivery Date</th>
                                             <th>Order Status</th>
@@ -84,10 +99,9 @@
                                     @foreach($order as $info)
                                     <tr>
                                     <td>{{$info->order_id}}</td>
-                                    <td>{{$info->sub_total}}</td>
-                                    @foreach($tax as $data)
-                                    <td>{{$data->value}}</td>
-                                    @endforeach
+                                    <td>{{$info->name}}</td>
+                                    <td>{{$info->item_id}}</td>
+                                    <td>{{$info->qty}}</td>
                                     <td>{{$info->total}}</td>
                                     <td>{{ date('d M Y', strtotime($info->order_required_date)) }}</td>
                                     @if($info->is_confirm==0)
@@ -104,7 +118,6 @@
                                     <td><span class="badge bg-success p-2 ml-5">Completed</span></td>
                                     @endif
                                     <td>{{ date('d M Y', strtotime($info->created)) }}</td>
-                                    
                                     </tr>
                                     @endforeach
                                     @endif

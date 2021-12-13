@@ -189,19 +189,25 @@
                         <li class="nav-item">
                             <a href="{{url('report/order')}}" class="nav-link">
                                 <i class="far fa-file-invoice nav-icon"></i>
-                                <p>Orders</p>
+                                <p>Order report</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{url('report/purchase-order')}}" class="nav-link">
                                 <i class="far fa-file-invoice nav-icon"></i>
-                                <p>Purchase order</p>
+                                <p>Purchase order report</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{url('report/order-item')}}" class="nav-link">
+                            <a href="{{url('report/inward')}}" class="nav-link">
                                 <i class="far fa-file-invoice nav-icon"></i>
-                                <p>Order Items</p>
+                                <p>Inward report</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{url('report/outward')}}" class="nav-link">
+                                <i class="far fa-file-invoice nav-icon"></i>
+                                <p>Outward report</p>
                             </a>
                         </li>
                     </ul>

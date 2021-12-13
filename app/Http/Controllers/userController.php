@@ -20,7 +20,7 @@ class UserController extends Controller
         $user = User::all()->count();
         $products = product_master::all()->count();
         $product = product_master::all();
-        $order = order::all();
+        $order = DB::table('orders')->paginate(10);
         return view('admin.dashboard')->with(['user'=>$user,'product'=>$product,'products'=>$products,'order'=>$order]);
     }
 
@@ -64,6 +64,7 @@ class UserController extends Controller
             $user->state = $request->state;
             $user->pincode = $request->pincode;
             $user->role = $request->role;
+            $user->status = $request->status;
             $user->save();
             $request->session()->flash('status', 'Task was successful!');
             return redirect('user')->with('success',' User Updated Successfully');

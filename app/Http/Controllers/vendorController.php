@@ -27,6 +27,7 @@ class vendorController extends Controller
             {
                 Session::put('vname',$user->name);
                 Session::put('vid',$user->id);
+                Session::put('role',$user->role);
                 return redirect('vendor/dashboard');
             }
                 
@@ -103,13 +104,27 @@ class vendorController extends Controller
 
     public function order(Request $request)
     {
-        if(isset($request))
+        
+        if(isset($request->from))
         {
-            return view('vendors.order');
+            $order = DB::table('purchase_orders as po')
+            ->leftjoin('orders as o', 'po.order_id', '=', 'o.id')
+            ->leftjoin('users as u', 'o.user_id', '=', 'u.id')
+            ->select('po.*','u.name')
+            ->whereBetween('po.created_at', [$request->from, $request->to])
+            ->where('po.vendor_id', $request->id)
+            ->paginate(10);
+            return view('vendors.order')->with(['order' =>$order]);
         }
         else
         {
-            return view('vendors.order');
+            $order = DB::table('purchase_orders as po')
+            ->leftjoin('orders as o', 'po.order_id', '=', 'o.id')
+            ->leftjoin('users as u', 'o.user_id', '=', 'u.id')
+            ->select('po.*','u.name')
+            ->where('po.vendor_id', session()->get('vid'))
+            ->paginate(10);
+            return view('vendors.order')->with(['order'=>$order]);
         }
     }
 

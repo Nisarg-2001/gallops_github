@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\order;
 use App\Models\order_items;
+use App\Models\User;
 use App\Models\tax_master;
 use Auth;
 use DB;
@@ -15,7 +16,7 @@ class orderController extends Controller
 
     public function view()
     {
-        $order = DB::table('orders')->paginate(10);
+        $order = DB::table('orders')->paginate(5);
         return view('admin.order.index')->with(['data' => $order]);
     }
 
@@ -147,19 +148,35 @@ class orderController extends Controller
     {
         if(isset($request))
         {
-            $order = DB::table('order_items as oi')
-            ->join('orders as o', 'oi.order_id', '=', 'o.id')
-            ->select('o.*', 'oi.*', 'o.created_at as created')
-            ->whereBetween('o.created_at', [$request->from,$request->to])
-            ->where('o.user_id', $request->id)
-            ->paginate(10);
-            $tax = tax_master::all();
-            return view('admin.order.report')->with(['order' => $order,'tax'=>$tax]);
+            if(!isset($request->branch_id) || $request->branch_id=='all')
+            {
+                $order = DB::table('order_items as oi')
+                ->join('orders as o', 'oi.order_id', '=', 'o.id')
+                ->join('users as u', 'u.id', '=', 'o.user_id')
+                ->select('o.*', 'oi.*', 'o.created_at as created','u.name')
+                ->whereBetween('o.created_at', [$request->from,$request->to])
+                ->paginate(10);
+                $branch = User::where('role','=', 2)->get();
+                return view('admin.order.report')->with(['order' => $order,'branch'=>$branch]);
+            }
+            else
+            {
+                $order = DB::table('orders as o')
+                ->join('order_items as oi', 'oi.order_id', '=', 'o.id')
+                ->join('users as u', 'u.id', '=', 'o.user_id')
+                ->select('o.*', 'oi.*', 'o.created_at as created','u.name')
+                ->whereBetween('o.created_at', [$request->from,$request->to])
+                ->where('u.id', $request->branch_id)
+                ->paginate(10);
+                $branch = User::where('role','=', 2)->get();
+                return view('admin.order.report')->with(['order' => $order,'branch'=>$branch]);
+            }
+                
         }
         else
         {
-            $tax = tax_master::all();
-            return view('admin.order.report')->with(['tax'=>$tax]);
+            $branch = User::where('role','=', 2)->get();
+            return view('admin.order.report')->with(['branch'=>$branch]);
         }
             
         
