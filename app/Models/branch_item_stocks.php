@@ -36,4 +36,3 @@ class branch_item_stocks extends Model
         return $outward_stock;
     }
 }
-
