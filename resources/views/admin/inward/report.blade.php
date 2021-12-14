@@ -38,9 +38,10 @@
                         <div class="card">
                             <div class="card-header">
                             <h3 class="card-header mb-3 text-center">Inward Report</h3>
-                                <form method="POST" action="{{url('/report/inward/')}}" >
+                                <form method="POST" action="{{ ((Auth::user()->role)==2) ? url('user/report/inward') : url('report/inward') }}" >
                                     @csrf
                                 <div class="row">
+                                @if((Auth::user()->role)==1)
                                 <div class="col-6 col-lg-3 col-md-3">
                                     <div class="form-group">
                                         <label>Select Branch</label>
@@ -53,6 +54,7 @@
                                         </select>
                                     </div>
                                 </div>
+                                @endif
                                 <div class="col-6 col-lg-3 col-md-3">
                                     <div class="form-group">
                                         <label>Select Vendor </label>

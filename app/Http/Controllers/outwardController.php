@@ -106,7 +106,7 @@ class outwardController extends Controller
             }
         }
 
-        return redirect('outward')->with('success', ' Outward Created Successfully');
+        return redirect('user/outward')->with('success', ' Outward Created Successfully');
     }
 
     public function delete($id)
@@ -117,7 +117,7 @@ class outwardController extends Controller
         $outward = outward_master::find($id);
         $outward->delete();
 
-        return redirect('outward')->with('danger', ' Outward Deleted Successfully');
+        return redirect('user/outward')->with('danger', ' Outward Deleted Successfully');
     }
     public function report(Request $request)
     {
@@ -125,15 +125,32 @@ class outwardController extends Controller
         {
             if((!isset($request->user_id) || !isset($request->person)) || ($request->user_id=='all' || $request->person=='all'))
             {
-                $outward = DB::table('outward_masters as om')
-                ->join('outward_items as oi', 'oi.outward_id', '=', 'om.id')
-                ->join('users as u', 'u.id', '=', 'om.user_id')
-                ->select('om.*','oi.product_id','oi.qty','oi.batch_no', 'u.name as uname')
-                ->whereBetween('om.created_at', [$request->from,$request->to])
-                ->paginate(10);
-                $person = outward_master::all();
-                $branch = User::where('role', '=', 2)->get();
-                return view('admin.outward.report')->with(['outward' => $outward,'person'=>$person, 'branch'=>$branch]);
+                if((Auth::user()->role)==2)
+                {
+                    $outward = DB::table('outward_masters as om')
+                    ->join('outward_items as oi', 'oi.outward_id', '=', 'om.id')
+                    ->join('users as u', 'u.id', '=', 'om.user_id')
+                    ->select('om.*','oi.product_id','oi.qty','oi.batch_no', 'u.name as uname')
+                    ->whereBetween('om.created_at', [$request->from,$request->to])
+                    ->where('om.user_id', $request->id)
+                    ->paginate(10);
+                    $person = outward_master::all();
+                    $branch = User::where('role', '=', 2)->get();
+                    return view('admin.outward.report')->with(['outward' => $outward,'person'=>$person, 'branch'=>$branch]);
+                }
+                else
+                {
+                    $outward = DB::table('outward_masters as om')
+                    ->join('outward_items as oi', 'oi.outward_id', '=', 'om.id')
+                    ->join('users as u', 'u.id', '=', 'om.user_id')
+                    ->select('om.*','oi.product_id','oi.qty','oi.batch_no', 'u.name as uname')
+                    ->whereBetween('om.created_at', [$request->from,$request->to])
+                    ->paginate(10);
+                    $person = outward_master::all();
+                    $branch = User::where('role', '=', 2)->get();
+                    return view('admin.outward.report')->with(['outward' => $outward,'person'=>$person, 'branch'=>$branch]);
+                }
+                
             }
             else
             {

@@ -16,6 +16,7 @@
     <!-- Main content -->
     <section class="content mt-3 mb-5">
       <div class="container-fluid">
+        
         <!-- Small boxes (Stat box) -->
         <div class="row">
         @if( session('success'))

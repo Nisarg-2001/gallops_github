@@ -13,9 +13,11 @@
         var APP_NAME = "{{ env('APP_NAME') }}";
         var APP_URL = "{{ env('APP_URL') }}";
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body class="font-sans antialiased hold-transition sidebar-mini layout-fixed">
-    <div class="wrapper">
+    
+    <div class="wrapper loaded">
         <div class="min-h-screen bg-gray-100">
             @include('layouts.navigation')
             @include('layouts.side-navbar')
@@ -23,6 +25,9 @@
                 {{ $slot }}
             </main>
         </div>
+    </div>
+    <div class="loader">
+        <div></div>
     </div>
     @include('layouts.scripts')
     @yield('page-footer-script')

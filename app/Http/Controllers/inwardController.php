@@ -101,16 +101,34 @@ class inwardController extends Controller
         {
             if((!isset($request->user_id) || !isset($request->vendor_id)) || ($request->user_id=='all' || $request->vendor_id=='all'))
             {
-                $inward = DB::table('inward_orders as io')
-                ->join('inward_order_items as iot', 'iot.inward_id', '=', 'io.id')
-                ->join('users as u', 'u.id', '=', 'io.user_id')
-                ->join('vendor_masters as vm', 'vm.id', '=', 'io.vendor_id')
-                ->select('io.*','iot.product_id','iot.qty', 'u.name as uname', 'vm.name as vname')
-                ->whereBetween('io.created_at', [$request->from,$request->to])
-                ->paginate(10);
-                $vendor = vendor_master::all();
-                $branch = User::where('role', '=', 2)->get();
-                return view('admin.inward.report')->with(['inward' => $inward,'vendor'=>$vendor, 'branch'=>$branch]);
+                if((Auth::user()->role)==2)
+                {
+                    $inward = DB::table('inward_orders as io')
+                    ->join('inward_order_items as iot', 'iot.inward_id', '=', 'io.id')
+                    ->join('users as u', 'u.id', '=', 'io.user_id')
+                    ->join('vendor_masters as vm', 'vm.id', '=', 'io.vendor_id')
+                    ->select('io.*','iot.product_id','iot.qty', 'u.name as uname', 'vm.name as vname')
+                    ->whereBetween('io.created_at', [$request->from,$request->to])
+                    ->where('io.user_id', $request->id)
+                    ->paginate(10);
+                    $vendor = vendor_master::all();
+                    $branch = User::where('role', '=', 2)->get();
+                    return view('admin.inward.report')->with(['inward' => $inward,'vendor'=>$vendor, 'branch'=>$branch]);
+                }
+                else
+                {
+                    $inward = DB::table('inward_orders as io')
+                    ->join('inward_order_items as iot', 'iot.inward_id', '=', 'io.id')
+                    ->join('users as u', 'u.id', '=', 'io.user_id')
+                    ->join('vendor_masters as vm', 'vm.id', '=', 'io.vendor_id')
+                    ->select('io.*','iot.product_id','iot.qty', 'u.name as uname', 'vm.name as vname')
+                    ->whereBetween('io.created_at', [$request->from,$request->to])
+                    ->paginate(10);
+                    $vendor = vendor_master::all();
+                    $branch = User::where('role', '=', 2)->get();
+                    return view('admin.inward.report')->with(['inward' => $inward,'vendor'=>$vendor, 'branch'=>$branch]);
+                }
+                
             }
             else
             {

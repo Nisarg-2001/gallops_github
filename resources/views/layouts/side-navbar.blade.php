@@ -156,27 +156,6 @@
                     </ul>
                 </li>
 
-                
-
-                <li class="nav-item menu">
-                    <a href="{{ url('/inward') }}" class="nav-link">
-                        <i class="nav-icon fas fa-dolly"></i>
-                        <p>
-                            Inwards
-
-                        </p>
-                    </a>
-                </li>
-
-                <li class="nav-item menu">
-                    <a href="{{ url('/outward') }}" class="nav-link">
-                        <i class="nav-icon fas fa-dolly"></i>
-                        <p>
-                            Outwards
-                        </p>
-                    </a>
-                </li>
-
                 <li class="nav-item menu">
                     <a href="{{url('reports')}}" class="nav-link">
                         <i class="nav-icon fas fa-file-chart-line"></i>

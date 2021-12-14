@@ -149,15 +149,31 @@ class orderController extends Controller
         if(isset($request))
         {
             if(!isset($request->branch_id) || $request->branch_id=='all')
-            {
-                $order = DB::table('order_items as oi')
-                ->join('orders as o', 'oi.order_id', '=', 'o.id')
-                ->join('users as u', 'u.id', '=', 'o.user_id')
-                ->select('o.*', 'oi.*', 'o.created_at as created','u.name')
-                ->whereBetween('o.created_at', [$request->from,$request->to])
-                ->paginate(10);
-                $branch = User::where('role','=', 2)->get();
-                return view('admin.order.report')->with(['order' => $order,'branch'=>$branch]);
+            {   
+                if((Auth::user()->role)==2)
+                {
+                    $order = DB::table('order_items as oi')
+                    ->join('orders as o', 'oi.order_id', '=', 'o.id')
+                    ->join('users as u', 'u.id', '=', 'o.user_id')
+                    ->select('o.*', 'oi.*', 'o.created_at as created','u.name')
+                    ->whereBetween('o.created_at', [$request->from,$request->to])
+                    ->where('u.id', $request->id)
+                    ->paginate(10);
+                    $branch = User::where('role','=', 2)->get();
+                    return view('admin.order.report')->with(['order' => $order,'branch'=>$branch]);
+                }
+                else
+                {
+                    $order = DB::table('order_items as oi')
+                    ->join('orders as o', 'oi.order_id', '=', 'o.id')
+                    ->join('users as u', 'u.id', '=', 'o.user_id')
+                    ->select('o.*', 'oi.*', 'o.created_at as created','u.name')
+                    ->whereBetween('o.created_at', [$request->from,$request->to])
+                    ->paginate(10);
+                    $branch = User::where('role','=', 2)->get();
+                    return view('admin.order.report')->with(['order' => $order,'branch'=>$branch]);
+                }
+               
             }
             else
             {
