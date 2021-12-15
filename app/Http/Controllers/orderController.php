@@ -16,7 +16,7 @@ class orderController extends Controller
 
     public function view()
     {
-        $order = DB::table('orders')->paginate(5);
+        $order = DB::table('orders')->where('user_id', Auth::user()->id)->paginate(10);
         return view('admin.order.index')->with(['data' => $order]);
     }
 
@@ -117,9 +117,21 @@ class orderController extends Controller
         return redirect('user/order')->with('danger', ' Order Deleted Successfully');
     }
 
-    public function invoice()
+    public function orderInvoice($id)
     {
-        return view('admin.order.invoice');
+        $order = DB::table('orders as o')
+        ->join('users as u', 'o.user_id', '=', 'u.id')
+        ->select('o.*', 'u.*')
+        ->where('o.id', $id)->first();
+
+        $item = DB::table('order_items as oi')
+        ->join('product_masters as pm', 'pm.id', '=', 'oi.item_id')
+        ->select('oi.*', 'pm.*')
+        ->where('oi.order_id', '=', $id)->get();
+
+        
+
+        return view('admin.order.invoice')->with(['order'=>$order, 'item'=>$item,]);
     }
 
     public function getProduct(Request $request)

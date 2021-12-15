@@ -14,7 +14,7 @@ $('.select2bs4').select2({
       "searching": false,
       "ordering": true,
       "info": true,
-      "autoWidth": false,
+      "autoWidth": true,
       "responsive": true,
     });
 

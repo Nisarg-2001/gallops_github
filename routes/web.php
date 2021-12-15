@@ -18,6 +18,7 @@ use App\Http\Controllers\userOrderController;
 use App\Http\Controllers\adminOrderController;
 use App\Http\Controllers\purchaseOrderController;
 use App\Http\Controllers\returnController;
+use App\Http\Controllers\invoiceController;
 
 
 
@@ -108,6 +109,7 @@ Route::get('/assign_product/add',[assignController::class,'create']);
 Route::get('/assign_product/edit/{id}', [assignController::class,'edit']);
 Route::post('/assign_product/getTax',[assignController::class,'getTax']);
 Route::post('/assign_product/post',[assignController::class,'addupdate']);
+Route::get('/assign_product/delete/{id}',[assignController::class,'delete']);
 
 ##  ORDER ROUTES ##
 Route::get('/order',[orderController::class,'view']);
@@ -117,7 +119,6 @@ Route::post('/order/post',[orderController::class,'addupdate']);
 Route::post('/order/getProduct',[orderController::class,'getProduct']);
 Route::post('/order/getTaxes',[orderController::class,'getTaxes']);
 Route::get('/order/delete/{id}',[orderController::class,'delete']);
-Route::get('/order/invoice',[orderController::class,'invoice']);
 
 ##  ADMIN ORDER ROUTES ##
 Route::get('/admin-order',[adminOrderController::class,'view']);
@@ -136,21 +137,7 @@ Route::post('/vendor-order/post', [purchaseOrderController::class,'updatePurchas
 
 
 
-##  INWARD ROUTES ##
-Route::get('/inward',[inwardController::class,'view']);
-Route::get('/inward/add',[inwardController::class,'create']);
-Route::post('/inward/store',[inwardController::class,'store']);
-Route::post('/inward/getProductByVendorId',[inwardController::class,'getProductByVendorId']);
 
-
-##  OUTWARD ROUTES ##
-Route::get('/outward',[outwardController::class,'view']);
-Route::get('/outward/add',[outwardController::class,'create']);
-Route::get('/outward/{id}', [outwardController::class,'edit']);
-Route::post('/order/getProduct',[orderController::class,'getProduct']);
-Route::post('/outward/post',[outwardController::class,'addupdate']);
-Route::get('/outward/delete/{id}',[orderController::class,'delete']);
-Route::get('/outward/invoice',[outwardController::class,'invoice']);
 
 ## REPORTS ROUTES   ##
 Route::get('/report/order',[orderController::class,'report']);
@@ -197,12 +184,12 @@ Route::group(['middleware' => 'user'],function(){
 ##  FRANCHISE  -- ORDERS    ##
 Route::get('/order',[orderController::class,'view']);
 Route::get('/order/add',[orderController::class,'create']);
-Route::get('/order/{id}', [orderController::class,'edit']);
+Route::get('/order/view/{id}', [orderController::class,'edit']);
 Route::post('/order/post',[orderController::class,'addupdate']);
 Route::post('/order/getProduct',[orderController::class,'getProduct']);
 Route::post('/order/getTaxes',[orderController::class,'getTaxes']);
 Route::get('/order/delete/{id}',[orderController::class,'delete']);
-Route::get('/order/invoice',[orderController::class,'invoice']);
+Route::get('/order/invoice/{id}',[orderController::class,'orderInvoice']);
 
 ##  FRANCHISE --  INWARDS ##
 Route::get('/inward',[inwardController::class,'view']);
@@ -218,7 +205,6 @@ Route::get('/outward/{id}', [outwardController::class,'edit']);
 Route::post('/order/getProduct',[orderController::class,'getProduct']);
 Route::post('/outward/post',[outwardController::class,'addupdate']);
 Route::get('/outward/delete/{id}',[orderController::class,'delete']);
-Route::get('/outward/invoice',[outwardController::class,'invoice']);
 
 ## FRANCHISE    --  REPORTS   ##
 Route::get('/report/order',[orderController::class,'report']);
