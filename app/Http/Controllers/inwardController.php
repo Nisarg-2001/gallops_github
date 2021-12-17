@@ -21,10 +21,23 @@ class inwardController extends Controller
     {
         $inward = DB::table('inward_orders as io')
         ->join('vendor_masters as v', 'io.vendor_id', '=', 'v.id')
-        ->join('inward_order_items as iot', 'io.id', '=', 'iot.inward_id')
-        ->select('io.*', 'v.name', 'iot.*')
+        ->select('io.*', 'v.name')
+        ->where('user_id', Auth::User()->id)
         ->paginate(10);
         return view('admin.inward.index',['inward'=>$inward]);
+    }
+
+    public function edit($id)
+    {
+        $vendor = vendor_master::all();
+        $data = inward_orders::find($id);
+        $InwardItemData = inward_orders::getInwardItemData($id);
+        return view('admin.inward.action')->with([
+            'vendor' => $vendor,
+            'data' => $data,
+            'inwardItemData' =>$InwardItemData,
+            // 'product' => $product,
+        ]);
     }
 
     public function create()
@@ -58,7 +71,7 @@ class inwardController extends Controller
         $order->received_date = date('Y-m-d', strtotime($request->dateofreceive));
         $order->save();
 
-        $order_id = $order->id;
+        $inward_id = $order->id;
 
         // insert into orde_items table
         $itemData = [];
@@ -95,6 +108,26 @@ class inwardController extends Controller
 
         return redirect('user/inward')->with('success', 'Products Added Successfully');
     }
+
+
+    public function inwardInvoice($id)
+    {
+        $order = DB::table('inward_orders as io')
+        ->join('users as u', 'io.user_id', '=', 'u.id')
+        ->join('vendor_masters as v', 'io.vendor_id', '=', 'v.id')
+        ->select('io.*', 'u.*', 'v.*', 'v.name as vname', 'v.address_line_1 as vadd1', 'v.address_line_2 as vadd2', 'v.contact as vcontact', 'v.email as vemail')
+        ->where('io.id', $id)->first();
+
+        $item = DB::table('inward_order_items as ii')
+        ->join('product_masters as pm', 'pm.id', '=', 'ii.product_id')
+        ->select('ii.*', 'pm.*')
+        ->where('ii.inward_id', '=', $id)->get();
+
+        
+
+        return view('admin.inward.invoice')->with(['order'=>$order, 'item'=>$item,]);
+    }
+
     public function report(Request $request)
     {
            if(isset($request))

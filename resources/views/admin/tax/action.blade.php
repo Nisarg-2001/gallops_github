@@ -24,7 +24,7 @@
                                 <form action="{{ url('tax/post') }}" method="post" id="taxForm">
                                     @csrf
                                     <div class="row">
-                                        <div class="col-12 col-md-4 col-lg-4">
+                                        <div class="col-12 col-md-5 col-lg-5">
                                             <div class="form-group">
                                                 <label>Tax Name</label>
                                                 <input type="hidden" name="id" value="{{(isset($tax->id) && !empty($tax->id)) ? $tax->id : ''}}">
@@ -34,31 +34,7 @@
                                                 @enderror
                                             </div>
                                         </div>
-                                        <div class="col-12 col-md-3 col-lg-3">
-                                            <div class="form-group">
-                                                <label>Tax type</label>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="type" @if(isset($tax->type) && $tax->type=='percentage') ?
-                                                    checked="Checked"
-                                                    :"" @endif value="percentage" id="flexRadioDefault1">
-                                                    <label class="form-check-label mr-5" for="flexRadioDefault1">
-                                                        Percentage
-                                                    </label>
-                                                    <input class="form-check-input" type="radio" name="type" @if(isset($tax->type) && $tax->type=='amount') ?
-                                                    checked="Checked"
-                                                    :"" @endif value="amount" id="flexRadioDefault2" >
-                                                    <label class="form-check-label" for="flexRadioDefault2">
-                                                        Fixed Amount
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-4">
-                                            <div class="form-group">
-                                                <label for="exampleInputPassword1">Value</label>
-                                                <input type="number" class="form-control" name="value" step="0.01" value="{{(isset($tax->value) && !empty($tax->value)) ? $tax->value : ''}}" placeholder="Enter tax value">
-                                            </div>
-                                        </div>
+                                       
                                     </div>
                                     <div class="text-center">
                                         <button type="submit" class="btn btn-primary ">Submit</button>

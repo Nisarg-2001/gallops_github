@@ -34,8 +34,6 @@ class taxController extends Controller
        {
          $tax = tax_master::find($request->id);
          $tax->tax_name = $request->name;
-         $tax->type = $request->type;
-         $tax->value = $request->value;
          $tax->save();
          $request->session()->flash('status', 'Task was successful!');
          return redirect('tax')->with('success',' Tax Updated Successfully');
@@ -44,15 +42,11 @@ class taxController extends Controller
 
       $request->validate([
         "name" => ["required","unique:tax_masters,tax_name"],
-        "type" => ["required"],
-        "value" => ["required"],
         ]);
        
 
       $tax = new tax_master;
       $tax->tax_name = $request->name;
-      $tax->type = $request->type;
-      $tax->value = $request->value;
       $tax->save();
       $request->session()->flash('status', 'Task was successful!');
         return redirect('tax')->with('success',' Tax Added Successfully');

@@ -131,7 +131,7 @@ Route::post('/admin-order/getVendorsByProduct', [adminOrderController::class,'ge
 ## VENDOR ORDER ROUTES ##
 Route::get('/vendor-order',[purchaseOrderController::class,'view']);
 Route::get('/vendor-order/{id}',[purchaseOrderController::class,'edit']);
-// Route::get('/purchase-order',[purchaseOrderController::class,'view']);
+ Route::get('/purchase-order',[purchaseOrderController::class,'view']);
 Route::post('/vendor-order/post', [purchaseOrderController::class,'updatePurchaseOrder']);
 
 
@@ -195,13 +195,16 @@ Route::get('/order/invoice/{id}',[orderController::class,'orderInvoice']);
 Route::get('/inward',[inwardController::class,'view']);
 Route::get('/inward/add',[inwardController::class,'create']);
 Route::post('/inward/store',[inwardController::class,'store']);
-Route::get('/product/edit/{id}',[productController::class,'edit']);
+Route::get('/inward/view/{id}',[inwardController::class,'edit']);
+Route::get('/inward/edit/{id}',[inwardController::class,'edit']);
 Route::post('/inward/getProductByVendorId',[inwardController::class,'getProductByVendorId']);
+Route::get('/inward/invoice/{id}',[inwardController::class,'inwardInvoice']);
 
 ##  FRANCHISE --    OUTWARDS  ##
 Route::get('/outward',[outwardController::class,'view']);
 Route::get('/outward/add',[outwardController::class,'create']);
-Route::get('/outward/{id}', [outwardController::class,'edit']);
+Route::get('/outward/edit/{id}', [outwardController::class,'edit']);
+Route::get('/outward/view/{id}', [outwardController::class,'viewOutward']);
 Route::post('/order/getProduct',[orderController::class,'getProduct']);
 Route::post('/outward/post',[outwardController::class,'addupdate']);
 Route::get('/outward/delete/{id}',[orderController::class,'delete']);
@@ -229,6 +232,7 @@ Route::get('/order',[vendorController::class,'order']);
 Route::post('/order',[vendorController::class,'order']);
 Route::get('/vieworder/{id}',[orderController::class,'view']);
 Route::get('/vendor-order/{id}',[purchaseOrderController::class,'edit']);
+Route::post('/vendor-order/post', [purchaseOrderController::class,'updatePurchaseOrder']);
 });
 });
 

@@ -38,6 +38,7 @@
                         <div class="card">
                             <div class="card-header">
                             <h3 class="card-header mb-3 text-center">Order Report</h3>
+                            
                                 <form method="POST" action="{{ ((Auth::user()->role)==2) ? url('user/report/order') : url('report/order') }}" >
                                     @csrf
                                 <div class="row">
@@ -74,15 +75,20 @@
                                         <div class="form-group">
                                         <label> &nbsp;</label>
                                         <input type="submit" class="btn btn-primary form-control" value="Generate">
+                                       
                                         </div>
                                     </div>
+                                   
                                     
                                 </div>
                             </div>
                             </form>
+                            
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <table id="example1" class="table table-bordered table-striped">
+                                <table id="example1" class="table caption-top table-bordered table-striped ">
+                                    <caption class="text-center">Gallops Food Plaza (Store)<br>
+                                    Report: Raw Material Register from: 1-11-2021  to 16-12-2021</caption>
                                     <thead>
                                         <tr>
                                             <th>Order No.</th>

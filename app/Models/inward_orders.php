@@ -21,4 +21,14 @@ class inward_orders extends Model
 
         return $product;
     }
+    public static function getInwardItemData($inward_id)
+    {
+        $order = DB::table('inward_order_items as ii')
+            ->select('ii.*', 'p.name as product_name')
+            ->leftJoin('product_masters as p', 'p.id', '=', 'ii.product_id')
+            ->where('ii.inward_id', $inward_id)
+            ->get();
+
+        return $order;
+    }
 }

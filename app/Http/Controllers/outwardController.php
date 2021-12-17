@@ -41,16 +41,33 @@ class outwardController extends Controller
         return view('admin.outward.action')->with(['product' => $product, 'taxes' => $taxes]);
     }
 
-    public function edit($id)
+    public function edit(Request $request)
+    {
+        $id = $request->id;
+        $outward = outward_master::find($id);
+        $branch_id = Auth::id();
+        $product = branch_item_stocks::getOutwardStock($branch_id);
+        // get order items by order id
+        $outwardItemData = outward_master::getOutwardItemData($id);
+       
+
+        return view('admin.outward.action', [
+            'outward' => $outward,
+            'outwardItemData' => $outwardItemData,
+            'product' => $product,
+        ]);
+    }
+
+    public function viewOutward($id)
     {
         // get order by id
         $orderData = outward_master::find($id);
-
+        $branch_id = Auth::id();
+        $product = branch_item_stocks::getOutwardStock($branch_id);
         // get order items by order id
-        $orderItemData = outward_master::getOrderItemData($id);
+        $orderItemData = outward_master::getOutwardItemData($id);
 
         // get all products
-        $product = outward_master::getProduct();
 
         return view('admin.outward.action', [
             'orderData' => $orderData,

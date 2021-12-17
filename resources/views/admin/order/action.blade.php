@@ -53,8 +53,8 @@
                       <tr>
                         <th class='text-center' width="5%">No.</th>
                         <th width="45%">Product Name</th>
-                        <th width="10%">Unit Price</th>
-                        <th width="20%">Quantity</th>
+                        <th width="10%">Quantity</th>
+                        <th width="20%">Unit Price</th>
                         <th width="20%">Amount</th>
                         <!-- <th></th> -->
                       </tr>

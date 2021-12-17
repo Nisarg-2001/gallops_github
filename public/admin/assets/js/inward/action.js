@@ -45,7 +45,6 @@ $(document).on('change', '#vendor_id', function () {
     let vendor_id = $(this).val();
     if (vendor_id) {
         $('#vendor').val(vendor_id);
-        $("#vendor_id").select2({ disabled: 'readonly' });
 
         $.ajax({
             url: APP_URL + 'user/inward/getProductByVendorId',

@@ -25,12 +25,13 @@
                   <input type="hidden" name="id" value="{{ (isset($data->id) && !empty($data->id)) ? $data->id : '' }}">
                   <input type="hidden" name="vendor" id="vendor" value="">
 
-
+                  @if(isset($data))
+                  @else
                   <div class="row">
                     <div class="col-6 col-lg-6 col-md-6">
                       <div class="form-group">
                         <label>Select Vendor *</label>
-                        <select class="form-control select2" name="vendor_id" id="vendor_id">
+                        <select class="form-control select2" name="vendor_id" id="vendor_id" >
                           <option value="">Select Vendor</option>
                           @foreach($vendor as $v)
                           <option value="{{$v->id}}" {{ (isset($data->vendor_id) && $data->vendor_id == $v->id ) ? 'selected' : '' }} {{(Request::get("product")) ? 'selected' : ''}}>{{ $v->name }}</option>
@@ -42,6 +43,7 @@
                       <a href="javascript:void(0);" class="btn btn-primary btn-sm mt-2" id="changeVendor" style="display:none;" title="Change Vendor">Change Vendor</a>
                     </div>
                   </div>
+                  @endif
 
                   
 
@@ -49,7 +51,7 @@
                     <div class="col-4 col-lg-4 col-md-4">
                       <div class="form-group">
                         <label for="exampleInputPassword1">Order No.</label>
-                        <input type="text" class="form-control" name="order" id="order" value="{{ (isset($data->order) && !empty($data->order)) ? $data->order : '' }}" placeholder="Order No.">
+                        <input type="text" class="form-control" name="order" id="order" value="{{ (isset($data->id) && !empty($data->id)) ? $data->id : '' }}" placeholder="Order No." {{(isset($data)) ? 'readonly' : ''}}>
                         @error('order')
                         <div class="text-danger">{{$message}}</div>
                         @enderror
@@ -58,7 +60,7 @@
                     <div class="col-4 col-lg-4 col-md-4">
                       <div class="form-group">
                         <label for="exampleInputPassword1">Vendor Bill No.</label>
-                        <input type="text" class="form-control" name="billno" value="{{ (isset($data->billno) && !empty($data->billno)) ? $data->billno : '' }}" placeholder="Vendor Bill No.">
+                        <input type="text" class="form-control" name="billno" value="{{ (isset($data->vendor_bill_no) && !empty($data->vendor_bill_no)) ? $data->vendor_bill_no : '' }}" placeholder="Vendor Bill No." {{(isset($data)) ? 'readonly' : ''}}>
                         @error('billno')
                         <div class="text-danger">{{$message}}</div>
                         @enderror
@@ -67,7 +69,7 @@
                     <div class="col-4 col-lg-4 col-md-4">
                       <div class="form-group">
                         <label for="exampleInputPassword1">Date of Receive</label>
-                        <input type="date" class="form-control" name="dateofreceive" value="{{ (isset($data->dateofreceive) && !empty($data->dateofreceive)) ? $data->dateofreceive : date('Y-m-d') }}" placeholder="Date of Receive">
+                        <input type="date" class="form-control" name="dateofreceive" value="{{ (isset($data->received_date) && !empty($data->received_date)) ? $data->received_date : date('Y-m-d') }}" placeholder="Date of Receive" {{(isset($data)) ? 'readonly' : ''}}>
                         @error('dateofreceive')
                         <div class="text-danger">{{$message}}</div>
                         @enderror
@@ -160,13 +162,54 @@
                       </tr>
                     </thead>
                     <tbody>
+                    <tr>
+                        @if(isset($inwardItemData) && $inwardItemData)
+
+                        @php
+                        $i = 1;
+                        @endphp
+
+                        @foreach($inwardItemData as $orderItem)
+                        <td class='text-center'> {{ $i }} </td>
+                        <td>
+
+                          <input type='text' value=" {{ $orderItem->product_name }}" id="Item_{{ $i }}" name='Item[]' class='form-control ' readonly />
+
+
+                          <input type='hidden' name='intItemID[]' id="intItemID_{{ $i }}" value="{{ $orderItem->product_id }}">
+                          
+                        </td>
+                        <td>
+                          <input type='number' value="{{ $orderItem->qty }}" id="Qty_{{ $i }}" name='Qty[]' class='form-control filterme' min='1' max='9999' readonly>
+                        </td>
+                        <td>
+                          <input type='text' value="-" id="NetPrice_{{ $i }}" name='NetPrice[]' class='form-control filterme' readonly>
+                        </td>
+                        <td>
+                          <input type='text' value="{{ $orderItem->packaging_month }}" id="NetPrice_{{ $i }}" name='packaging_month[]' class='form-control filterme' readonly>
+                        </td>
+                        <td>
+                          <input type='text' value="{{ $orderItem->batch_no }}" id="NetPrice_{{ $i }}" name='batch_no[]' class='form-control filterme' readonly>
+                        </td>
+                        <!-- <td class='text-center'>
+                          <button type="button" class="btn btn-danger btn-sm removethis">
+                            <i class="fa fa-trash"></i>
+                          </button>
+                        </td> -->
+                      </tr>
+                      @php $i++; @endphp
+                      @endforeach
+                      @endif
                     </tbody>
                   </table>
 
                   <div class="text-center">
 
-                    <button type="submit" class="btn btn-primary ">Submit</button>
-                    <a href="{{url('user/inward')}}" class="btn btn-danger">Cancel</a>
+                    @if(isset($data)) @else<button type="submit" class="btn btn-primary ">Submit</button>@endif
+                    
+                    @if(isset($data))<a href="{{url('user/inward')}}" class="btn btn-danger">Back</a>
+                    @else<a href="{{url('user/inward')}}" class="btn btn-danger">Cancel</a>
+                    @endif
 
                   </div>
                 </form>

@@ -44,8 +44,8 @@
                                         <tr>
                                             <th>ID</th>
                                             <th>Product Name</th>
+                                            <th>Alias Name</th>
                                             <th>Product Self Life</th>
-                                            <th>Price</th>
                                             <th>Unit</th>
                                             <th>Action</th>
                                         </tr>
@@ -56,8 +56,8 @@
                                         <tr>
                                             <td>{{ $c }}</td>
                                             <td>{{ $info->name }}</td>
+                                            <td>{{ $info->alias }}</td>
                                             <td>{{ $info->label }}</td>
-                                            <td>{{ $info->price }}</td>
                                             <td>{{ $info->unit}}</td>
                                             <td class="text-center">
                                                 <a href="assign_product/add?product={{$info->id}}"

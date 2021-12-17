@@ -76,7 +76,7 @@
                       @endif
                       <td>
                         <a href="{{ url('/user/order/invoice/'.$info->id) }}" class="btn btn-info" title="Print Invoice"><i class="fas fa-print"></i></a>
-                        <a href="{{ url('user/order/view'.$info->id)}}" class="btn btn-primary" title="View"><i class="fas fa-eye"></i></a>
+                        <a href="{{ url('user/order/view/'.$info->id)}}" class="btn btn-primary" title="View"><i class="fas fa-eye"></i></a>
                         <!-- <a data-confirm="" href="{{ url('order/delete/'.$info->id)}}" data-id="{{$info->id}}" class="btn btn-danger" title="Delete"><i class="fas fa-trash-alt"></i></a> -->
                       </td>
 

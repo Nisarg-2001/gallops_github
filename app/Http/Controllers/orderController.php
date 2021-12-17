@@ -210,6 +210,7 @@ class orderController extends Controller
         
     }
 
+
     public function order_item_report()
     {
         $order = DB::table('orders')->paginate(10);

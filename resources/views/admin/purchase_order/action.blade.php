@@ -20,9 +20,10 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <form action="{{ url('vendor-order/post') }}" method="post" id="orderForm">
+                <form action="{{ url('vendor/vendor-order/post') }}" method="post" id="orderForm">
                   @csrf
                   <input type="hidden" name="id" value="{{ (isset($orderData->id) && !empty($orderData->id)) ? $orderData->id : '' }}">
+                  <input type="hidden" name="order_id" value="{{ (isset($orderData->order_id) && !empty($orderData->order_id)) ? $orderData->order_id : '' }}">
                   <div class="row">
                     <div class="col-12 col-lg-6 col-md-6">
                       <div class="form-group">
@@ -193,7 +194,7 @@
                   <div class="text-center">
                     
                     <button type="submit" class="btn btn-primary">Save Order</button>
-                    <a href="{{url('vendor-order')}}" class="btn btn-danger">Back</a>
+                    <a href="{{url('vendor/order')}}" class="btn btn-danger">Back</a>
                   </div>
                 </form>
               </div>

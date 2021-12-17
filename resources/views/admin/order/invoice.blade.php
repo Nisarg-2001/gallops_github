@@ -21,7 +21,7 @@
     <div class="row">
       <div class="col-12">
         <h2 class="page-header">
-          <i class="fas fa-globe"></i> Gallops, Inc.
+          <i class="fas fa-globe"></i> {{$order->name}}
           <small class="float-right">Date: {{ date('d-M-Y')}}</small>
         </h2>
       </div>
@@ -30,7 +30,7 @@
     <!-- info row -->
     <div class="row invoice-info">
       <div class="col-sm-4 invoice-col">
-        From
+        By,
         <address>
           <strong>{{$order->name}}, Inc.</strong><br>
           {{$order->address_line_1}}<br>
@@ -40,16 +40,7 @@
         </address>
       </div>
       <!-- /.col -->
-      <div class="col-sm-4 invoice-col">
-        To
-        <address>
-          <strong>John Doe</strong><br>
-          795 Folsom Ave, Suite 600<br>
-          San Francisco, CA 94107<br>
-          Phone: (555) 539-1037<br>
-          Email: john.doe@example.com
-        </address>
-      </div>
+      
       <!-- /.col -->
       <div class="col-sm-4 invoice-col">
      

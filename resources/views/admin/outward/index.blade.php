@@ -47,7 +47,9 @@
                       <td>Pending</td>
                       <td>
                         <a href="{{ url('user/outward/invoice') }}" class="btn btn-info" title="Print Invoice"><i class="fas fa-print"></i></a>
-                        <a href="{{ url('user/outward/'.$info->id)}}" class="btn btn-primary" title="View"><i class="fas fa-eye"></i></a>
+                        <a href="{{ url('user/outward/view/'.$info->id)}}" class="btn btn-primary" title="View"><i class="fas fa-eye"></i></a>
+                        <a href="{{url('user/outward/edit/'.$info->id)}}" class="btn btn-info"
+                            title="Edit"><i class="fas fa-pencil"></i></a>
                         <!-- <a data-confirm="" href="{{ url('order/delete/'.$info->id)}}" data-id="{{$info->id}}" class="btn btn-danger" title="Delete"><i class="fas fa-trash-alt"></i></a> -->
                       </td>
 

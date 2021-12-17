@@ -19,10 +19,10 @@ class productController extends Controller
 {
     public function view()
     {
-        $product = DB::table('product_masters as p')->join('assign_products as ap', 'p.id', '=', 'ap.product_id')
+        $product = DB::table('product_masters as p')
         ->join('shelf_lives as sl', 'p.self_life', '=', 'sl.id')
         ->join('unit_masters as u', 'p.unit', '=', 'u.id')
-        ->select('p.*', 'ap.price','sl.label','u.unit')->where('ap.is_default', '=', '1')->paginate(10);
+        ->select('p.*','sl.label','u.unit')->paginate(10);
         //$data = product_master::all();
         return view('admin.product.index', ['data' => $product]);
     }

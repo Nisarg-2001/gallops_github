@@ -34,24 +34,22 @@
                       <th>Order No.</th>
                       <th>Vendor Name</th>
                       <th>Date of Receive</th>
-                      <th>Qty</th>
-                      <th>Batch No.</th>
+                      <th>Vendor bill No.</th>
                       <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
                     @foreach($inward as $info)
                     <tr>
-                      <td>{{$info->order_no}}</td>
+                      <td>{{$info->id}}</td>
                       <td>{{$info->name}}</td>
                       <td>{{date('d M Y', strtotime($info->received_date))}}</td>
-                      <td>{{$info->qty}}</td>
-                      <td>{{$info->batch_no}}</td>
+                      <td>{{$info->vendor_bill_no}}</td>
                       <td class="text-center">
-                        <a href="{{url('user/product/edit/'.$info->id)}}" class="btn btn-info"
+                      <a href="{{ url('/user/inward/invoice/'.$info->id) }}" class="btn btn-secondary" title="Print Invoice"><i class="fas fa-print"></i></a>
+                        <a href="{{ url('user/inward/view/'.$info->id)}}" class="btn btn-primary" title="View"><i class="fas fa-eye"></i></a>
+                        <a href="{{url('user/inward/edit/'.$info->id)}}" class="btn btn-info"
                             title="Edit"><i class="fas fa-pencil"></i></a>
-                        <a data-confirm="" data-id="{{$info->id}}" href="{{url('user/product/delete/'.$info->id)}}" class="btn btn-danger"
-                            title="Delete"><i class="fas fa-trash-alt"></i></a>
                       </td>
                     </tr>
                     @endforeach
