@@ -183,7 +183,7 @@
                           <input type='number' value="{{ $orderItem->qty }}" id="Qty_{{ $i }}" name='Qty[]' class='form-control filterme' min='1' max='9999' readonly>
                         </td>
                         <td>
-                          <input type='text' value="-" id="NetPrice_{{ $i }}" name='NetPrice[]' class='form-control filterme' readonly>
+                          <input type='text' value="{{ $orderItem->unit }}" id="NetPrice_{{ $i }}" name='NetPrice[]' class='form-control filterme' readonly>
                         </td>
                         <td>
                           <input type='text' value="{{ $orderItem->packaging_month }}" id="NetPrice_{{ $i }}" name='packaging_month[]' class='form-control filterme' readonly>

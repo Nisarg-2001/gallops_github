@@ -130,6 +130,24 @@
       <!-- /.col -->
     </div>
     <!-- /.row -->
+    <table class="table table-bordered" >
+												<tr>	
+													<td >
+														<b>Declration</b> : Certified that the particulars given above are true and correct amount identical represents the price actually charged and that there is no flow additional consideration directly or indirectly from the buyer.
+													</td>
+												</tr>
+												
+												<tr>	
+													<td >
+														<b>Note</b> : This order is valid for 15 days.
+													</td>
+												</tr>
+											</table>
+											<div class="row">
+												<div class="col-sm-12 center">
+													<h6 style="margin-top:5px;">This is computer generated invoice.</h6>
+												</div>
+											</div>
   </section>
   <!-- /.content -->
 </div>

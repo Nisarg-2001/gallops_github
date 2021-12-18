@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 class outward_master extends Model
 {
     use HasFactory;
-
+  
     public static function getProduct()
     {
         $product = DB::table('assign_products as ap')
@@ -24,8 +24,9 @@ class outward_master extends Model
     public static function getOutwardItemData($outward_id)
     {
         $order = DB::table('outward_items as oi')
-            ->select('oi.*', 'p.name as product_name')
+            ->select('oi.*', 'p.name as product_name', 'um.unit')
             ->leftJoin('product_masters as p', 'p.id', '=', 'oi.product_id')
+            ->leftJoin('unit_masters as um', 'um.id', '=', 'p.unit')
             ->where('oi.outward_id', $outward_id)
             ->get();
 

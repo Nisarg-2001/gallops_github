@@ -195,7 +195,7 @@ Route::get('/order/invoice/{id}',[orderController::class,'orderInvoice']);
 Route::get('/inward',[inwardController::class,'view']);
 Route::get('/inward/add',[inwardController::class,'create']);
 Route::post('/inward/store',[inwardController::class,'store']);
-Route::get('/inward/view/{id}',[inwardController::class,'edit']);
+Route::get('/inward/view/{id}',[inwardController::class,'viewInward']);
 Route::get('/inward/edit/{id}',[inwardController::class,'edit']);
 Route::post('/inward/getProductByVendorId',[inwardController::class,'getProductByVendorId']);
 Route::get('/inward/invoice/{id}',[inwardController::class,'inwardInvoice']);

@@ -66,20 +66,90 @@ class outwardController extends Controller
         $product = branch_item_stocks::getOutwardStock($branch_id);
         // get order items by order id
         $orderItemData = outward_master::getOutwardItemData($id);
+        $outwardItemData = outward_master::getOutwardItemData($id);
 
         // get all products
 
         return view('admin.outward.action', [
             'orderData' => $orderData,
             'orderItemData' => $orderItemData,
+            'outwardItemData' => $outwardItemData,
             'product' => $product,
         ]);
     }
 
     public function addupdate(Request $request)
     {
+        
+        if(isset($request->id))
+        { 
+            
+            $branch_id = Auth::id();
+            $param = $request->all();
+    
+            if (!empty($request->product_id)) {
+    
+                // insert into outward_masters table
+                $outward =  outward_master::find($request->id);
+                $outward->user_id = $branch_id;
+                $outward->person_name = $request->person_name;
+                $outward->issue_date = date('Y-m-d', strtotime($request->date_of_issue));
+                $outward->note = $request->note;
+                $outward->save();
+               
+                $outward_id = $outward->id;
+    
+    
+    
+                // insert into outward_items table
+                    $itemData = [];
+                    foreach ($request->product_id as $key => $value) {
+                        $param['Item'] = $value;
+                
+                        //     $outwardupdate = outward_item::find($outward_id);
+                        //     $outwardupdate = $outwardupdate->update([
+                        //         'product_id' => $request->product_id[$key],
+                        //         'qty' => $request->qty[$key],
+                        //         'batch_no' => $request->batch_number[$key],
+                        //     ])->where(['product_id', '<>', $request->product_id[$key] ], ['batch_no', '<>', $request->batch_number[$key] ]);
+                        //    dd('done');
+                                
+                        
+                        // else
+                        // {
+                        //     $itemData[] = [
+                        //         'outward_id' => $outward_id,
+                        //         'product_id' => $request->product_id[$key],
+                        //         'qty' => $request->qty[$key],
+                        //         'batch_no' => $request->batch_number[$key],
+                        //     ];
+                        // }
+                        
+                    }
+                    dd('update');
 
-        $branch_id = Auth::id();
+                    outward_item::insert($itemData);
+               
+                //update branch stock
+                foreach ($request->product_id as $key => $value) {
+                    $stock = branch_item_stocks::where('branch_id', $branch_id)
+                        ->where('product_id', $request->product_id[$key])
+                        ->where('batch_no', $request->batch_number[$key])
+                        ->first();
+                    if ($stock) {
+                        $stock->qty = $stock->qty - $request->qty[$key];
+                        $stock->save();
+                    }
+                }
+            }
+    
+            return redirect('user/outward')->with('success', ' Outward Created Successfully');
+        }
+        
+        else
+        {
+            dd('here');
+            $branch_id = Auth::id();
         $param = $request->all();
 
         if (!empty($request->product_id)) {
@@ -124,6 +194,8 @@ class outwardController extends Controller
         }
 
         return redirect('user/outward')->with('success', ' Outward Created Successfully');
+        }
+        
     }
 
     public function delete($id)

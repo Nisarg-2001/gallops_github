@@ -38,9 +38,8 @@
                                         <div class="col-12 col-lg-6 col-md-6">
                                             <div class="form-group">
                                                 <label for="date_of_issue">Date of Issue *</label>
-                                                <input type="hidden" value="{{(isset($orderData->id)) ? $orderData->id : ''}}" />
-                                                <input type="date" class="form-control" name="date_of_issue" id="date_of_issue" value="@if(isset($orderData->issue_date) && !empty($orderData->issue_date)) <?php echo $orderData->issue_date; ?>
-                                                 @elseif(isset($outward->issue_date) && !empty($outward->issue_date)) <?php echo $outward->issue_date; ?> @else  echo date('Y-m-d'); ?> @endif" {{ ((isset($orderData))) ? 'readonly' : '' }} placeholder="Date of Issue">
+                                                <input type="hidden" name="id" value="{{(isset($outward->id)) ? $outward->id : ''}}" />
+                                                <input type="date" class="form-control" name="date_of_issue" id="date_of_issue" value="{{(isset($orderData->issue_date) || isset($outward->issue_date)) ? (isset($orderData)) ? $orderData->issue_date : $outward->issue_date   : date('Y-m-d') }}" {{ ((isset($orderData))) ? 'readonly' : '' }} placeholder="Date of Issue">
                                                 @error('date_of_issue')
                                                 <div class="text-danger">{{$message}}</div>
                                                 @enderror
@@ -104,7 +103,7 @@
                                         <tbody>
 
                                         <tr>
-                                                        @if(isset($outwardItemData) && $outwardItemData)
+                                                        
 
                                                        
 
@@ -112,78 +111,35 @@
                                                         $i = 1;
                                                        
                                                         @endphp
-
+                                                        
                                                         @foreach($outwardItemData as $orderItem)
-                                                        <td class='text-center'> {{ $i }} </td>
+                                                       
+                                                        <td> {{ $i }} </td>
+                                                        <input type="hidden" name="product_id[]" value="{{$orderItem->product_id }}">
                                                         <td>
 
-                                                        <input type='text' value=" {{ $orderItem->product_name }}" id="Item_{{ $i }}" name='Item[]' class='form-control ' />
+                                                        <input type='text' value=" {{ $orderItem->product_name }}" id="Item_{{ $i }}" name='Item[]' class='form-control ' readonly/>
                                                         </td>
                                                         <td>
-                                                        <input type='number' value="{{ $orderItem->qty }}" id="Qty_{{ $i }}" name='Qty[]' class='form-control filterme' min='1' max='9999'>
+                                                        <input type='number' value="{{ $orderItem->qty }}" id="Qty_{{ $i }}" name='qty[]' class='form-control filterme' min='1' max='9999' {{(isset($orderItemData)) ? 'readonly' : ''}}>
                                                         </td>
                                                         <td>
-                                                        <input type='text' value="-" id="NetPrice_{{ $i }}" name='NetPrice[]' class='form-control filterme'>
+                                                        <input type='text' value="{{ $orderItem->unit }}" id="NetPrice_{{ $i }}" name='unit[]' class='form-control filterme' readonly>
                                                         </td>
                                                         <td>
-                                                        <input type='text' value="{{$orderItem->batch_no}}" id="NetPrice_{{ $i }}" name='NetPrice[]' class='form-control filterme'>
+                                                        <input type='text' value="{{$orderItem->batch_no}}" id="NetPrice_{{ $i }}" name='batch_number[]' class='form-control filterme' readonly>
                                                         </td>
-                                                        <!-- <td class='text-center'>
+                                                        <td class='text-center'>
                                                         <button type="button" class="btn btn-danger btn-sm removethis">
                                                             <i class="fa fa-trash"></i>
                                                         </button>
-                                                        </td> -->
+                                                        </td>
                                                     </tr>
                                                     @php $i++; @endphp
                                                     @endforeach
-                                                    @endif
+                                                   
 
-                                                    <tr>
-                                                        @if(isset($orderItemData) && $orderItemData)
-
-                                                       
-
-                                                        @php
-                                                        $i = 1;
-                                                       
-                                                        @endphp
-
-                                                        @foreach($orderItemData as $orderItem)
-                                                        <td class='text-center'> {{ $i }} </td>
-                                                        <td>
-
-                                                        <input type='text' value=" {{ $orderItem->product_name }}" id="Item_{{ $i }}" name='Item[]' class='form-control ' readonly />
-                                                        </td>
-                                                        <td>
-                                                        <input type='number' value="{{ $orderItem->qty }}" id="Qty_{{ $i }}" name='Qty[]' class='form-control filterme' min='1' max='9999'  readonly>
-                                                        </td>
-                                                        <td>
-                                                        <input type='text' value="-" id="NetPrice_{{ $i }}" name='NetPrice[]' class='form-control filterme' readonly>
-                                                        </td>
-                                                        <td>
-                                                        <input type='text' value="{{$orderItem->batch_no}}" id="NetPrice_{{ $i }}" name='NetPrice[]' class='form-control filterme' readonly>
-                                                        </td>
-                                                        <!-- <td class='text-center'>
-                                                        <button type="button" class="btn btn-danger btn-sm removethis">
-                                                            <i class="fa fa-trash"></i>
-                                                        </button>
-                                                        </td> -->
-                                                    </tr>
-                                                    @php $i++; @endphp
-                                                    @endforeach
-                                                    @endif
-
-                                            
-                                                <!-- @if(isset($orderItemData) && $orderItemData)
-                                                @php $i=1; @endphp
-
-
-                                                @foreach($orderItemData as $orderItem)
-
-                                                
-                                            @php $i++; @endphp
-                                            @endforeach
-                                            @endif -->
+                                                   
                                         </tbody>
                                     </table>
 
@@ -204,8 +160,8 @@
                                     <div class="text-center">
                                         @if((isset($orderData)))
                                         @else
-                                        <button type="submit" class="btn btn-primary" onClick="return check();">Place
-                                            Order</button>
+                                        <button type="submit" class="btn btn-primary" onClick="return check();"> {{(isset($outward)) ? 'Update' : 'Place' }}
+                                          Order</button>
                                         @endif
                                         <a href="{{url('user/outward')}}" class="btn btn-danger">Back</a>
                                     </div>

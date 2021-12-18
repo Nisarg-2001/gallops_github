@@ -1,4 +1,4 @@
-var i = 1;
+var i = $("table.outward-table").find("tr").length;
 
 $('#outwardForm').validate({
     rules: {

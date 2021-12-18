@@ -40,6 +40,19 @@ class inwardController extends Controller
         ]);
     }
 
+    public function viewInward($id)
+    {
+        $vendor = vendor_master::all();
+        $data = inward_orders::find($id);
+        $InwardItemData = inward_orders::getInwardItemData($id);
+        return view('admin.inward.action')->with([
+            'vendor' => $vendor,
+            'data' => $data,
+            'inwardItemData' =>$InwardItemData,
+            // 'product' => $product,
+        ]);
+    }
+
     public function create()
     {
         // $product = product_master::all();
@@ -115,7 +128,7 @@ class inwardController extends Controller
         $order = DB::table('inward_orders as io')
         ->join('users as u', 'io.user_id', '=', 'u.id')
         ->join('vendor_masters as v', 'io.vendor_id', '=', 'v.id')
-        ->select('io.*', 'u.*', 'v.*', 'v.name as vname', 'v.address_line_1 as vadd1', 'v.address_line_2 as vadd2', 'v.contact as vcontact', 'v.email as vemail')
+        ->select('io.*', 'u.*','u.name as uname','u.address_line_1 as uadd1', 'u.address_line_2 as uadd2', 'u.contact as ucontact', 'u.email as uemail', 'v.*', 'v.name as vname', 'v.address_line_1 as vadd1', 'v.address_line_2 as vadd2', 'v.contact as vcontact', 'v.email as vemail')
         ->where('io.id', $id)->first();
 
         $item = DB::table('inward_order_items as ii')

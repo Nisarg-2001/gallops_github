@@ -32,11 +32,11 @@
       <div class="col-sm-4 invoice-col">
         From
         <address>
-          <strong>{{$order->name}}, Inc.</strong><br>
-          {{$order->address_line_1}}<br>
-          {{$order->address_line_2}}<br>
-          Phone: +91-{{$order->contact}}<br>
-          Email: {{$order->email}}
+          <strong>{{$order->uname}}, Inc.</strong><br>
+          {{$order->uadd1}}<br>
+          {{$order->uadd2}}<br>
+          Phone: +91-{{$order->ucontact}}<br>
+          Email: {{$order->uemail}}
         </address>
       </div>
       <!-- /.col -->
@@ -139,6 +139,24 @@
       <!-- /.col -->
     </div>
     <!-- /.row -->
+    <table class="table table-bordered" >
+												<tr>	
+													<td >
+														<b>Declration</b> : Certified that the particulars given above are true and correct amount identical represents the price actually charged and that there is no flow additional consideration directly or indirectly from the buyer.
+													</td>
+												</tr>
+												
+												<tr>	
+													<td >
+														<b>Note</b> : This order is valid for 15 days.
+													</td>
+												</tr>
+											</table>
+											<div class="row">
+												<div class="col-sm-12 center">
+													<h6 style="margin-top:5px;">This is computer generated invoice.</h6>
+												</div>
+											</div>
   </section>
   <!-- /.content -->
 </div>
