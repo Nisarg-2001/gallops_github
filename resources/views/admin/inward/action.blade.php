@@ -29,7 +29,7 @@
                     <div class="col-6 col-lg-6 col-md-6">
                       <div class="form-group">
                         <label>Select Vendor *</label>
-                        <select class="form-control select2" name="vendor_id" id="vendor_id" >
+                        <select class="form-control select2" name="vendor_id" id="vendor_id" {{(isset($view)) ? 'disabled' : ''}} >
                           <option value="">Select Vendor</option>
                           @foreach($vendor as $v)
                           <option value="{{$v->id}}" {{ (isset($data->vendor_id) && $data->vendor_id == $v->id ) ? 'selected' : '' }} {{(Request::get("product")) ? 'selected' : ''}}>{{ $v->name }}</option>
@@ -128,7 +128,7 @@
                       <div class="col-12 col-lg-4 col-md-4">
                         <div class="form-group">
                           <label for="batch_number">Batch Number *</label>
-                          <input type="text" class="form-control" name="batch_number" id="batch_number" value="" placeholder="Batch Number">
+                          <input type="text" class="form-control" name="batch_no" id="batch_number" value="" placeholder="Batch Number">
                           @error('batch_number')
                           <div class="text-danger">{{$message}}</div>
                           @enderror
@@ -173,20 +173,20 @@
                           <input type='text' value=" {{ $orderItem->product_name }}" id="Item_{{ $i }}" name='Item[]' class='form-control ' readonly />
 
 
-                          <input type='hidden' name='intItemID[]' id="intItemID_{{ $i }}" value="{{ $orderItem->product_id }}">
+                          <input type='hidden' name='product_id[]' i  d="intItemID_{{ $i }}" value="{{ $orderItem->product_id }}">
                           
                         </td>
                         <td>
-                          <input type='number' value="{{ $orderItem->qty }}" id="Qty_{{ $i }}" name='Qty[]' class='form-control filterme' min='1' max='9999'>
+                          <input type='number' value="{{ $orderItem->qty }}" id="Qty_{{ $i }}" name='qty[]' class='form-control filterme' min='1' max='9999' {{(isset($view)) ? 'readonly' : ''}}>
                         </td>
                         <td>
-                          <input type='text' value="{{ $orderItem->unit }}" id="NetPrice_{{ $i }}" name='NetPrice[]' class='form-control filterme' readonly>
+                          <input type='text' value="{{ $orderItem->unit }}" id="Unit_{{ $i }}" name='unit[]' class='form-control filterme' readonly>
                         </td>
                         <td>
-                          <input type='text' value="{{ $orderItem->packaging_month }}" id="NetPrice_{{ $i }}" name='packaging_month[]' class='form-control filterme' readonly>
+                          <input type='text' value="{{ $orderItem->packaging_month }}" id="Packaging_month_{{ $i }}" name='monthYear[]' class='form-control filterme' readonly>
                         </td>
                         <td>
-                          <input type='text' value="{{ $orderItem->batch_no }}" id="NetPrice_{{ $i }}" name='batch_no[]' class='form-control filterme' readonly>
+                          <input type='text' value="{{ $orderItem->batch_no }}" id="NetPrice_{{ $i }}" name='batch_number[]' class='form-control filterme' readonly>
                         </td>
                          <td>
                           <button type="button" class="btn btn-danger btn-sm removethis">
@@ -202,7 +202,7 @@
 
                   <div class="text-center">
 
-                    <button type="submit" class="btn btn-primary ">@if(isset($data)) Update @else Submit @endif</button>
+                    @if(isset($view)) @else<button type="submit" class="btn btn-primary ">@if(isset($data)) Update @else Submit @endif</button>@endif
                     
                     @if(isset($data))<a href="{{url('user/inward')}}" class="btn btn-danger">Back</a>
                     @else<a href="{{url('user/inward')}}" class="btn btn-danger">Cancel</a>

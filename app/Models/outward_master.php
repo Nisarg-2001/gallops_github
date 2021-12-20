@@ -21,13 +21,13 @@ class outward_master extends Model
         return $product;
     }
 
-    public static function getOutwardItemData($outward_id)
+    public static function getOutwardItemData($inward_id)
     {
         $order = DB::table('outward_items as oi')
             ->select('oi.*', 'p.name as product_name', 'um.unit')
             ->leftJoin('product_masters as p', 'p.id', '=', 'oi.product_id')
             ->leftJoin('unit_masters as um', 'um.id', '=', 'p.unit')
-            ->where('oi.outward_id', $outward_id)
+            ->where('oi.outward_id', $inward_id)
             ->get();
 
         return $order;

@@ -43,12 +43,14 @@ class inwardController extends Controller
     public function viewInward($id)
     {
         $vendor = vendor_master::all();
+        $view ="view";
         $data = inward_orders::find($id);
         $InwardItemData = inward_orders::getInwardItemData($id);
         return view('admin.inward.action')->with([
             'vendor' => $vendor,
             'data' => $data,
             'inwardItemData' =>$InwardItemData,
+            'view' => $view,
             // 'product' => $product,
         ]);
     }
@@ -86,42 +88,93 @@ class inwardController extends Controller
         $order->vendor_bill_no = $request->billno;
         $order->received_date = date('Y-m-d', strtotime($request->dateofreceive));
         $order->save();
-        dd('update');
+
 
         $inward_id = $order->id;
 
-        // insert into orde_items table
-        $itemData = [];
-        foreach ($request->product_id as $key => $value) {
-            $itemData[] = [
-                'inward_id' => $order_id,
-                'product_id' => $request->product_id[$key],
-                'qty' => $request->qty[$key],
-                'batch_no' => $request->batch_number[$key],
-                'packaging_month' => date('Y-m-d', strtotime($request->monthYear[$key])),
-            ];
-        }
 
-        inward_order_items::insert($itemData);
-
-        //update stock
         foreach ($request->product_id as $key => $value) {
-            $stock = branch_item_stocks::where('branch_id', $branch_id)
-                ->where('product_id', $request->product_id[$key])
-                ->where('batch_no', $request->batch_number[$key])
-                ->first();
-            if ($stock) {
-                $stock->qty = $stock->qty + $request->qty[$key];
-                $stock->save();
+            $productIds[] = $request->product_id[$key];
+
+            $count =  inward_order_items::where('inward_id', $inward_id)->where('product_id', $request->product_id[$key])->get()->count();
+            
+            if ($count == 0) {
+                //new entry
+                $inward_item = new inward_order_items;
+                $inward_item->inward_id = $inward_id;
+                $inward_item->product_id = $request->product_id[$key];
+                $inward_item->qty = $request->qty[$key];
+                $inward_item->batch_no = $request->batch_number[$key];
+                $inward_item->packaging_month = date('Y-m-d', strtotime($request->monthYear[$key]));
+                $inward_item->save();
+
+                //update branch stock
+                $stock = branch_item_stocks::where('branch_id', $branch_id)
+                    ->where('product_id', $request->product_id[$key])
+                    ->where('batch_no', $request->batch_number[$key])
+                    ->first();
+                if ($stock) {
+                    $stock->qty = $stock->qty + $request->qty[$key];
+                    $stock->save();
+                }
             } else {
-                $stock = new branch_item_stocks;
-                $stock->branch_id = $branch_id;
-                $stock->product_id = $request->product_id[$key];
-                $stock->qty = $request->qty[$key];
-                $stock->batch_no = $request->batch_number[$key];
-                $stock->save();
+
+                    $inward_item = inward_order_items::where('inward_id', $inward_id)->where('product_id', $request->product_id[$key])->get();
+                    foreach($inward_item as $item)
+                    {
+                        $item->qty;
+                       
+                    }
+                 //Update quantity into branch_items_stocks table
+                 $stock = branch_item_stocks::where('branch_id', $branch_id)
+                 ->where('product_id', $request->product_id[$key])
+                 ->where('batch_no', $request->batch_number[$key])
+                 ->first();
+                 if($stock){
+                     $stock->qty = ($stock->qty - $item->qty) + ($request->qty[$key]);
+                     $stock->save();
+                 }
+                    //Update data into Outward_items table
+                   
+                    $item->qty = $request->qty[$key];
+                    $item->save();
+
+                   
+                //existing entry - update
+                //olt qty = outward_item -> qty [outward_id, prod_id]
+                //new qty = $request->qty[$key]
+                // branch_item_stocks - get stock(x) - (x + old qty - new qty)
+
+                //outward_items update new qty [outward_id, prod_id]
             }
+            
         }
+
+        //removed items
+
+        
+        $inwardItems = inward_order_items::select('id', 'product_id', 'qty', 'batch_no')
+            ->whereNotIn('product_id', $productIds)->get();
+        
+        if ($inwardItems->count() > 0) {
+            $inIds = [];
+            foreach ($inwardItems as $key => $value) {
+                //update branch stock before item delete
+                $inIds[] = $value->id;
+                $stock = branch_item_stocks::where('branch_id', $branch_id)
+                    ->where('product_id', $value->product_id)
+                    ->where('batch_no', $value->batch_no)
+                    ->first();
+                if ($stock) {
+                    $stock->qty = $stock->qty + $value->qty;
+                    $stock->save();
+                }
+            }
+
+            //delete from outward items
+            inward_order_items::whereIn('id', $inIds)->delete();
+        }
+                
 
         return redirect('user/inward')->with('success', 'Inwards Updated Successfully');
         }
@@ -144,7 +197,7 @@ class inwardController extends Controller
         $itemData = [];
         foreach ($request->product_id as $key => $value) {
             $itemData[] = [
-                'inward_id' => $order_id,
+                'inward_id' => $inward_id,
                 'product_id' => $request->product_id[$key],
                 'qty' => $request->qty[$key],
                 'batch_no' => $request->batch_number[$key],
@@ -189,7 +242,8 @@ class inwardController extends Controller
 
         $item = DB::table('inward_order_items as ii')
         ->join('product_masters as pm', 'pm.id', '=', 'ii.product_id')
-        ->select('ii.*', 'pm.*')
+        ->join('unit_masters as um', 'um.id', '=', 'pm.unit')
+        ->select('ii.*', 'pm.*','um.unit as unit_name')
         ->where('ii.inward_id', '=', $id)->get();
 
         

@@ -87,8 +87,8 @@
                             <!-- /.card-header -->
                             <div class="card-body">
                                 <table id="example1" class="table caption-top table-bordered table-striped ">
-                                    <caption class="text-center">Gallops Food Plaza (Store)<br>
-                                    Report: Raw Material Register from: 1-11-2021  to 16-12-2021</caption>
+                                    <caption class="text-center " style="caption-side:top;">Gallops Food Plaza (Store)<br>
+                                    <b>Report: order Report</b></caption>
                                     <thead>
                                         <tr>
                                             <th>Order No.</th>

@@ -102,11 +102,11 @@
                                         </thead>
                                         <tbody>
 
-                                        <tr>
+                                        
                                                         
 
-                                                       
-
+                                                       @if(isset($outwardItemData))
+                                                       <tr>
                                                         @php
                                                         $i = 1;
                                                        
@@ -137,6 +137,7 @@
                                                     </tr>
                                                     @php $i++; @endphp
                                                     @endforeach
+                                                    @endif
                                                    
 
                                                    

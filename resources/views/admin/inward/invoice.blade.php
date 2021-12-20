@@ -16,64 +16,58 @@
 <body>
 <div class="wrapper">
   <!-- Main content -->
-  <section class="invoice">
+  <section class="invoice p-5" style="border:2px solid black">
+  <div class="row">
+      
+      <div class="col-sm-12 text-center">
+        <h3 style="margin-bottom:0px;">RETAIL INVOICE</h3>
+        <h6 style="margin-top:5px;">(ISSUE OF INVOICE UNDER RULE 11 OF CENTRAL EXCISE RULE 2002)</h6>
+      </div>
+</div>
     <!-- title row -->
     <div class="row">
       <div class="col-12">
         <h2 class="page-header">
-          <i class="fas fa-globe"></i> Gallops, Inc.
+          
           <small class="float-right">Date: {{ date('d-M-Y')}}</small>
         </h2>
       </div>
       <!-- /.col -->
     </div>
     <!-- info row -->
-    <div class="row invoice-info">
-      <div class="col-sm-4 invoice-col">
-        From
+    <div class="row">
+      <div class="col-6">
+      <h4>Customer</h4>
         <address>
-          <strong>{{$order->uname}}, Inc.</strong><br>
-          {{$order->uadd1}}<br>
-          {{$order->uadd2}}<br>
-          Phone: +91-{{$order->ucontact}}<br>
-          Email: {{$order->uemail}}
+          <strong>Name: </strong>{{$order->name}}<br>
+          <strong>GST No :</strong>{{$order->gst}}<br>
+          <strong>Address :</strong>
+          {{$order->address_line_1}}<br>
+          <strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong>{{$order->address_line_2}}<br>
+          <strong>Phone :</strong> +91-{{$order->contact}}<br>
+          <strong>Email:</strong> {{$order->email}}<br>
+          <b>Order ID:</b> {{$order->id}}<br>
         </address>
       </div>
       <!-- /.col -->
-      <div class="col-sm-4 invoice-col">
-        To
-        <address>
-          <strong>{{ $order->vname}}</strong><br>
-          {{ $order->vadd1}}<br>
-          {{ $order->vadd2}}<br>
-          Phone: {{$order->vcontact}}<br>
-          Email: {{$order->vemail}}
-        </address>
-      </div>
-      <!-- /.col -->
-      <div class="col-sm-4 invoice-col">
-     
-        <br>
-        <b>Order ID:</b> {{$order->id}}<br>
-        <b>Vendor Bill No: </b> {{$order->vendor_bill_no}}<br>
-      </div>
+      
       <!-- /.col -->
     </div>
     <!-- /.row -->
+    
 
     <!-- Table row -->
     <div class="row">
       <div class="col-12 table-responsive">
-      <hr/>
-        <table class="table table-striped">
+        <table class="table table-bordered">
           <thead>
           <tr>
             <th>Sr.No.</th>
-            <th>Product</th>
+            <th>Particulars</th>
             <th>Unit</th>
             <th>Quantity</th>
-            <th>Rate</th>
-            <th>Total</th>
+            <th>Batch No.</th>
+            <th>Mfg. Month</th>
           </tr>
           </thead>
           <tbody>
@@ -82,63 +76,23 @@
             <tr>
               <td>{{ $c }}</td>
               <td>{{ $data->name }}</td>
-              <td>{{ $data->unit}}</td>
               <td>{{ $data->qty}}</td>
-              <td> </td>
-              <td> </td>
+              <td>{{ $data->qty}}&nbsp; {{$data->unit_name}}</td>
+              <td>{{ $data->batch_no}}</td>
+              <td>{{ date('M-Y',strtotime($data->packaging_month))}}</td>
+              
             </tr>
-            <?php $c++; ?>
+            
             @endforeach
           </tbody>
-          <tfoot>
-            <tr>
-              <th> </th>
-              <th> </th>
-              <th> </th>
-              <th> </th>
-              <th>Total</th>
-              <th>₹ {{ $total }}</th>
-            </tr>
-          </tfoot>
           
         </table>
-        <hr/>
       </div>
       <!-- /.col -->
     </div>
     <!-- /.row -->
 
-    <div class="row">
-      <!-- accepted payments column -->
-     
-      <!-- /.col -->
-      <div class="col-4"></div>
-      <div class="col-4"></div>
-      <div class="col-4">
-        <div class="table-responsive table-bordered">
-          <table class="table">
-            <tr>
-              <th>Subtotal:</th>
-              <th >₹ {{$total }}</th>
-            </tr>
-            <tr>
-              <th>Tax (9.3%)</th>
-              <td>₹ 10.34</td>
-            </tr>
-            <tr>
-              <th>Shipping:</th>
-              <td>₹ 5.80</td>
-            </tr>
-            <tr>
-              <th>Total:</th>
-              <td><b>₹ {{$total}}</td>
-            </tr>
-          </table>
-        </div>
-      </div>
-      <!-- /.col -->
-    </div>
-    <!-- /.row -->
+    
     <table class="table table-bordered" >
 												<tr>	
 													<td >
@@ -153,7 +107,7 @@
 												</tr>
 											</table>
 											<div class="row">
-												<div class="col-sm-12 center">
+												<div class="col-sm-12 text-center">
 													<h6 style="margin-top:5px;">This is computer generated invoice.</h6>
 												</div>
 											</div>

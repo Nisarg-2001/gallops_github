@@ -1,0 +1,25 @@
+outward id = 10
+
+5
+
+1 - remove
+3 - update
+1 - new
+1 - remain
+
+10 - product_id = 100 and batch no = xyz
+
+old qty = plus
+new qty - minus
+
+branch_item_stock 
+
+
+prod = 200
+out id = 10
+batch = abc
+
+
+delete qty, prod  from 10 and prod_id not in [10,11,12..15]
+
+qty = 20

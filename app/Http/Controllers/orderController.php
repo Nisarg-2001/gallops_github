@@ -126,7 +126,8 @@ class orderController extends Controller
 
         $item = DB::table('order_items as oi')
         ->join('product_masters as pm', 'pm.id', '=', 'oi.item_id')
-        ->select('oi.*', 'pm.*')
+        ->join('unit_masters as um', 'um.id', 'pm.unit')
+        ->select('oi.*', 'pm.*','um.unit as unit_name')
         ->where('oi.order_id', '=', $id)->get();
 
         

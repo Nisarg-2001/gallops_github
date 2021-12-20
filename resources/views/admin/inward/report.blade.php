@@ -93,7 +93,9 @@
                             </form>
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <table id="example1" class="table table-bordered table-striped">
+                                <table id="example1" class="table table-bordered table-striped caption">
+                                <caption class="text-center " style="caption-side:top;">Gallops Food Plaza (Store)<br>
+                                    Report: Inward Report</caption>
                                     <thead>
                                         <tr>
                                             <th>Inward no.</th>
