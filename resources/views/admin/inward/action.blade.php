@@ -20,13 +20,11 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <form action="{{ url('user/inward/store') }}" method="post" id="inwardForm">
+                <form action="{{ url('user/inward/post') }}" method="post" id="inwardForm">
                   @csrf
                   <input type="hidden" name="id" value="{{ (isset($data->id) && !empty($data->id)) ? $data->id : '' }}">
                   <input type="hidden" name="vendor" id="vendor" value="">
 
-                  @if(isset($data))
-                  @else
                   <div class="row">
                     <div class="col-6 col-lg-6 col-md-6">
                       <div class="form-group">
@@ -43,7 +41,6 @@
                       <a href="javascript:void(0);" class="btn btn-primary btn-sm mt-2" id="changeVendor" style="display:none;" title="Change Vendor">Change Vendor</a>
                     </div>
                   </div>
-                  @endif
 
                   
 
@@ -170,7 +167,7 @@
                         @endphp
 
                         @foreach($inwardItemData as $orderItem)
-                        <td class='text-center'> {{ $i }} </td>
+                        <td> {{ $i }} </td>
                         <td>
 
                           <input type='text' value=" {{ $orderItem->product_name }}" id="Item_{{ $i }}" name='Item[]' class='form-control ' readonly />
@@ -180,7 +177,7 @@
                           
                         </td>
                         <td>
-                          <input type='number' value="{{ $orderItem->qty }}" id="Qty_{{ $i }}" name='Qty[]' class='form-control filterme' min='1' max='9999' readonly>
+                          <input type='number' value="{{ $orderItem->qty }}" id="Qty_{{ $i }}" name='Qty[]' class='form-control filterme' min='1' max='9999'>
                         </td>
                         <td>
                           <input type='text' value="{{ $orderItem->unit }}" id="NetPrice_{{ $i }}" name='NetPrice[]' class='form-control filterme' readonly>
@@ -191,11 +188,11 @@
                         <td>
                           <input type='text' value="{{ $orderItem->batch_no }}" id="NetPrice_{{ $i }}" name='batch_no[]' class='form-control filterme' readonly>
                         </td>
-                        <!-- <td class='text-center'>
+                         <td>
                           <button type="button" class="btn btn-danger btn-sm removethis">
                             <i class="fa fa-trash"></i>
                           </button>
-                        </td> -->
+                        </td> 
                       </tr>
                       @php $i++; @endphp
                       @endforeach
@@ -205,7 +202,7 @@
 
                   <div class="text-center">
 
-                    @if(isset($data)) @else<button type="submit" class="btn btn-primary ">Submit</button>@endif
+                    <button type="submit" class="btn btn-primary ">@if(isset($data)) Update @else Submit @endif</button>
                     
                     @if(isset($data))<a href="{{url('user/inward')}}" class="btn btn-danger">Back</a>
                     @else<a href="{{url('user/inward')}}" class="btn btn-danger">Cancel</a>

@@ -103,44 +103,65 @@ class outwardController extends Controller
     
                 // insert into outward_items table
                     $itemData = [];
+                    $productIds = [];
+                    
                     foreach ($request->product_id as $key => $value) {
-                        $param['Item'] = $value;
-                
-                        //     $outwardupdate = outward_item::find($outward_id);
-                        //     $outwardupdate = $outwardupdate->update([
-                        //         'product_id' => $request->product_id[$key],
-                        //         'qty' => $request->qty[$key],
-                        //         'batch_no' => $request->batch_number[$key],
-                        //     ])->where(['product_id', '<>', $request->product_id[$key] ], ['batch_no', '<>', $request->batch_number[$key] ]);
-                        //    dd('done');
-                                
-                        
-                        // else
-                        // {
-                        //     $itemData[] = [
-                        //         'outward_id' => $outward_id,
-                        //         'product_id' => $request->product_id[$key],
-                        //         'qty' => $request->qty[$key],
-                        //         'batch_no' => $request->batch_number[$key],
-                        //     ];
-                        // }
-                        
-                    }
-                    dd('update');
+                        $productIds[] = $request->product_id[$key];
 
-                    outward_item::insert($itemData);
-               
-                //update branch stock
-                foreach ($request->product_id as $key => $value) {
-                    $stock = branch_item_stocks::where('branch_id', $branch_id)
-                        ->where('product_id', $request->product_id[$key])
-                        ->where('batch_no', $request->batch_number[$key])
-                        ->first();
-                    if ($stock) {
-                        $stock->qty = $stock->qty - $request->qty[$key];
-                        $stock->save();
+                        $count =  outward_item::where('outward_id', $outward_id)->where('product_id', $request->product_id[$key])->get()->count();
+
+                        if ($count == 0) {
+                            //new entry
+                            $outward_item = new outward_item;
+                            $outward_item->outward_id = $outward_id;
+                            $outward_item->product_id = $request->product_id[$key];
+                            $outward_item->qty = $request->qty[$key];
+                            $outward_item->batch_no = $request->batch_number[$key];
+                            $outward_item->save();
+
+                            //update branch stock
+                            $stock = branch_item_stocks::where('branch_id', $branch_id)
+                                ->where('product_id', $request->product_id[$key])
+                                ->where('batch_no', $request->batch_number[$key])
+                                ->first();
+                            if ($stock) {
+                                $stock->qty = $stock->qty - $request->qty[$key];
+                                $stock->save();
+                            }
+                        } else {
+                            //existing entry - update
+                            //olt qty = outward_item -> qty [outward_id, prod_id]
+                            //new qty = $request->qty[$key]
+                            // branch_item_stocks - get stock(x) - (x + old qty - new qty)
+
+                            //outward_items update new qty [outward_id, prod_id]
+                        }
+                        
                     }
-                }
+
+                    //removed items
+                    $outwardItems = outward_item::select('id', 'product_id', 'qty', 'batch_no')
+                        ->whereNotIn('product_id', $productIds)->get();
+                    
+                    if ($outwardItems->count() > 0) {
+                        $outIds = [];
+                        foreach ($outwardItems as $key => $value) {
+                            //update branch stock before item delete
+                            $outIds[] = $value->id;
+                            $stock = branch_item_stocks::where('branch_id', $branch_id)
+                                ->where('product_id', $value->product_id)
+                                ->where('batch_no', $value->batch_no)
+                                ->first();
+                            if ($stock) {
+                                $stock->qty = $stock->qty + $value->qty;
+                                $stock->save();
+                            }
+                        }
+
+                        //delete from outward items
+                        outward_item::whereIn('id', $outIds)->delete();
+                    }
+                    
             }
     
             return redirect('user/outward')->with('success', ' Outward Created Successfully');

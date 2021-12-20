@@ -73,7 +73,61 @@ class inwardController extends Controller
 
     public function store(Request $request)
     {
-        $branch_id = Auth::id();
+        if($request->id)
+        {
+            
+            $branch_id = Auth::id();
+
+        // insert into inward_orders table
+        $order = inward_orders::find($request->id);
+        $order->user_id = $branch_id;
+        $order->vendor_id = $request->vendor_id;
+        $order->order_no = $request->order;
+        $order->vendor_bill_no = $request->billno;
+        $order->received_date = date('Y-m-d', strtotime($request->dateofreceive));
+        $order->save();
+        dd('update');
+
+        $inward_id = $order->id;
+
+        // insert into orde_items table
+        $itemData = [];
+        foreach ($request->product_id as $key => $value) {
+            $itemData[] = [
+                'inward_id' => $order_id,
+                'product_id' => $request->product_id[$key],
+                'qty' => $request->qty[$key],
+                'batch_no' => $request->batch_number[$key],
+                'packaging_month' => date('Y-m-d', strtotime($request->monthYear[$key])),
+            ];
+        }
+
+        inward_order_items::insert($itemData);
+
+        //update stock
+        foreach ($request->product_id as $key => $value) {
+            $stock = branch_item_stocks::where('branch_id', $branch_id)
+                ->where('product_id', $request->product_id[$key])
+                ->where('batch_no', $request->batch_number[$key])
+                ->first();
+            if ($stock) {
+                $stock->qty = $stock->qty + $request->qty[$key];
+                $stock->save();
+            } else {
+                $stock = new branch_item_stocks;
+                $stock->branch_id = $branch_id;
+                $stock->product_id = $request->product_id[$key];
+                $stock->qty = $request->qty[$key];
+                $stock->batch_no = $request->batch_number[$key];
+                $stock->save();
+            }
+        }
+
+        return redirect('user/inward')->with('success', 'Inwards Updated Successfully');
+        }
+        else
+        {
+            $branch_id = Auth::id();
 
         // insert into inward_orders table
         $order = new inward_orders;
@@ -120,6 +174,8 @@ class inwardController extends Controller
         }
 
         return redirect('user/inward')->with('success', 'Products Added Successfully');
+        }
+        
     }
 
 

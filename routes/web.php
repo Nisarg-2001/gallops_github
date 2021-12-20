@@ -185,6 +185,7 @@ Route::group(['middleware' => 'user'],function(){
 Route::get('/order',[orderController::class,'view']);
 Route::get('/order/add',[orderController::class,'create']);
 Route::get('/order/view/{id}', [orderController::class,'edit']);
+Route::get('/order/edit/{id}', [orderController::class,'edit']);
 Route::post('/order/post',[orderController::class,'addupdate']);
 Route::post('/order/getProduct',[orderController::class,'getProduct']);
 Route::post('/order/getTaxes',[orderController::class,'getTaxes']);
@@ -194,7 +195,7 @@ Route::get('/order/invoice/{id}',[orderController::class,'orderInvoice']);
 ##  FRANCHISE --  INWARDS ##
 Route::get('/inward',[inwardController::class,'view']);
 Route::get('/inward/add',[inwardController::class,'create']);
-Route::post('/inward/store',[inwardController::class,'store']);
+Route::post('/inward/post',[inwardController::class,'store']);
 Route::get('/inward/view/{id}',[inwardController::class,'viewInward']);
 Route::get('/inward/edit/{id}',[inwardController::class,'edit']);
 Route::post('/inward/getProductByVendorId',[inwardController::class,'getProductByVendorId']);
