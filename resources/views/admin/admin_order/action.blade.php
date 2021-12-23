@@ -148,7 +148,7 @@
                     </tbody>
                   </table>
 
-                  <!-- <table class="table table-bordered table-hover " id="taxTotal">
+                  {{-- <table class="table table-bordered table-hover " id="taxTotal">
                     <tr>
                       <td width="85%" align="right" style="padding-right:20px;"> <b>Sub Total (₹)</b>
                       </td>
@@ -174,7 +174,7 @@
                       </td>
                       <td width="15%" align="right"> <b><span id="TotalAmt">{{ (isset($orderData)) ? number_format($orderData->total, 2) : 0.00 }}</span></b></td>
                     </tr>
-                  </table> -->
+                  </table> --}}
 
                   <input type="hidden" name="hiddenSubTotalAmt" id="hiddenSubTotalAmt" value="{{ (isset($orderData) && !empty($orderData->sub_total)) ? $orderData->sub_total : 0 }}">
                   <input type="hidden" name="hiddenTotalAmt" id="hiddenTotalAmt" value="{{ (isset($orderData) && !empty($orderData->total)) ? $orderData->total : 0 }}">

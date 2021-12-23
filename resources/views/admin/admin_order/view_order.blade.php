@@ -130,8 +130,9 @@
                       </td>
                       <td width="15%" align="right"> <span id="SubTotalAmt">{{ (isset($orderData)) ? number_format($orderData->sub_total, 2) : 0.00 }}</span></td>
                     </tr>
-
+                    
                     @foreach($taxList as $t)
+                        @if(isset($taxData[$t->id]))
 
                     <tr>
                       <input type="hidden" name="hiddenTotalTax[]" id="hiddenTotalTax_{{ $t->id }}" value="{{ (isset($taxData)) ? $taxData[$t->id] : 0 }}">
@@ -142,6 +143,7 @@
                       </td>
                       <td width="15%" align="right"> <b><span id="TotalSingleTax_{{ $t->id }}">{{ (isset($taxData)) ? number_format($taxData[$t->id], 2) : 0.00 }}</span></b></td>
                     </tr>
+                        @endif
                     @endforeach
 
                     <tr>
