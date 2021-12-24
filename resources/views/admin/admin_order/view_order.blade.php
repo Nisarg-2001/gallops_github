@@ -21,7 +21,7 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <form action="{{ url('admin-order/updateStatus') }}" method="post" id="orderForm">
+                <form action="{{ url('admin-order/updateOrder') }}" method="post" id="orderForm">
                   @csrf
                   <input type="hidden" name="id" value="{{ (isset($orderData->id) && !empty($orderData->id)) ? $orderData->id : '' }}">
                   <div class="row">
@@ -87,7 +87,7 @@
                             $t = 0;
                             $t = $orderItem->unit_price * $orderItem->qty * ($tax->value / 100);
                             $totalTaxAmt += $t;
-                            $taxStr = $taxStr . ' ' . 'tax-' . $tax->id . '=' . '"' . $t . '"';
+                            $taxStr = $taxStr . ' ' . 'tax-' . $tax->id . '=' . $t;
 
                             $taxData[$tax->id] = ((isset($taxData[$tax->id])) ? $taxData[$tax->id] : 0) + $t;
                           }
@@ -103,13 +103,13 @@
                           <input type="hidden" name="itemTax[]" id="itemTax_{{ $i }}" value="{{ $orderItem->tax }}" data-id="{{ $i }}">
                         </td>
                         <td>
-                          <input type='number' value="{{ $orderItem->qty }}" id="Qty_{{ $i }}" name='Qty_[]' class='form-control filterme' min='1' max='9999' onkeyup="updateAmount('{{ $orderItem->item_id }}', '{{ $i }}')" onchange="updateAmount('{{ $orderItem->item_id }}', '{{ $i }}')" readonly>
+                          <input type='number' value="{{ $orderItem->qty }}" id="Qty_{{ $i }}" name='Qty[]' class='form-control filterme' min='1' max='9999' onkeyup="updateAmount('{{ $orderItem->item_id }}', '{{ $i }}')" >
                         </td>
                         <td>
                           <input type='text' value="{{ $orderItem->unit_price }}" id="NetPrice_{{ $i }}" name='NetPrice[]' class='form-control filterme' readonly>
                         </td>
                         <td>
-                          <input type='text' value="{{ number_format($orderItem->unit_price * $orderItem->qty, 2) }}" id='Amount_{{ $i }}' name='Amount[]' class='form-control filterme' readonly>
+                          <input type='text' value="{{ $orderItem->unit_price * $orderItem->qty }}" id='Amount_{{ $i }}' name='Amount[]' class='form-control filterme' readonly>
                           <input type='hidden' name='taxAmount[]' id='taxAmount_{{ $i }}' value='{{ $totalTaxAmt }}' data-id='{{ $i }}' {{ $taxStr }}>
                         </td>
                         <!-- <td class='text-center'>
@@ -209,7 +209,7 @@
   @section('page-footer-script')
   <script src="{{ asset('/admin/assets/js/common.js') }}"></script>
   <script src="{{ asset('/admin/assets/js/form-validation.js') }}"></script>
-  <!-- <script src="{{ asset('/admin/assets/js/order/action.js') }}"></script> -->
+  <script src="{{ asset('/admin/assets/js/order/action.js') }}"></script>
   @endsection
   @include('layouts.footer')
 </x-app-layout>

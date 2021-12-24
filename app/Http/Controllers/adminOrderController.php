@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\order;
+use App\Models\order_items;
 use App\Models\tax_master;
 use App\Models\purchase_orders;
 use App\Models\purchase_order_items;
@@ -50,10 +51,6 @@ class adminOrderController extends Controller
 
         // get order items by order id
         $orderItemData = order::getOrderItemDataWithVendor($id);
-
-        // echo "<pre>";
-        // print_r($orderItemData);
-        // exit;
 
         // get all products
         $product = order::getProduct();
@@ -104,12 +101,55 @@ class adminOrderController extends Controller
         return response()->json($data);
     }
 
-    function updateStatus(Request $request)
+    function updateOrder(Request $request)
     {
-        $data = order::find($request->id);
-        $data->is_confirm = $request->is_confirm;
-        $data->payment_status = $request->payment_status;
-        $data->save();
+        $param = $request->all();
+        if (!empty($request->Item)) {
+
+            // get all taxes
+            $taxIds = $taxName = $taxValue = [];
+            $jsonOrderTax = '';
+            if (isset($request->hiddenTaxId) && isset($request->hiddenTaxName) && isset($request->hiddenTotalTax)) {
+                $taxIds = $request->hiddenTaxId;
+                $taxName = $request->hiddenTaxName;
+                $taxValue = $request->hiddenTotalTax;
+
+                foreach ($taxIds as $key => $value) {
+                    $taxData[$key]['id'] = $value;
+                    $taxData[$key]['name'] = $taxName[$key];
+                    $taxData[$key]['value'] = $taxValue[$key];
+                }
+            }
+
+            $jsonOrderTax = json_encode($taxData);
+
+            // update into orders table
+            $order = order::find($request->id);
+            $order->sub_total = $request->hiddenSubTotalAmt;
+            $order->tax = $jsonOrderTax;
+            $order->total = $request->hiddenTotalAmt;
+            $order->is_confirm = $request->is_confirm;
+            $order->payment_status = $request->payment_status;
+            
+            $order->save();
+
+            $order_id = $request->id;
+
+            // insert into orde_items table
+            $itemData = [];
+            foreach ($request->Item as $key => $value) {
+                $param['Item'] = $value;
+                $orderItem = order_items::where('order_id', $order_id)->where('item_id', $request->intItemID[$key])->first();
+
+                if ($orderItem) {
+                    order_items::where('id', $orderItem->id)->update([
+                        'qty' => $request->Qty_[$key],
+                        'tax' => $request->itemTax[$key],
+                    ]);
+                }
+            }
+
+        }
 
         return redirect('admin-order')->with('success', ' Order Updated Successfully');
     }

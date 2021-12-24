@@ -123,7 +123,7 @@ Route::get('/order/delete/{id}',[orderController::class,'delete']);
 ##  ADMIN ORDER ROUTES ##
 Route::get('/admin-order',[adminOrderController::class,'view']);
 Route::get('/place-purchase-order/{id}', [adminOrderController::class,'getOrderDetails']);
-Route::post('/admin-order/updateStatus',[adminOrderController::class,'updateStatus']);
+Route::post('/admin-order/updateOrder',[adminOrderController::class,'updateOrder']);
 Route::post('/admin-order/place-purhcase-order',[adminOrderController::class,'placePurchaseOrder']);
 Route::get('/admin-order/{id}', [adminOrderController::class,'edit']); //display same view from order controller
 Route::post('/admin-order/getVendorsByProduct', [adminOrderController::class,'getVendorsByProduct']);
@@ -187,9 +187,9 @@ Route::get('/order/add',[orderController::class,'create']);
 Route::get('/order/view/{id}', [orderController::class,'edit']);
 Route::get('/order/edit/{id}', [orderController::class,'edit']);
 Route::post('/order/post',[orderController::class,'addupdate']);
-Route::post('/order/getProduct',[orderController::class,'getProduct']);
-Route::post('/order/getTaxes',[orderController::class,'getTaxes']);
-Route::get('/order/delete/{id}',[orderController::class,'delete']);
+
+
+
 Route::get('/order/invoice/{id}',[orderController::class,'orderInvoice']);
 
 ##  FRANCHISE --  INWARDS ##
@@ -206,7 +206,7 @@ Route::get('/outward',[outwardController::class,'view']);
 Route::get('/outward/add',[outwardController::class,'create']);
 Route::get('/outward/edit/{id}', [outwardController::class,'edit']);
 Route::get('/outward/view/{id}', [outwardController::class,'viewOutward']);
-Route::post('/order/getProduct',[orderController::class,'getProduct']);
+
 Route::post('/outward/post',[outwardController::class,'addupdate']);
 Route::get('/outward/delete/{id}',[orderController::class,'delete']);
 
