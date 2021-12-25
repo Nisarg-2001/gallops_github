@@ -143,7 +143,7 @@ class adminOrderController extends Controller
 
                 if ($orderItem) {
                     order_items::where('id', $orderItem->id)->update([
-                        'qty' => $request->Qty_[$key],
+                        'qty' => $request->Qty[$key],
                         'tax' => $request->itemTax[$key],
                     ]);
                 }
