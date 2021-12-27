@@ -63,7 +63,7 @@
                                                 <label>GST no.</label>
                                                 <input type="text" class="form-control" name="gst"
                                                     value="{{ (isset($data->gst) && !empty($data->gst)) ? $data->gst : '' }}"
-                                                    placeholder="GST no." required>
+                                                    placeholder="GST no.">
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-4 col-lg-4">
@@ -71,7 +71,7 @@
                                                 <label for="exampleInputPassword1">CIN no.</label>
                                                 <input type="text" class="form-control" name="cin"
                                                     value="{{ (isset($data->cin) && !empty($data->cin)) ? $data->cin : '' }}"
-                                                    placeholder="CIN no." required>
+                                                    placeholder="CIN no.">
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-4 col-lg-4">
@@ -79,7 +79,7 @@
                                                 <label for="exampleInputPassword1">FSSAI no.</label>
                                                 <input type="text" class="form-control" name="fssai"
                                                     value="{{ (isset($data->fssai) && !empty($data->fssai)) ? $data->fssai : '' }}"
-                                                    placeholder="FSSAI no." required>
+                                                    placeholder="FSSAI no." >
                                             </div>
                                         </div>
                                     </div>

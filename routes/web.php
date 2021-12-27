@@ -89,6 +89,7 @@ Route::post('/product/post',[productController::class,'addupdate']);
 Route::get('/product/edit/{id}',[productController::class,'edit']);
 Route::get('/product/delete/{id}',[productController::class,'delete']);
 
+
 ## PRODUCT SHELF LIFE ROUTES ##
 Route::get('/productshelflife',[shelflifeController::class,'view']);
 Route::get('/productshelflife/add',[shelflifeController::class,'create']);
@@ -140,6 +141,8 @@ Route::post('/vendor-order/post', [purchaseOrderController::class,'updatePurchas
 
 
 ## REPORTS ROUTES   ##
+Route::get('/report/raw-stock',[productController::class,'report']);
+Route::post('/report/raw-stock',[productController::class,'report']);
 Route::get('/report/order',[orderController::class,'report']);
 Route::post('/report/order',[orderController::class,'report']);
 Route::get('/report/purchase-order',[purchaseOrderController::class,'report']);
@@ -148,6 +151,8 @@ Route::get('/report/inward',[inwardController::class,'report']);
 Route::post('/report/inward',[inwardController::class,'report']);
 Route::get('/report/outward',[outwardController::class,'report']);
 Route::post('/report/outward',[outwardController::class,'report']);
+Route::get('/report/item-master',[productController::class,'item_master']);
+Route::get('/expiry',[productController::class,'expiry']);
 
 
 ## RETURN GOODS ## 
@@ -209,7 +214,7 @@ Route::get('/outward/view/{id}', [outwardController::class,'viewOutward']);
 
 Route::post('/outward/post',[outwardController::class,'addupdate']);
 Route::get('/outward/delete/{id}',[orderController::class,'delete']);
-
+Route::get('/vendor-order',[purchaseOrderController::class,'view']);
 ## FRANCHISE    --  REPORTS   ##
 Route::get('/report/order',[orderController::class,'report']);
 Route::post('/report/order',[orderController::class,'report']);

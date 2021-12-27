@@ -133,13 +133,13 @@
                     @foreach($taxList as $t)
 
                     <tr>
-                      <input type="hidden" name="hiddenTotalTax[]" id="hiddenTotalTax_{{ $t->id }}" value="{{ (isset($taxData)) ? $taxData[$t->id] : 0 }}">
+                      <input type="hidden" name="hiddenTotalTax[]" id="hiddenTotalTax_{{ $t->id }}" value="{{ (isset($taxData)) ? isset($taxData[$t->id]) : 0 }}">
                       <input type="hidden" name="hiddenTaxId[]" id="hiddenTaxId_{{ $t->id }}" value="{{ $t->id }}">
                       <input type="hidden" name="hiddenTaxName[]" id="hiddenTaxName_{{ $t->id }}" value="{{ $t->tax_name }}">
                       <td width="85%" align="right" style="padding-right:20px;">
                         <b>{{ $t->tax_name }} (₹)</b>
                       </td>
-                      <td width="15%" align="right"> <b><span id="TotalSingleTax_{{ $t->id }}">{{ (isset($taxData)) ? number_format($taxData[$t->id], 2) : 0.00 }}</span></b></td>
+                      <td width="15%" align="right"> <b><span id="TotalSingleTax_{{ $t->id }}">{{ (isset($taxData)) ? number_format(isset($taxData[$t->id]), 2) : 0.00 }}</span></b></td>
                     </tr>
                     @endforeach
 

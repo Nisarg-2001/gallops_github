@@ -41,21 +41,7 @@
                                 <form method="POST" action="{{ ((Auth::user()->role)==2) ? url('user/report/inward') : url('report/inward') }}" >
                                     @csrf
                                 <div class="row">
-                                @if((Auth::user()->role)==1)
-                                <div class="col-6 col-lg-3 col-md-3">
-                                    <div class="form-group">
-                                        <label>Select Branch</label>
-                                        <select class="form-control select2" name="user_id" >
-                                        <option value="">Select Franchise</option>
-                                        @foreach($branch as $b)
-                                        <option value="{{$b->id}}">{{ $b->name }}</option>
-                                        @endforeach
-                                        <option value="all">All Franchise</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                @endif
-                                <div class="col-6 col-lg-3 col-md-3">
+                                <div class="col-6 col-lg-6 col-md-6">
                                     <div class="form-group">
                                         <label>Select Vendor </label>
                                         <select class="form-control select2" name="vendor_id" >
@@ -98,29 +84,21 @@
                                     Report: Inward Report</caption>
                                     <thead>
                                         <tr>
-                                            <th>Inward no.</th>
-                                            <th>Order no.</th>
-                                            <th>Branch</th>
-                                            <th>Vendor Bill no.</th>
-                                            <th>Vendor</th>
-                                            <th>Item id</th>
-                                            <th>Qty</th>
-                                            <th>Received on</th>
+                                            <th>Sr.no.</th>
+                                            <th>Vendor Name</th>
+                                            <th>Amount</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                     @if(isset($inward))
+                                    <?php $c=1; ?>
                                     @foreach($inward as $info)
                                     <tr>
-                                    <td>{{$info->id}}</td>
-                                    <td>{{$info->order_no}}</td>
-                                    <td>{{$info->uname}}</td>
-                                    <td>{{$info->vendor_bill_no}}</td>
+                                    <td>{{$c}}</td>
                                     <td>{{$info->vname}}</td>
-                                    <td>{{$info->product_id}}</td>
-                                    <td>{{$info->qty}}</td>
-                                    <td>{{ date('d M Y', strtotime($info->received_date)) }}</td>
+                                    <td>{{$info->vname}}</td>
                                     </tr>
+                                    <?php $c++; ?>
                                     @endforeach
                                     @endif
                                     </tbody>

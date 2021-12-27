@@ -165,6 +165,18 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                            <a href="{{url('report/item-master')}}" class="nav-link">
+                                <i class="far fa-file-invoice nav-icon"></i>
+                                <p>Item Master report</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{url('report/raw-stock')}}" class="nav-link">
+                                <i class="far fa-file-invoice nav-icon"></i>
+                                <p>Raw Stock report</p>
+                            </a>
+                        </li>
                         <li class="nav-item">
                             <a href="{{url('report/order')}}" class="nav-link">
                                 <i class="far fa-file-invoice nav-icon"></i>
@@ -193,21 +205,19 @@
                 </li>
 
                 <li class="nav-item menu">
-                    <a href="{{ url('/return') }}" class="nav-link">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
-                        <p>
-                            Returned Goods
-
-                        </p>
-                    </a>
-                </li>
-
-                <li class="nav-item menu">
                     <a href="{{ url('/role') }}" class="nav-link">
                         <i class="nav-icon fas fa-user-tag"></i>
                         <p>
                             Roles
 
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item menu">
+                    <a href="{{ url('/expiry') }}" class="nav-link">
+                        <i class="nav-icon fas fa-user-tag"></i>
+                        <p>
+                            Expiry near Products
                         </p>
                     </a>
                 </li>
@@ -246,6 +256,16 @@
                         </p>
                     </a>
                 </li>
+
+                <li class="nav-item menu">
+                            <a href="{{ url('user/vendor-order') }}" class="nav-link ">
+                                <i class="nav-icon fas fa-file-edit"></i>
+                                <p>
+                                    Purchase Orders
+                                </p>
+                            </a>
+                </li>
+
                 <li class="nav-item menu">
                     <a href="{{url('user/reports')}}" class="nav-link">
                         <i class="nav-icon fas fa-file-chart-line"></i>

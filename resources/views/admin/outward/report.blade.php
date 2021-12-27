@@ -41,25 +41,11 @@
                                 <form method="POST" action="{{ ((Auth::user()->role)==2) ? url('user/report/outward') : url('report/outward') }}" >
                                     @csrf
                                     <div class="row">
-                                    @if((Auth::user()->role)==1)
-                                <div class="col-6 col-lg-3 col-md-3">
+                                <div class="col-6 col-lg-6 col-md-6">
                                     <div class="form-group">
-                                        <label>Select Branch</label>
-                                        <select class="form-control select2" name="user_id" >
-                                        <option value="">Select Franchise</option>
-                                        @foreach($branch as $b)
-                                        <option value="{{$b->id}}">{{ $b->name }}</option>
-                                        @endforeach
-                                        <option value="all">All Franchise</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                @endif
-                                <div class="col-6 col-lg-3 col-md-3">
-                                    <div class="form-group">
-                                        <label>Select Person </label>
+                                        <label>Select Category </label>
                                         <select class="form-control select2" name="person" >
-                                        <option value="">Select person</option>
+                                        <option value="">Select Department</option>
                                         @foreach($person as $p)
                                         <option value="{{$p->person_name}}">{{ $p->person_name }}</option>
                                         @endforeach
@@ -98,29 +84,21 @@
                                     <b>Report: Outward Report</b></caption>
                                     <thead>
                                         <tr>
-                                            <th>Outward No.</th>
-                                            <th>Branch Name</th>
-                                            <th>Person Name</th>
-                                            <th>Item id</th>
-                                            <th>Qty</th>
-                                            <th>Batch No.</th>
-                                            <th>Issued Date</th>
-                                            <th>Note</th>
+                                            <th>Sr.no.</th>
+                                            <th>Department Name</th>
+                                            <th>Amount</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                     @if(isset($outward))
+                                    <?php $c=1; ?>
                                     @foreach($outward as $info)
                                     <tr>
-                                    <td>{{$info->id}}</td>
-                                    <td>{{$info->uname}}</td>
+                                    <td>{{$c}}</td>
                                     <td>{{$info->person_name}}</td>
-                                    <td>{{$info->product_id}}</td>
-                                    <td>{{$info->qty}}</td>
-                                    <td>{{$info->batch_no}}</td>
-                                    <td>{{ date('d M Y', strtotime($info->issue_date)) }}</td>
-                                    <td>{{$info->note}}</td>
+                                    <td>1000</td>
                                     </tr>
+                                    <?php $c++; ?>
                                     @endforeach
                                     @endif
                                     </tbody>

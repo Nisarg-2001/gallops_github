@@ -45,7 +45,6 @@
                     <th>ID</th>
                     <th>Name</th>
                     <th>Email</th>
-                    <th>Status</th>
                     <th>Role</th>
                     <th>Action</th>
                   </tr>
@@ -57,11 +56,6 @@
                     <td>{{ $c }}</td>
                     <td>{{ $users->name }}</td>
                     <td>{{ $users->email }}</td>
-                    @if($users->status==0)
-                    <td><span class="badge bg-danger p-2 ml-5">Deactivate</span></td>
-                    @else
-                    <td><span class="badge bg-success p-2 ml-5">Active</span></td>
-                    @endif
                     <td>{{ $users->rolename }}</td>
                     <td class="text-center">
                       <a href="{{url('user/edit/'.$users->id)}}" class="btn btn-info" title="Edit"><i class="fas fa-pencil" ></i></a>
