@@ -29,6 +29,9 @@ class adminOrderController extends Controller
 
         // get order items by order id
         $orderItemData = order::getOrderItemData($id);
+        // echo "<pre>";;
+        // print_r($orderItemData);
+        // exit;
 
         // get all products
         $product = order::getProduct();

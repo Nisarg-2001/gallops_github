@@ -88,8 +88,16 @@
                     </div>
 
                     <div class="row">
-
-                      <div class="col-12 col-lg-4 col-md-4">
+                      <div class="col-12 col-lg-2 col-md-2">
+                        <div class="form-group">
+                          <label for="exampleInputPassword1">Unit Price</label>
+                          <input type="text" class="form-control" name="unit_price" id="unit_price" value="" placeholder="0.00" >
+                          @error('quantity')
+                          <div class="text-danger">{{$message}}</div>
+                          @enderror
+                        </div>
+                      </div>
+                      <div class="col-12 col-lg-2 col-md-2">
                         <div class="form-group">
                           <label for="exampleInputPassword1">Quantity</label>
                           <input type="number" class="form-control" name="qty" id="qty" value="1" placeholder="Quantity" min="1" max="9999">
@@ -136,6 +144,19 @@
                       </div>
                     </div>
 
+                    <div class="row">
+                      <div class="col-12 col-lg-6 col-md-6">
+                        <div class="form-group">
+                          <label for="exampleInputPassword1">Select Tax</label>
+                          <select class="form-control select2" style="width: 100%;" name="tax" id="tax" multiple>
+                            @foreach($taxData as $tax)
+                              <option value="{{ $tax->id }}">{{ $tax->tax_name }}</option>
+                            @endforeach
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+
                     <div class="row" style="margin-bottom: 1rem;">
                       <div class="col-12 col-lg-12 col-md-12">
                         <button class="btn btn-primary" id="addInwardProduct">Add Product</button>
@@ -151,10 +172,13 @@
                       <tr>
                         <th>ID</th>
                         <th>Product Name</th>
+                        <th>Unit Price</th>
                         <th>Quantity</th>
-                        <th>Unit</th>
+                        <!-- <th>Unit</th> -->
+                        <th>Tax</th>
                         <th>Pkg Month-Year</th>
                         <th>Batch No</th>
+                        <th>Cost Per Item</th>
                         <th></th>
                       </tr>
                     </thead>

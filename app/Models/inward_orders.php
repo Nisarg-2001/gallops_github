@@ -13,7 +13,7 @@ class inward_orders extends Model
     public static function getProductByVendorId($vendor_id)
     {
         $product = DB::table('assign_products as ap')
-            ->select('p.*', 'ap.price', 'u.unit as unit_name')
+            ->select('p.*', 'ap.price', 'ap.tax', 'u.unit as unit_name')
             ->leftJoin('product_masters as p', 'p.id', '=', 'ap.product_id')
             ->leftJoin('unit_masters as u', 'u.id', '=', 'p.unit')
             ->where('ap.vendor_id', $vendor_id)

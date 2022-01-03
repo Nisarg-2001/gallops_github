@@ -32,6 +32,26 @@ class order extends Model
         return $order;
     }
 
+    // public static function getOrderItemData($order_id)
+    // {
+    //     $order = DB::table('order_items as oi')
+    //         //->select('oi.*', 'p.name as product_name')
+    //         ->select('oi.*', 'p.name as product_name', DB::raw('SUM(bs.qty) AS stock_qty'))
+    //         //->selectRaw('sum(total) as sum, hive_types.name as name')
+    //         ->leftJoin('product_masters as p', 'p.id', '=', 'oi.item_id')
+    //         ->leftJoin('orders as o', 'o.id', '=', 'oi.order_id')
+    //         //->leftJoin('branch_item_stocks as ', 'bsi.branch_id', '=', '')
+    //         ->leftJoin("branch_item_stocks as bs",function($join){
+    //             $join->on("bs.product_id","=","oi.item_id")
+    //                 ->on("bs.branch_id","=","o.user_id");
+    //         })
+    //         ->where('oi.order_id', $order_id)
+    //         ->groupBy('bs.qty')
+    //         ->get();
+
+    //     return $order;
+    // }
+
     // Functions for admin orders
     public static function getOrders()
     {

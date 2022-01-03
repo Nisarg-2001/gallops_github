@@ -59,8 +59,10 @@ class inwardController extends Controller
     {
         // $product = product_master::all();
         $vendor = vendor_master::all();
+        $tax = tax_master::all();
         return view('admin.inward.action')->with([
             'vendor' => $vendor,
+            'taxData' => $tax,
             // 'product' => $product,
         ]);
     }
