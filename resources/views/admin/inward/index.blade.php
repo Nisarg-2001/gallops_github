@@ -48,8 +48,8 @@
                       <td class="text-center">
                       <a href="{{ url('/user/inward/invoice/'.$info->id) }}" class="btn btn-secondary" title="Print Invoice" value="edit"><i class="fas fa-print"></i></a>
                         <a href="{{ url('user/inward/view/'.$info->id)}}" class="btn btn-primary" title="View"><i class="fas fa-eye"></i></a>
-                        <a href="{{url('user/inward/edit/'.$info->id)}}" class="btn btn-info"
-                            title="Edit"><i class="fas fa-pencil"></i></a>
+                        <!--<a href="{{url('user/inward/edit/'.$info->id)}}" class="btn btn-info"
+                            title="Edit"><i class="fas fa-pencil"></i></a>-->
                       </td>
                     </tr>
                     @endforeach

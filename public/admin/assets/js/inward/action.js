@@ -1,4 +1,4 @@
-var i = $("table.inward-table").find("tr").length;
+var i = $("table.inward-table").find("tr").length - 1;
 
 $('#inwardForm').validate({
     rules: {

@@ -201,16 +201,26 @@
                           
                         </td>
                         <td>
-                          <input type='number' value="{{ $orderItem->qty }}" id="Qty_{{ $i }}" name='qty[]' class='form-control filterme' min='1' max='9999' {{(isset($view)) ? 'readonly' : ''}}>
+                          <input type='text' value="{{ $orderItem->unit_price }}" id="Unit_Price_{{ $i }}" name='unit_price[]' class='form-control filterme' {{(isset($view)) ? 'readonly' : ''}}>
                         </td>
                         <td>
-                          <input type='text' value="{{ $orderItem->unit }}" id="Unit_{{ $i }}" name='unit[]' class='form-control filterme' readonly>
+                          <input type='number' value="{{ $orderItem->qty }}" id="Qty_{{ $i }}" name='qty[]' class='form-control filterme' min='1' max='9999' {{(isset($view)) ? 'readonly' : ''}}>
                         </td>
+                        <!-- <td>
+                          <input type='text' value="{{ $orderItem->unit }}" id="Unit_{{ $i }}" name='unit[]' class='form-control filterme' readonly>
+                        </td> -->
+                        <td>
+                          <input type='text' value="{{ $orderItem->tax }}" id="Tax_{{ $i }}" name='tax[]' class='form-control filterme' readonly>
+                          <input type='hidden' id="Tax_Data_{{ $i }}" name='taxStr[]' value="{{ $orderItem->tax_data }}">
+                        </td> 
                         <td>
                           <input type='text' value="{{ $orderItem->packaging_month }}" id="Packaging_month_{{ $i }}" name='monthYear[]' class='form-control filterme' readonly>
                         </td>
                         <td>
                           <input type='text' value="{{ $orderItem->batch_no }}" id="NetPrice_{{ $i }}" name='batch_number[]' class='form-control filterme' readonly>
+                        </td>
+                        <td>
+                          <input type='text' value="{{ $orderItem->cost_per_item }}" id="Cost_Per_Item_{{ $i }}" name='cost_per_item[]' class='form-control filterme' readonly>
                         </td>
                          <td>
                           <button type="button" class="btn btn-danger btn-sm removethis">
