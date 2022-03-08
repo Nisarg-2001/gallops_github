@@ -62,7 +62,7 @@
                     @foreach($data as $info)
                     <tr>
                       <td>{{ $info->id }}</td>
-                      <td><a href="{{ url('order') . '/' . $info->order_id }}" target="_blank" title="View Order">{{ $info->order_id }}</td>
+                      <td><a href="{{ (Auth::User()->role==1) ? url('order') . '/' . $info->order_id : url('user/order') . '/' . $info->order_id }}" target="_blank" title="View Order">{{ $info->order_id }}</td>
                       <td>{{ $info->user_name }}</td>
                       <td>{{ $info->vendor_name }}</td>
                       <td>{{ $info->total }}</td>

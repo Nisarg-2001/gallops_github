@@ -43,7 +43,9 @@ $("#product_id").change(function () {
 
     row += "<td><input type='text' value='" + products[itemid].price + "' id='NetPrice_" + i + "' name='NetPrice[]' class='form-control filterme' readonly></td>";
 
-    row += "<td><input type='number' value='1' id='Qty_" + i + "' name='Qty_[]' class='form-control filterme' min='1' max='9999'  onkeyup=updateAmount(" + itemid + ',' + i + ", 'cd') onchange=updateAmount(" + itemid + ',' + i + ",'ab')></td>";
+    row += "<td><input type='number' pattern='0-9' value='1' id='Qty_" + i + "' name='Qty[]' class='form-control filterme' min='1' max='9999'  onkeyup=updateAmount(" + itemid + ',' + i + ", 'cd') onchange=updateAmount(" + itemid + ',' + i + ",'ab')></td>";
+    
+    row += "<td><input type='text' value='" + products[itemid].unit_name + "' id='unit_" + i + "' class='form-control' readonly></td>";
 
     row += "<td><input type='text' value='" + products[itemid].price + "' id='Amount_" + i + "' name='Amount[]' class='form-control filterme' readonly><input type='hidden' name='taxAmount[]'  id='taxAmount_" + i + "' value='" + totalTaxAmt + "' data-id='" + i + "' " + taxStr + "></td>";
 
@@ -168,7 +170,7 @@ function check() {
 
 function getAllProducts() {
     $.ajax({
-        url: APP_URL + 'order/getProduct',
+        url: APP_URL + 'user/order/getProduct',
         type: 'POST',
         beforeSend: function () {
             $("#orderForm").find('input[type=submit]').attr('disabled', true);
@@ -186,7 +188,7 @@ function getAllProducts() {
 
 function getAllTaxes() {
     $.ajax({
-        url: APP_URL + 'order/getTaxes',
+        url: APP_URL + 'user/order/getTaxes',
         type: 'POST',
         beforeSend: function () {
             $("#orderForm").find('input[type=submit]').attr('disabled', true);

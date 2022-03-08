@@ -1,0 +1,199 @@
+if(isset($request->from))
+        {
+            if($request->role ==2)
+            {
+                $branch_id = $request->id;
+                $start_date = date('Y-m-d', strtotime('-1 day', strtotime($request->from)));
+                $end_date = date('Y-m-d', strtotime('+1 day', strtotime($request->to)));
+                
+                $product_data = DB::table('product_masters as pm')
+                ->join('unit_masters as um', 'pm.unit', '=', 'um.id')
+                ->select('pm.id', 'pm.name', 'pm.code', 'um.unit')
+                ->where('pm.id',$request->product_id)
+                ->get();
+                
+                $received_data = DB::table('inward_orders as io')
+                ->join('inward_order_items as ii', 'io.id', '=', 'ii.inward_id')
+                ->join('vendor_masters as v', 'io.vendor_id', '=', 'v.id')
+                ->where('io.user_id', $branch_id)
+                ->whereBetween('io.received_date', [$start_date, $end_date])
+                ->where('ii.product_id',$request->product_id)
+                ->select('ii.inward_id','ii.product_id', DB::raw(' qty'), 'ii.unit_price','v.name','io.updated_at')
+                ->get();
+                
+                
+                
+                $issued_data = DB::table('outward_masters as om')
+                ->join('outward_items as oi', 'om.id', '=', 'oi.outward_id')
+                ->join('department_masters as d', 'om.department', '=', 'd.id')
+                ->join('inward_order_items as ii', function ($join) {
+                    $join->on('ii.product_id', '=', 'oi.product_id');
+                    $join->on('ii.batch_no', '=', 'oi.batch_no');
+                })
+                ->where('om.user_id', $branch_id)
+                ->whereBetween('om.issue_date', [$start_date, $end_date])
+                ->select('oi.outward_id','oi.product_id', DB::raw('ii.qty'), 'ii.unit_price','d.name','om.updated_at')
+                ->where('oi.product_id',$request->product_id)
+                ->get();
+                
+                $closing_stock = DB::table('branch_item_stocks')
+                ->select('qty','product_id','updated_at')
+                ->where('branch_id',$branch_id)
+                ->whereBetween('updated_at',[$start_date,$end_date])
+                ->where('product_id',$request->product_id)
+                ->get();
+                
+                $product = $closing = $received = $issued = $stock_data = [];
+                
+                
+                
+                foreach($closing_stock as $close) {
+                    $closing[$close->product_id][] = $close;
+                }
+                
+                foreach($received_data as $rec) {
+                    $received[$rec->product_id][] = $rec;
+                }
+                
+                foreach($issued_data as $issue) {
+                    $issued[$issue->product_id][] = $issue;
+                }
+                
+                foreach($product_data as $prod) {
+                    $stock_data[$prod->id]['product'] = $prod;
+                    $stock_data[$prod->id]['closing'] =  (isset($closing[$prod->id])) ? $closing[$prod->id] : [];
+                    $stock_data[$prod->id]['received'] = (isset($received[$prod->id])) ? $received[$prod->id] : [];
+                    $stock_data[$prod->id]['issued'] = (isset($issued[$prod->id])) ? $issued[$prod->id] : [];
+                }
+                
+                $branch = User::where('role',2)->get();
+                $department = DB::table('product_masters as c')
+                ->select('c.*')
+                ->orderBy('name','ASC')
+                ->get();
+                
+                return view('admin.stock.stock_ledger')->with(['department'=>$department,'branch'=>$branch,'stock'=>$stock_data]);
+            }
+            else
+            {
+                $branch_id = $request->branch_id;
+                $start_date = date('Y-m-d', strtotime('-1 day', strtotime($request->from)));
+                $end_date = date('Y-m-d', strtotime('+1 day', strtotime($request->to)));
+                
+                $product_data = DB::table('product_masters as pm')
+                ->join('unit_masters as um', 'pm.unit', '=', 'um.id')
+                ->select('pm.id', 'pm.name', 'pm.code', 'um.unit')
+                ->where('pm.id',$request->product_id)
+                ->get();
+                
+                $received_data = DB::table('inward_orders as io')
+                ->join('inward_order_items as ii', 'io.id', '=', 'ii.inward_id')
+                ->join('vendor_masters as v', 'io.vendor_id', '=', 'v.id')
+                ->where('io.user_id', $branch_id)
+                ->whereBetween('io.received_date', [$start_date, $end_date])
+                ->where('ii.product_id',$request->product_id)
+                ->select('ii.inward_id','ii.product_id', DB::raw(' qty'), 'ii.unit_price','v.name','io.updated_at')
+                ->get();
+                
+                
+                
+                $issued_data = DB::table('outward_masters as om')
+                ->join('outward_items as oi', 'om.id', '=', 'oi.outward_id')
+                ->join('department_masters as d', 'om.department', '=', 'd.id')
+                ->join('inward_order_items as ii', function ($join) {
+                    $join->on('ii.product_id', '=', 'oi.product_id');
+                    $join->on('ii.batch_no', '=', 'oi.batch_no');
+                })
+                ->where('om.user_id', $branch_id)
+                ->whereBetween('om.issue_date', [$start_date, $end_date])
+                ->select('oi.outward_id','oi.product_id', DB::raw('ii.qty'), 'ii.unit_price','d.name','om.updated_at')
+                ->where('oi.product_id',$request->product_id)
+                ->get();
+                
+                $closing_stock = DB::table('branch_item_stocks')
+                ->select('qty','product_id','updated_at')
+                ->where('branch_id',$branch_id)
+                ->whereBetween('updated_at',[$start_date,$end_date])
+                ->where('product_id',$request->product_id)
+                ->get();
+                
+                $product = $closing = $received = $issued = $stock_data = [];
+                
+                $date_data = [];
+                
+                $fdata = [];
+                
+                foreach($closing_stock as $close) {
+                    $d = date('Y-m-d', strtotime($close->updated_at));
+                    $fdata[$d]['closing'][] = $close;
+                    
+                    $closing[$close->product_id][$d][] = $close;
+                    $date_data[] = $d;
+                }
+                
+                foreach($received_data as $rec) {
+                    $rd = date('Y-m-d', strtotime($rec->updated_at));
+                    $fdata[$rd]['received'][] = $rec;
+                    $received[$rec->product_id][$rd][] = $rec;
+                    $date_data[] = $rd;
+                }
+                
+                foreach($issued_data as $issue) {
+                    $id = date('Y-m-d', strtotime($issue->updated_at));
+                    $fdata[$id]['issue'][] = $issue;
+                    $issued[$issue->product_id][$id][] = $issue;
+                    $date_data[] = $id;
+                }
+                
+                $new_data = [];
+                
+                foreach($product_data as $prod) {
+                    
+                    $stock_data[$prod->id]['product']= $prod;
+                    $stock_data[$prod->id]['closing']=  (isset($closing[$prod->id])) ? $closing[$prod->id] : [];
+                    $stock_data[$prod->id]['received']= (isset($received[$prod->id])) ? $received[$prod->id] : [];
+                    $stock_data[$prod->id]['issued']= (isset($issued[$prod->id])) ? $issued[$prod->id] : [];
+                }
+                
+                // echo "<pre>";
+                // print_r($fdata);
+                // exit;
+                
+                $date_data = array_unique($date_data);
+                
+                // foreach($date_data as $date) {
+                //     foreach($stock_data as $prod_id => $stock) {
+                //         echo "<pre>";
+                //         print_r($stock);
+                //         exit;
+                //     }
+                // }
+                
+                // echo "<pre>";
+                // print_r($date_data);
+                // print_r($stock_data);
+                
+                // exit;
+                
+                $branch = User::where('role',2)->get();
+                $department = DB::table('product_masters as c')
+                ->select('c.*')
+                ->orderBy('name','ASC')
+                ->get();
+                
+                
+                return view('admin.stock.stock_ledger')->with(['department'=>$department,'branch'=>$branch,'stock'=>$stock_data]);
+            }
+            
+            
+        }
+        else
+        {
+            
+            $branch = User::where('role',2)->get();
+            $department = DB::table('product_masters as c')
+            ->select('c.*')
+            ->orderBy('name','ASC')
+            ->get();
+            return view('admin.stock.stock_ledger')->with(['department'=>$department,'branch'=>$branch]);
+        }

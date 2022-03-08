@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\userController;
 use App\Http\Controllers\taxController;
 use App\Http\Controllers\categoryController;
+use App\Http\Controllers\departmentController;
 use App\Http\Controllers\sub_categoryController;
 use App\Http\Controllers\unitController;
 use App\Http\Controllers\productController;
@@ -68,6 +69,13 @@ Route::post('/category/post',[categoryController::class,'addupdate']);
 Route::get('/category/edit/{id}',[categoryController::class,'edit']);
 Route::get('/category/delete/{id}',[categoryController::class,'delete']);
 
+## DEPARTMENT ROUTES ##
+Route::get('/department',[departmentController::class,'view']);
+Route::get('/department/add',[departmentController::class,'create']);
+Route::post('/department/post',[departmentController::class,'addupdate']);
+Route::get('/department/edit/{id}',[departmentController::class,'edit']);
+Route::get('/department/delete/{id}',[departmentController::class,'delete']);
+
 ## SUB CATEGORIES ROUTES ##
 Route::get('/subCategory',[sub_categoryController::class,'view']);
 Route::get('/subCategory/add',[sub_categoryController::class,'create']);
@@ -113,13 +121,6 @@ Route::post('/assign_product/post',[assignController::class,'addupdate']);
 Route::get('/assign_product/delete/{id}',[assignController::class,'delete']);
 
 ##  ORDER ROUTES ##
-Route::get('/order',[orderController::class,'view']);
-Route::get('/order/add',[orderController::class,'create']);
-Route::get('/order/{id}', [orderController::class,'edit']);
-Route::post('/order/post',[orderController::class,'addupdate']);
-Route::post('/order/getProduct',[orderController::class,'getProduct']);
-Route::post('/order/getTaxes',[orderController::class,'getTaxes']);
-Route::get('/order/delete/{id}',[orderController::class,'delete']);
 
 ##  ADMIN ORDER ROUTES ##
 Route::get('/admin-order',[adminOrderController::class,'view']);
@@ -132,7 +133,7 @@ Route::post('/admin-order/getVendorsByProduct', [adminOrderController::class,'ge
 ## VENDOR ORDER ROUTES ##
 Route::get('/vendor-order',[purchaseOrderController::class,'view']);
 Route::get('/vendor-order/{id}',[purchaseOrderController::class,'edit']);
- Route::get('/purchase-order',[purchaseOrderController::class,'view']);
+Route::get('/purchase-order',[purchaseOrderController::class,'view']);
 Route::post('/vendor-order/post', [purchaseOrderController::class,'updatePurchaseOrder']);
 
 
@@ -151,13 +152,28 @@ Route::get('/report/inward',[inwardController::class,'report']);
 Route::post('/report/inward',[inwardController::class,'report']);
 Route::get('/report/outward',[outwardController::class,'report']);
 Route::post('/report/outward',[outwardController::class,'report']);
+Route::get('/report/opening-stock',[departmentController::class,'opening_stock']);
+Route::post('/report/opening-stock',[departmentController::class,'opening_stock']);
+Route::get('/report/closing-stock',[departmentController::class,'closing_stock']);
+Route::get('/report/stock-ledger',[departmentController::class,'stock_ledger']);
+Route::post('/report/stock-ledger',[departmentController::class,'stock_ledger']);
+Route::post('/report/closing-stock',[departmentController::class,'closing_stock']);
+Route::get('/report/return',[returnController::class,'report']);
+Route::post('/report/return',[returnController::class,'report']);
 Route::get('/report/item-master',[productController::class,'item_master']);
 Route::get('/expiry',[productController::class,'expiry']);
+
 
 
 ## RETURN GOODS ## 
 Route::get('/return',[returnController::class,'view']);
 Route::get('/return/add',[returnController::class,'create']);
+Route::get('/return/edit/{id}', [returnController::class,'edit']);
+Route::get('/return/view/{id}', [returnController::class,'viewOutward']);
+Route::post('/return/post',[returnController::class,'addupdate']);
+Route::get('/return/print/{id}',[returnController::class,'invoice']);
+Route::get('/return/delete/{id}',[orderController::class,'delete']);
+Route::get('/vendor-order',[purchaseOrderController::class,'view']);
 
 
 
@@ -181,29 +197,34 @@ Route::group(['prefix' => 'user'], function(){
 Route::group(['middleware' => 'user'],function(){
 
 
-
-
-    Route::get('/dashboard/',function(){
-        return view('user.dashboard');
-    });
+Route::get('/dashboard/',[userController::class,'userdashboard']);
 ##  FRANCHISE  -- ORDERS    ##
 Route::get('/order',[orderController::class,'view']);
 Route::get('/order/add',[orderController::class,'create']);
-Route::get('/order/view/{id}', [orderController::class,'edit']);
-Route::get('/order/edit/{id}', [orderController::class,'edit']);
+Route::get('/order/{id}', [orderController::class,'edit']);
+Route::get('/order/edit/{id}', [adminOrderController::class,'edit']);
+Route::post('/order/updateOrder',[adminOrderController::class,'updateOrder']);
+Route::get('/order/view/{id}', [adminOrderController::class,'orderview']);
 Route::post('/order/post',[orderController::class,'addupdate']);
+Route::post('/order/getProduct',[orderController::class,'getProduct']);
+Route::post('/order/getTaxes',[orderController::class,'getTaxes']);
+Route::get('/order/delete/{id}',[orderController::class,'delete']);
 
 
 
 Route::get('/order/invoice/{id}',[orderController::class,'orderInvoice']);
+Route::get('/purchase-order',[purchaseOrderController::class,'view']);
 
 ##  FRANCHISE --  INWARDS ##
 Route::get('/inward',[inwardController::class,'view']);
 Route::get('/inward/add',[inwardController::class,'create']);
+Route::get('/stock',[inwardController::class,'addstock']);
 Route::post('/inward/post',[inwardController::class,'store']);
+Route::post('/stock/post',[inwardController::class,'storestock']);
 Route::get('/inward/view/{id}',[inwardController::class,'viewInward']);
 Route::get('/inward/edit/{id}',[inwardController::class,'edit']);
 Route::post('/inward/getProductByVendorId',[inwardController::class,'getProductByVendorId']);
+Route::post('/inward/getProduct',[inwardController::class,'getProduct']);
 Route::get('/inward/invoice/{id}',[inwardController::class,'inwardInvoice']);
 
 ##  FRANCHISE --    OUTWARDS  ##
@@ -211,13 +232,31 @@ Route::get('/outward',[outwardController::class,'view']);
 Route::get('/outward/add',[outwardController::class,'create']);
 Route::get('/outward/edit/{id}', [outwardController::class,'edit']);
 Route::get('/outward/view/{id}', [outwardController::class,'viewOutward']);
-
 Route::post('/outward/post',[outwardController::class,'addupdate']);
+Route::get('/outward/print/{id}',[outwardController::class,'invoice']);
 Route::get('/outward/delete/{id}',[orderController::class,'delete']);
 Route::get('/vendor-order',[purchaseOrderController::class,'view']);
+
+
+##  FRANCHISE   --  RETURNS     ##
+Route::get('/return',[returnController::class,'view']);
+Route::get('/return/add',[returnController::class,'create']);
+Route::get('/return/edit/{id}', [returnController::class,'edit']);
+Route::get('/return/view/{id}', [returnController::class,'viewOutward']);
+Route::post('/return/post',[returnController::class,'addupdate']);
+Route::get('/return/print/{id}',[returnController::class,'invoice']);
+Route::get('/return/delete/{id}',[orderController::class,'delete']);
+Route::get('/vendor-order',[purchaseOrderController::class,'view']);
+
 ## FRANCHISE    --  REPORTS   ##
 Route::get('/report/order',[orderController::class,'report']);
 Route::post('/report/order',[orderController::class,'report']);
+Route::get('/report/opening-stock',[departmentController::class,'opening_stock']);
+Route::post('/report/opening-stock',[departmentController::class,'opening_stock']);
+Route::get('/report/closing-stock',[departmentController::class,'closing_stock']);
+Route::post('/report/closing-stock',[departmentController::class,'closing_stock']);
+Route::get('/report/stock-ledger',[departmentController::class,'stock_ledger']);
+Route::post('/report/stock-ledger',[departmentController::class,'stock_ledger']);
 Route::get('/report/inward',[inwardController::class,'report']);
 Route::post('/report/inward',[inwardController::class,'report']);
 Route::get('/report/outward',[outwardController::class,'report']);
@@ -243,7 +282,29 @@ Route::post('/vendor-order/post', [purchaseOrderController::class,'updatePurchas
 });
 
 
-
+Route::get('/report/daily_opening_stock',[departmentController::class,'daily_opening_stock']);
 
 
 require __DIR__.'/auth.php';
+
+
+ Route::get('/route-cache', function() {
+     $exitCode = Artisan::call('route:cache');
+     return 'Routes cache cleared';
+ });
+ 
+ Route::get('/config-cache', function() {
+     $exitCode = Artisan::call('config:cache');
+     return 'Config cache cleared';
+ });
+ 
+ 
+ Route::get('/clear-cache', function() {
+     $exitCode = Artisan::call('cache:clear');
+     return 'Application cache cleared';
+ });
+ 
+ Route::get('/view-clear', function() {
+     $exitCode = Artisan::call('view:clear');
+     return 'View cache cleared';
+ });

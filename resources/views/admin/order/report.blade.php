@@ -59,14 +59,13 @@
                                     <div class="col-12 col-lg-3 col-md-3">
                                         <div class="form-group">
                                             <label>Select Branch</label>
-                                            <select class="form-control select2" style="width: 100%;" name="branch_id" >
+                                            <select class="form-control select2" style="width: 100%;" name="branch_id" required>
                                             <option value="">Select Franchise</option>
                                             @foreach($branch as $b)
                                             <option value="{{$b->id}}">
                                                 {{ $b->name }}
                                             </option>
                                             @endforeach
-                                            <option value="all">All Branches</option>
                                             </select>
                                         </div>
                                     </div>
@@ -88,48 +87,46 @@
                             <div class="card-body">
                                 <table id="example1" class="table caption-top table-bordered table-striped ">
                                     <caption class="text-center " style="caption-side:top;">Gallops Food Plaza (Store)<br>
-                                    <b>Report: order Report</b></caption>
+                                    <b>Report: order Report {{ (isset($from)) ? 'From: '.date('d-m-Y',strtotime($from)).' To '.date('d-m-Y',strtotime($to)) : '' }}</b></caption>
                                     <thead>
                                         <tr>
+                                             <th>Date</th>
                                             <th>Order No.</th>
                                             <th>Branch name</th>
-                                            <th>Item</th>
-                                            <th>Qty</th>
-                                            <th>Total</th>
-                                            <th>Expecting Delivery Date</th>
-                                            <th>Order Status</th>
                                             <th>Payment Status</th>
-                                            <th>Created on</th>
+                                            <th>Subtotal</th>
+                                            <th>Tax</th>
+                                            <th>Total Amount</th>
+                                            
+                                           
                                         </tr>
                                     </thead>
                                     <tbody>
                                     @if(isset($order))
+                                    @php $total =0; @endphp
                                     @foreach($order as $info)
                                     <tr>
-                                    <td>{{$info->order_id}}</td>
+                                        <td>{{ date('d M Y', strtotime($info->created)) }}</td>
+                                    <td>{{$info->id}}</td>
                                     <td>{{$info->name}}</td>
-                                    <td>{{$info->item_id}}</td>
-                                    <td>{{$info->qty}}</td>
-                                    <td>{{$info->total}}</td>
-                                    <td>{{ date('d M Y', strtotime($info->order_required_date)) }}</td>
-                                    @if($info->is_confirm==0)
-                                    <td><span class="badge bg-warning p-2 ml-5">Pending</span></td>
-                                    @elseif($info->is_confirm==1)
-                                    <td><span class="badge bg-success p-2 ml-5">Accepted</span></td>
-                                    @else
-                                    <td><span class="badge bg-danger p-2 ml-5">Cancelled</span></td>
-                                    @endif
-
-                                    @if($info->payment_status==0)
-                                    <td><span class="badge bg-warning p-2 ml-5">Pending</span></td>
-                                    @else
-                                    <td><span class="badge bg-success p-2 ml-5">Completed</span></td>
-                                    @endif
-                                    <td>{{ date('d M Y', strtotime($info->created)) }}</td>
+                                    <td>{{$info->payment_status}}</td>
+                                    <td align="right">{{number_format($info->sub_total,2)}}</td>
+                                    <td align="right">{{number_format($info->sub_total,2)}}</td>
+                                    <td align="right">{{number_format($info->total,2)}}</td>
+                                    
+                                    
                                     </tr>
+                                    @php $total = $total; @endphp
                                     @endforeach
                                     @endif
                                     </tbody>
+                                    <tfoot>
+                                        <tr align="right">
+                                            <th colspan="6" >Total:</th>
+                                            <th >₹ {{(isset($total)) ? number_format($total,2) : ''}}</th>
+                                            
+                                        </tr>
+                                    </tfoot>
                                 </table>
                             </div>
                             <!-- /.card-body -->

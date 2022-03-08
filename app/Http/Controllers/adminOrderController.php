@@ -46,6 +46,31 @@ class adminOrderController extends Controller
             'taxList' => $taxList,
         ]);
     }
+     public function orderview($id)
+    {
+        // get order by id
+        $orderData = order::find($id);
+
+        // get order items by order id
+        $orderItemData = order::getOrderItemData($id);
+        // echo "<pre>";;
+        // print_r($orderItemData);
+        // exit;
+
+        // get all products
+        $product = order::getProduct();
+
+        // get all taxes
+        $taxList = tax_master::all();
+        $view = "view";
+        return view('admin.admin_order.view_order', [
+            'orderData' => $orderData,
+            'orderItemData' => $orderItemData,
+            'product' => $product,
+            'taxList' => $taxList,
+            'view' => $view,
+        ]);
+    }
 
     public function getOrderDetails($id)
     {
@@ -153,8 +178,10 @@ class adminOrderController extends Controller
             }
 
         }
-
-        return redirect('admin-order')->with('success', ' Order Updated Successfully');
+        if(Auth::User()->role == 1)
+            return redirect('admin-order')->with('success', ' Order Updated Successfully');
+        else
+            return redirect('user/order')->with('success', ' Order Updated Successfully');
     }
 
     public function placePurchaseOrder(Request $request)
@@ -207,9 +234,10 @@ class adminOrderController extends Controller
                     $sub_total += $item['qty'] * $item['unit_price'];
                     $itemtax = json_decode($item['tax']);
                     $totaltax = 0;
+                    
                     foreach ($itemtax as $tax) {
                         $t = $item['qty'] * $item['unit_price'] * ($tax->value / 100);
-                        $taxData[$tax->id] += $t;
+                        (isset($taxData[$tax->id])) ? $taxData[$tax->id] :   $t=$t;
                         $totaltax += $t;
                     }
 

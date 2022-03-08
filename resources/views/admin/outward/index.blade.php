@@ -30,7 +30,7 @@
                   <thead>
                     <tr>
                       <th>Outward ID</th>
-                      <th>Person Name</th>
+                      <th>Department Name</th>
                       <th>Date of Issue</th>
                       <th>Order Status</th>
                       <th>Payment Status</th>
@@ -41,11 +41,12 @@
                     @foreach($data as $info)
                     <tr>
                       <td>{{ $info->id }}</td>
-                      <td>{{ $info->person_name }}</td>
+                      <td>{{ $info->name }}</td>
                       <td>{{ date('d M Y', strtotime($info->issue_date)) }}</td>
                       <td>Pending</td>
                       <td>Pending</td>
                       <td>
+                           <a href="{{ url('/user/outward/print/'.$info->id) }}" class="btn btn-secondary" title="Print Invoice" value="print"><i class="fas fa-print"></i></a>
                         <a href="{{ url('user/outward/view/'.$info->id)}}" class="btn btn-primary" title="View"><i class="fas fa-eye"></i></a>
                         <a href="{{url('user/outward/edit/'.$info->id)}}" class="btn btn-info"
                             title="Edit"><i class="fas fa-pencil"></i></a>

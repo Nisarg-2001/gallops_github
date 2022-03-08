@@ -43,6 +43,16 @@
                         </p>
                     </a>
                 </li>
+                
+                <li class="nav-item menu">
+                    <a href="{{ url('/department') }}" class="nav-link">
+                        <i class="nav-icon fas fa-receipt"></i>
+                        <p>
+                            Departments
+
+                        </p>
+                    </a>
+                </li>
 
                 <li class="nav-item menu">
                     <a href="{{ url('/category') }}" class="nav-link">
@@ -83,24 +93,15 @@
                     </a>
                 </li>
 
-                <li class="nav-item menu">
-                    <a href="{{ url('/assign_product') }}" class="nav-link ">
-                        <i class="nav-icon fas fa-cart-plus"></i>
-                        <p>
-                            Assign Products
-                        </p>
-                    </a>
-                </li>
+                <!--<li class="nav-item menu">-->
+                <!--    <a href="{{ url('/assign_product') }}" class="nav-link ">-->
+                <!--        <i class="nav-icon fas fa-cart-plus"></i>-->
+                <!--        <p>-->
+                <!--            Assign Products-->
+                <!--        </p>-->
+                <!--    </a>-->
+                <!--</li>-->
 
-                <li class="nav-item menu">
-                    <a class="nav-link ">
-                        <i class="nav-icon fas fa-cog"></i>
-                        <p>
-                            More Settings
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview" >
                         <li class="nav-item menu">
                         <a href="{{ url('/unit') }}" class="nav-link">
                             <i class="nav-icon fas fa-list-ul"></i>
@@ -109,16 +110,6 @@
                             </p>
                         </a>
                         </li>
-                        <li class="nav-item menu">
-                            <a href="{{ url('/productshelflife') }}" class="nav-link">
-                                <i class="nav-icon fas fa-box"></i>
-                                <p>
-                                    Product Shelf Life
-                                </p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
 
                 
 
@@ -174,7 +165,25 @@
                         <li class="nav-item">
                             <a href="{{url('report/raw-stock')}}" class="nav-link">
                                 <i class="far fa-file-invoice nav-icon"></i>
-                                <p>Raw Stock report</p>
+                                <p>Stock report</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{url('report/stock-ledger')}}" class="nav-link">
+                                <i class="far fa-file-invoice nav-icon"></i>
+                                <p>Stock Ledger report</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{url('report/opening-stock')}}" class="nav-link">
+                                <i class="far fa-file-invoice nav-icon"></i>
+                                <p>Opening Stock report</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{url('report/closing-stock')}}" class="nav-link">
+                                <i class="far fa-file-invoice nav-icon"></i>
+                                <p>Closing Stock report</p>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -183,12 +192,12 @@
                                 <p>Order report</p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="{{url('report/purchase-order')}}" class="nav-link">
-                                <i class="far fa-file-invoice nav-icon"></i>
-                                <p>Purchase order report</p>
-                            </a>
-                        </li>
+                        <!--<li class="nav-item">-->
+                        <!--    <a href="{{url('report/purchase-order')}}" class="nav-link">-->
+                        <!--        <i class="far fa-file-invoice nav-icon"></i>-->
+                        <!--        <p>Purchase order report</p>-->
+                        <!--    </a>-->
+                        <!--</li>-->
                         <li class="nav-item">
                             <a href="{{url('report/inward')}}" class="nav-link">
                                 <i class="far fa-file-invoice nav-icon"></i>
@@ -201,26 +210,32 @@
                                 <p>Outward report</p>
                             </a>
                         </li>
+                        <!--<li class="nav-item">-->
+                        <!--    <a href="{{url('report/return')}}" class="nav-link">-->
+                        <!--        <i class="far fa-file-invoice nav-icon"></i>-->
+                        <!--        <p>Return report</p>-->
+                        <!--    </a>-->
+                        <!--</li>-->
                     </ul>
                 </li>
 
-                <li class="nav-item menu">
-                    <a href="{{ url('/role') }}" class="nav-link">
-                        <i class="nav-icon fas fa-user-tag"></i>
-                        <p>
-                            Roles
+                <!--<li class="nav-item menu">-->
+                <!--    <a href="{{ url('/return') }}" class="nav-link">-->
+                <!--        <i class="nav-icon fas fa-exchange"></i>-->
+                <!--        <p>-->
+                <!--            Return Product-->
 
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item menu">
-                    <a href="{{ url('/expiry') }}" class="nav-link">
-                        <i class="nav-icon fas fa-user-tag"></i>
-                        <p>
-                            Expiry near Products
-                        </p>
-                    </a>
-                </li>
+                <!--        </p>-->
+                <!--    </a>-->
+                <!--</li>-->
+                <!--<li class="nav-item menu mb-5">-->
+                <!--    <a href="{{ url('/expiry') }}" class="nav-link">-->
+                <!--        <i class="nav-icon fas fa-user-tag"></i>-->
+                <!--        <p>-->
+                <!--            Expiry near Products-->
+                <!--        </p>-->
+                <!--    </a>-->
+                <!--</li>-->
 
                 @endif
                 @if(Auth::user()->role==2)
@@ -256,15 +271,32 @@
                         </p>
                     </a>
                 </li>
+                <!--<li class="nav-item menu">-->
+                <!--    <a href="{{ url('/user/stock') }}" class="nav-link">-->
+                <!--        <i class="nav-icon fas fa-dolly"></i>-->
+                <!--        <p>-->
+                <!--            Add Opening Stock-->
+                <!--        </p>-->
+                <!--    </a>-->
+                <!--</li>-->
 
-                <li class="nav-item menu">
-                            <a href="{{ url('user/vendor-order') }}" class="nav-link ">
-                                <i class="nav-icon fas fa-file-edit"></i>
-                                <p>
-                                    Purchase Orders
-                                </p>
-                            </a>
-                </li>
+                <!--<li class="nav-item menu">-->
+                <!--            <a href="{{ url('user/vendor-order') }}" class="nav-link ">-->
+                <!--                <i class="nav-icon fas fa-file-edit"></i>-->
+                <!--                <p>-->
+                <!--                    Purchase Orders-->
+                <!--                </p>-->
+                <!--            </a>-->
+                <!--</li>-->
+                <!--<li class="nav-item menu">-->
+                <!--    <a href="{{ url('/user/return') }}" class="nav-link">-->
+                <!--        <i class="nav-icon fas fa-exchange"></i>-->
+                <!--        <p>-->
+                <!--            Return Product-->
+
+                <!--        </p>-->
+                <!--    </a>-->
+                <!--</li>-->
 
                 <li class="nav-item menu">
                     <a href="{{url('user/reports')}}" class="nav-link">
@@ -282,6 +314,24 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="{{url('/user/report/opening-stock')}}" class="nav-link">
+                                <i class="far fa-file-invoice nav-icon"></i>
+                                <p>Opening Stock report</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{url('/user/report/closing-stock')}}" class="nav-link">
+                                <i class="far fa-file-invoice nav-icon"></i>
+                                <p>Closing Stock report</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{url('user/report/stock-ledger')}}" class="nav-link">
+                                <i class="far fa-file-invoice nav-icon"></i>
+                                <p>Stock Ledger report</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{{url('user/report/inward')}}" class="nav-link">
                                 <i class="far fa-file-invoice nav-icon"></i>
                                 <p>Inward Report</p>
@@ -293,6 +343,12 @@
                                 <p>Outward Report</p>
                             </a>
                         </li>
+                        <!--<li class="nav-item">-->
+                        <!--    <a href="{{url('user/report/return')}}" class="nav-link">-->
+                        <!--        <i class="far fa-file-invoice nav-icon"></i>-->
+                        <!--        <p>Return Report</p>-->
+                        <!--    </a>-->
+                        <!--</li>-->
                     </ul>
                 </li>
                 @endif

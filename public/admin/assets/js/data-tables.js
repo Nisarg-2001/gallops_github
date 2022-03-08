@@ -6,10 +6,10 @@ $('.select2bs4').select2({
 })
     $("#example1").DataTable({
       "responsive": true, "lengthChange": false, "autoWidth": false,
-      "buttons": ["excel", "pdf", ]
+      "buttons": ["excel", "pdf" ],
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
     $('#example2').DataTable({
-      "paging": true,
+      "paging": false,
       "lengthChange": false,
       "searching": false,
       "ordering": true,
@@ -17,6 +17,8 @@ $('.select2bs4').select2({
       "autoWidth": true,
       "responsive": true,
     });
+    
+    
 
     $('#reload').click(function() {
       location.reload();

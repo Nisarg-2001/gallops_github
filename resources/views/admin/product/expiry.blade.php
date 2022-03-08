@@ -60,7 +60,24 @@
                                             <td>{{$data->code}}</td>
                                             <td>{{$data->name}}</td>
                                             <td>{{$data->uunit}}</td>
-                                            <td>{{$data->packaging_month}}</td>
+                                            <td>
+                                            <?php
+                                            $Date =0;
+                                            $validity = 0;
+                                            $expiry = 0;
+                                          
+                                                $now = date('d-M-Y',time());
+                                                $validity =$data->packaging_month;
+                                                 $date1 = new DateTime($now);
+                                                $date2 = new DateTime($validity);
+                                                $date2 = $date2->add(new DateInterval('P'.$data->self_life.'D'));
+                                                $interval = $date1->diff($date2);
+                                                //$result = $validity->diff($now);
+                                                //$validity = date('Y-m-d', strtotime($Date. ' + $data->self_life days'));
+                                                //$result = abs(strtotime($now) - strtotime($validity));
+                                                //$expiry = floor($result/ (365*60*60*24));
+                                            ?>
+                                            {{$interval->days}} days</td>
                                         </tr>
                                         @endforeach
                                     

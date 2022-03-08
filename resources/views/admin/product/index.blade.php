@@ -57,7 +57,7 @@
                                             <td>{{ $c }}</td>
                                             <td>{{ $info->name }}</td>
                                             <td>{{ $info->alias }}</td>
-                                            <td>{{ $info->self_life }}</td>
+                                            <td>{{ $info->self_life }} days</td>
                                             <td>{{ $info->unit}}</td>
                                             <td class="text-center">
                                                 <a href="assign_product/add?product={{$info->id}}"

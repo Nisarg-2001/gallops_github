@@ -13,10 +13,16 @@ class order extends Model
     public static function getProduct()
     {
         $product = DB::table('assign_products as ap')
-            ->select('p.*', 'ap.tax', 'ap.price')
+            ->select('p.*', 'ap.tax', 'ap.price', 'u.unit as unit_name')
             ->leftJoin('product_masters as p', 'p.id', '=', 'ap.product_id')
-            ->where('ap.is_default', 1)
+            ->leftjoin('unit_masters as u', 'p.unit','=','u.id')
+            ->groupBy('ap.product_id')
             ->get();
+        
+        //  $product = DB::table('product_masters as p')
+        //     ->select('p.*', 'u.unit as unit_name')
+        //     ->leftJoin('unit_masters as u', 'u.id', '=', 'p.unit')
+        //     ->get();
 
         return $product;
     }
@@ -24,8 +30,9 @@ class order extends Model
     public static function getOrderItemData($order_id)
     {
         $order = DB::table('order_items as oi')
-            ->select('oi.*', 'p.name as product_name')
+            ->select('oi.*', 'p.name as product_name','u.unit as unit_name')
             ->leftJoin('product_masters as p', 'p.id', '=', 'oi.item_id')
+            ->leftjoin('unit_masters as u', 'p.unit', '=', 'u.id')
             ->where('oi.order_id', $order_id)
             ->get();
 

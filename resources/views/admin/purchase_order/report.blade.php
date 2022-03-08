@@ -84,11 +84,12 @@
                                 <table id="example1" class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
+                                            <th>Order Date</th>
                                             <th>Purchase Order ID</th>
                                             <th>Order ID</th>
                                             <th>Branch Name</th>
                                             <th>Total Amount</th>
-                                            <th>Order Date</th>
+                                            
                                             <th>Expecting Delivery Date</th>
                                             <th>Order Status</th>
                                             <th>Dispatch</th>
@@ -99,12 +100,13 @@
                                     @if(isset($data))
                                     @foreach($data as $info)
                                     <tr>
+                                        <td>{{ date('d M Y', strtotime($info->created_at)) }}</td>
                                     <td>{{$info->id}}</td>
                                     <td>{{$info->order_id}}</td>
                                     <td>{{$info->name}}</td>
                                     <td>{{$info->total}}</td>
                                     <td>{{ date('d M Y', strtotime($info->order_required_date)) }}</td>
-                                    <td>{{ date('d M Y', strtotime($info->created_at)) }}</td>
+                                    
                                     @if($info->is_confirm==0)
                                     <td><span class="badge bg-warning p-2 ml-5">Pending</span></td>
                                     @elseif($info->is_confirm==1)

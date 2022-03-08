@@ -16,7 +16,7 @@ class orderController extends Controller
 
     public function view()
     {
-        $order = DB::table('orders')->where('user_id', Auth::user()->id)->paginate(10);
+        $order = DB::table('orders')->where('user_id', Auth::user()->id)->get();
         return view('admin.order.index')->with(['data' => $order]);
     }
 
@@ -51,6 +51,7 @@ class orderController extends Controller
             'taxes' => $taxes,
         ]);
     }
+    
 
     public function addupdate(Request $request)
     {
@@ -123,16 +124,19 @@ class orderController extends Controller
         ->join('users as u', 'o.user_id', '=', 'u.id')
         ->select('o.*', 'u.*')
         ->where('o.id', $id)->first();
+         $taxes = tax_master::all();
 
         $item = DB::table('order_items as oi')
         ->join('product_masters as pm', 'pm.id', '=', 'oi.item_id')
         ->join('unit_masters as um', 'um.id', 'pm.unit')
         ->select('oi.*', 'pm.*','um.unit as unit_name')
         ->where('oi.order_id', '=', $id)->get();
-
+        //$leads= '{"name":"Johny Carson","title":"CTO"}';
+        $leads = DB::table('order_items as os')->select('os.tax')->where('os.order_id',$id)->get();
+        
         
 
-        return view('admin.order.invoice')->with(['order'=>$order, 'item'=>$item,]);
+        return view('admin.order.invoice')->with(['order'=>$order, 'item'=>$item,'taxes'=>$taxes,'leads'=>$leads]);
     }
 
     public function getProduct(Request $request)
@@ -159,47 +163,37 @@ class orderController extends Controller
 
     public function report(Request $request)
     {
-        if(isset($request))
+        
+        if(isset($request->from))
         {
-            if(!isset($request->branch_id) || $request->branch_id=='all')
-            {   
+            
                 if((Auth::user()->role)==2)
                 {
-                    $order = DB::table('order_items as oi')
-                    ->join('orders as o', 'oi.order_id', '=', 'o.id')
+                    
+                    $order = DB::table('orders as o')
                     ->join('users as u', 'u.id', '=', 'o.user_id')
-                    ->select('o.*', 'oi.*', 'o.created_at as created','u.name')
+                    ->select('o.*', 'o.created_at as created','u.name')
                     ->whereBetween('o.created_at', [$request->from,$request->to])
                     ->where('u.id', $request->id)
-                    ->paginate(10);
+                    ->get();
+                    
                     $branch = User::where('role','=', 2)->get();
                     return view('admin.order.report')->with(['order' => $order,'branch'=>$branch]);
                 }
                 else
                 {
-                    $order = DB::table('order_items as oi')
-                    ->join('orders as o', 'oi.order_id', '=', 'o.id')
+                    $order = DB::table('orders as o')
                     ->join('users as u', 'u.id', '=', 'o.user_id')
-                    ->select('o.*', 'oi.*', 'o.created_at as created','u.name')
+                    ->select('o.*', 'o.created_at as created','u.name')
                     ->whereBetween('o.created_at', [$request->from,$request->to])
-                    ->paginate(10);
+                    ->where('u.id', $request->branch_id)
+                    ->get();
+                    
                     $branch = User::where('role','=', 2)->get();
-                    return view('admin.order.report')->with(['order' => $order,'branch'=>$branch]);
+                    return view('admin.order.report')->with(['order' => $order,'branch'=>$branch,'from'=>$request->from,'to'=>$request->to]);
                 }
                
-            }
-            else
-            {
-                $order = DB::table('orders as o')
-                ->join('order_items as oi', 'oi.order_id', '=', 'o.id')
-                ->join('users as u', 'u.id', '=', 'o.user_id')
-                ->select('o.*', 'oi.*', 'o.created_at as created','u.name')
-                ->whereBetween('o.created_at', [$request->from,$request->to])
-                ->where('u.id', $request->branch_id)
-                ->paginate(10);
-                $branch = User::where('role','=', 2)->get();
-                return view('admin.order.report')->with(['order' => $order,'branch'=>$branch]);
-            }
+            
                 
         }
         else
@@ -214,7 +208,7 @@ class orderController extends Controller
 
     public function order_item_report()
     {
-        $order = DB::table('orders')->paginate(10);
+        $order = DB::table('orders')->get();
         $product = order::getProduct();
         
         return view('admin.order.report')->with(['data' => $order,'product'=>$product]);

@@ -16,8 +16,13 @@ class inward_orders extends Model
             ->select('p.*', 'ap.price', 'ap.tax', 'u.unit as unit_name')
             ->leftJoin('product_masters as p', 'p.id', '=', 'ap.product_id')
             ->leftJoin('unit_masters as u', 'u.id', '=', 'p.unit')
-            ->where('ap.vendor_id', $vendor_id)
+            ->groupBy('ap.product_id')
             ->get();
+        
+        // $product = DB::table('product_masters as p')
+        //     ->select('p.*', 'u.unit as unit_name')
+        //     ->leftJoin('unit_masters as u', 'u.id', '=', 'p.unit')
+        //     ->get();
 
         return $product;
     }

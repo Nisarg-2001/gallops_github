@@ -55,7 +55,7 @@ class purchaseOrderController extends Controller
         $order_data->payment_status = $request->payment_status;
         $order_data->save();
 
-        return redirect('vendor/order')->with('success',' Order Updated Successfully');
+        return redirect('vendor-order')->with('success',' Order Updated Successfully');
 
     }
 

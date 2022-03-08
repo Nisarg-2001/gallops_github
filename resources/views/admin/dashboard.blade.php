@@ -58,7 +58,7 @@
               <div class="inner">
                 <h3>{{ $user }}</h3>
 
-                <p>User Registrations</p>
+                <p>User Registered</p>
               </div>
               <div class="icon">
                 <i class="ion ion-person-add"></i>
@@ -122,24 +122,28 @@
                 <div class="table-responsive">
                   <table class="table m-0">
                     <thead>
-                    <tr>
+                    <tr align-="center">
                       <th>Order ID</th>
+                      <th>Date</th>
+                      <th>Branch</th>
                       <th>Total</th>
-                      <th>Status</th>
-                      <th>Payments</th>
+                      <th>Order Status</th>
+                      <th>Payment Status</th>
                     </tr>
                     </thead>
                     <tbody>
                       @foreach($order as $info)
                     <tr>
                       <td>{{ $info->id }}</td>
+                      <td>{{date('d-m-Y',strtotime($info->created_at))}}</td>
+                      <td>{{$info->name}}</td>
                       <td>{{ $info->total }}</td>
                       @if($info->is_confirm==0)
                       <td><span class="badge bg-warning p-2 ml-5">Pending</span></td>
                       @elseif($info->is_confirm==1)
                       <td><span class="badge bg-success p-2 ml-5">Accepted</span></td>
                       @else
-                      <td><span class="badge bg-danger p-2 ml-5">Cancelled</span></td>
+                      <td><span class="badge bg-danger p-2 ml-auto">Cancelled</span></td>
                       @endif
 
                       @if($info->payment_status==0)
@@ -156,8 +160,7 @@
               </div>
               <!-- /.card-body -->
               <div class="card-footer clearfix">
-                <a href="{{ url('order/add') }}" class="btn btn-sm btn-primary float-left">Place New Order</a>
-                <a href="{{ url('/order') }}" class="btn btn-sm btn-info float-right">View All Orders</a>
+                <a href="{{ url('/admin-order') }}" class="btn btn-sm btn-info float-right">View All Orders</a>
               </div>
               <!-- /.card-footer -->
             </div>
@@ -184,10 +187,8 @@
                 <li class="item">
                     <div class="">
                       <a class="product-title text-dark"><b>{{ $data->name }}</b>
-                        <span class="badge badge-success p-2 float-right"><strong>{{ $data->self_life }}&nbsp;</strong>Months</span></a>
-                      <span class="product-description">
-                        {{ $data->alias }}
-                      </span>
+                        <span class="badge badge-success p-2 float-right"><strong>{{ round($data->self_life/30,0) }}&nbsp;</strong>Months</span></a>
+                      
                     </div>
                   </li>
                   @endforeach

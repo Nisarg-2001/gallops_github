@@ -15,19 +15,18 @@ class outward_master extends Model
         $product = DB::table('assign_products as ap')
             ->select('p.*')
             ->leftJoin('product_masters as p', 'p.id', '=', 'ap.product_id')
-            ->where('ap.is_default', 1)
             ->get();
 
         return $product;
     }
 
-    public static function getOutwardItemData($inward_id)
+    public static function getOutwardItemData($id)
     {
         $order = DB::table('outward_items as oi')
             ->select('oi.*', 'p.name as product_name', 'um.unit')
             ->leftJoin('product_masters as p', 'p.id', '=', 'oi.product_id')
             ->leftJoin('unit_masters as um', 'um.id', '=', 'p.unit')
-            ->where('oi.outward_id', $inward_id)
+            ->where('oi.outward_id', $id)
             ->get();
 
         return $order;

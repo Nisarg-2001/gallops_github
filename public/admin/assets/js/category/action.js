@@ -4,18 +4,13 @@ $('#catForm').validate({
             required: true,
             xssProtection: true
         },
-        description: {
-            required: true,
-            xssProtection: true
-        },
+       
     },
     messages: {
         title: {
             required: "Please enter category title.",
         },
-        description: {
-            required: "Please enter description.",
-        },
+       
     },
     errorElement: 'span',
     errorPlacement: function (error, element) {

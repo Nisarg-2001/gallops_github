@@ -1,5 +1,5 @@
 var i = $("table.inward-table").find("tr").length - 1;
-
+var amount =0, total =0;
 $('#inwardForm').validate({
     rules: {
         vendor_id: {
@@ -64,7 +64,7 @@ $(document).on('change', '#vendor_id', function () {
                     $('#changeVendor').show();
                     let options = '<option value="">Select Product</option>';
                     $.each(data, function (key, value) {
-                        options += "<option value='" + value.id + "' data-unit='" + value.unit_name + "' data-price='" + value.price + "' data-tax='" + value.tax + "'>" + value.name + "</option>";
+                        options += "<option value='" + value.id + "' data-unit='" + value.unit_name + "' data-price='" + value.price + "' data-tax='" + value.tax + "'>" + value.name +" ("+value.code+")" +"</option>";
                     });
                     $('#product_id').html(options);
                     $('.select2').select2();
@@ -81,7 +81,7 @@ $(document).on('change', '#vendor_id', function () {
 
 
 $(document).on('click', '#addInwardProduct', function () {
-    if ($('#product_id').val() == '') {
+    if ($('#product_id').val() ==='') {
         alert('Please select product.');
         return false;
     }
@@ -95,11 +95,12 @@ $(document).on('click', '#addInwardProduct', function () {
         alert('Please select tax.');
         return false;
     }
+    // if (!$('#batch_number').val()) {
+    //     alert('Please enter batch number.');
+    //     return false;
+    // }
 
-    if (!$('#batch_number').val()) {
-        alert('Please enter batch number.');
-        return false;
-    }
+   
 
     addInwardProduct();
 
@@ -115,7 +116,9 @@ $("table.inward-table").on('click', 'button.removethis', function (e) {
 
 $(document).on('change', '#product_id', function () {
     let unit_price = $('#product_id option:selected').attr('data-price');
+    let uom = $('#product_id option:selected').attr('data-unit');
     $('#unit_price').val(unit_price);
+    $('#uom').val(uom);
 });
 
 function addInwardProduct() {
@@ -130,7 +133,7 @@ function addInwardProduct() {
     let tax = $('#tax').val();
 
     var taxArr = [];
-
+    
     let taxVal = 0;
     let sub_total = qty * unit_price;
 
@@ -143,12 +146,12 @@ function addInwardProduct() {
 
     let taxStr = JSON.stringify(taxArr);
 
-    let total = sub_total + taxVal;
-
-    let cost_per_item = total / qty;
+     total = sub_total + taxVal;
+    
+    let cost_per_item = total ;
     
     
-    let batch_number = $('#batch_number').val();
+    //let batch_number = $('#batch_number').val();
 
     let packaging_month_text = $('#packaging_month option:selected').text();
     let packaging_month = $('#packaging_month option:selected').val();
@@ -165,19 +168,26 @@ function addInwardProduct() {
     //row += '<td>' + unit + '<input type="hidden" name="unit[]" value="' + unit + '"></td>';
     row += '<td>' + taxVal + '<input type="hidden" name="tax[]" value="' + taxVal + '">' + "<input type='hidden' name='taxStr[]' value='" + taxStr + "'></td>";
     row += '<td>' + packaging_month_text + '-' + packaging_year + '<input type="hidden" name="monthYear[]" value="' + packaging_date + '"></td>';
-    row += '<td>' + batch_number + '<input type="hidden" name="batch_number[]" value="' + batch_number + '"></td>';
+    //row += '<td>' + batch_number + '<input type="hidden" name="batch_number[]" value="' + batch_number + '"></td>';
     row += '<td>' + cost_per_item + '<input type="hidden" name="cost_per_item[]" value="' + cost_per_item + '"></td>';
     row += '<td><button type="button" class="btn btn-danger btn-sm removethis" title="Remove"><i class="fa fa-trash"></i></button></td>';
     row += "</tr>";
-
+    
     $("table.inward-table").append(row);
-
+     updateTotal();
     resetData();
 
     i++;
 
 }
 
+function updateTotal()
+{
+    var Amount = parseFloat(total);
+
+    $("#total").html(Amount.toFixed(2));
+
+}
 function resetData() {
     const d = new Date();
     let month = d.getMonth() + 1; //months from 1-12

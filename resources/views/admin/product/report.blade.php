@@ -46,22 +46,35 @@
                                         <div class="form-group">
                                             <label>From</label>
                                             <input type="hidden" name="id" class="form-control" value="{{Auth::user()->id}}" />
-                                            <input type="date" name="from" class="form-control" required/>
+                                            <input type="date" name="from" class="form-control" value="{{old('from')}}" required/>
                                         </div>
                                     </div>
                                     <div class="col-12 col-lg-3 col-md-3">
                                         <div class="form-group">
                                             <label>To</label>
-                                            <input type="date" name="to" class="form-control" required/>
+                                            <input type="date" name="to" class="form-control" value="{{old('to')}}" required/>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-lg-3 col-md-3">
+                                        <div class="form-group">
+                                            <label>Select Department</label>
+                                            <select class="form-control select2" style="width: 100%;" name="department_id" required>
+                                            <option value="">Select Department</option>
+                                            @foreach($cat as $c)
+                                            <option value="{{$c->id}}">{{$c->title}}</option>
+                                            @endforeach
+                                            </select>
                                         </div>
                                     </div>
                                     @if((Auth::user()->role)==1)
                                     <div class="col-12 col-lg-3 col-md-3">
                                         <div class="form-group">
                                             <label>Select Branch</label>
-                                            <select class="form-control select2" style="width: 100%;" name="branch_id" >
+                                            <select class="form-control select2" style="width: 100%;" name="branch_id" required>
                                             <option value="">Select Franchise</option>
-                                            <option value="all">All Branches</option>
+                                            @foreach($branch as $b)
+                                            <option value="{{$b->id}}">{{$b->name}}</option>
+                                            @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -83,20 +96,21 @@
                             <div class="card-body">
                                 <table id="example1" class="table caption-top table-bordered table-striped ">
                                     <caption class="text-center " style="caption-side:top;">Gallops Food Plaza (Store)<br>
-                                    <b>Report: Raw Stock Report</b></caption>
+                                    <b>Report: Stock Report {{(isset($from)) ? 'From: '.date('d-m-Y',strtotime($from)).' To '.date('d-m-Y',strtotime($to)) : '' }}</b></caption>
                                     <thead>
                                     <tr>
-                                            <th>Code</th>
+                                            <th>Date</th>
                                             <th>Item Name</th>
+                                            <th>Department</th>
                                             <th>Unit</th>
                                             
                                             <th colspan="2" class="text-center">Opening</th>
-                                            <th colspan="2" class="text-center">Received</th>
-                                            <th colspan="2" class="text-center">Issued</th>
+                                            <th colspan="2" class="text-center">Inward</th>
+                                            <th colspan="2" class="text-center">Outward</th>
                                             <th colspan="2" class="text-center">Closing</th>
-                                        </tr>
+                                    </tr>
                                         <tr>
-                                            <th colspan="3"></th>
+                                            <th colspan="4"></th>
                                             <th>Qty.</th>
                                             <th>Amt.</th>
                                             <th>Qty.</th>
@@ -112,20 +126,41 @@
                                     @if(isset($stock))
                                     <tbody>
                                         @foreach($stock as $data)
+                                        
+                                        @php 
+                                        $opening = $received = $issued = $open =0;
+                                        if(isset($data['opening']) && !empty($data['opening']))
+                                        {
+                                            $opening = $data['opening']->qty;
+                                            $open = $data['opening']->qty;
+                                            if(isset($data['received']) && !empty($data['received']))
+                                                $received = $data['received']->qty;
+                                            else
+                                                $received = 0;
+                                            if(isset($data['issued']) && !empty($data['issued']))
+                                                $issued = $data['issued']->qty;
+                                            else
+                                                $issued = 0;
+                                            $opening = $opening + $received - $issued;
+                                        }
+                                        else
+                                            $opening =0;
+                                        
+                                        @endphp
                                         <tr>
-                                            <td>{{$data->code}}</td>
-                                            <td>{{$data->name}}</td>
-                                            <td>{{$data->uunit}}</td>
-                                            <td>{{$data->oqty}}</td>
-                                            <td>{{($data->oqty * $data->price)}}</td>
-                                            <td>{{$data->oqty}}</td>
-                                            <td>{{($data->oqty * $data->price)}}</td>
-                                            <td>{{$data->oqty}}</td>
-                                            <td>{{($data->oqty * $data->price)}}</td>
-                                            <td>{{$data->oqty}}</td>
-                                            <td>{{($data->oqty * $data->price)}}</td>
-
-
+                                            <td align="center">{{ (isset($data['opening']) && !empty($data['opening'])) ? date('d-m-Y',strtotime($data['opening']->date)) : '-' }}</td>
+                                            <td align="center">{{$data['product']->name}}</td>
+                                            <td align="center">{{$data['product']->title}}</td>
+                                            <td align="center">{{$data['product']->unit}}</td>
+                                            <td align="right">{{ (isset($data['opening']) && !empty($data['opening'])) ? $data['opening']->qty : '0.00'}}</td>
+                                            <td align="right">{{ (isset($data['opening']) && !empty($data['opening'])) ? number_format($data['opening']->amount,2) : '0.00'}}</td>
+                                            <td align="right">{{ (isset($data['received']) && !empty($data['received'])) ? $data['received']->qty : '0.00'}}</td>
+                                            <td align="right">{{ (isset($data['received']) && !empty($data['received'])) ? number_format($data['received']->amount,2) : '0.00'}}</td>
+                                            <td align="right">{{ (isset($data['issued']) && !empty($data['issued'])) ? $data['issued']->qty : '0.00'}}</td>
+                                            <td align="right">{{ (isset($data['issued']) && !empty($data['issued'])) ? number_format($data['issued']->amount,2) : '0.00'}}</td>
+                                            <td align="right">{{(isset($opening)) ? number_format($opening,2) : '0.00' }}</td>
+                                            <td align="right">{{ (isset($data['opening']) && !empty($data['opening'])) ? number_format($data['opening']->unit_price*$opening,2) : '0.00' }}</td>
+                                            
                                         </tr>
                                         @endforeach
                                     </tbody>
@@ -146,7 +181,7 @@
         <!-- /.content -->
     </div>
     @section('page-footer-script')
-    <script src="{{ asset('/admin/assets/js/data-tables.js') }}"></script>
+    <script src="{{ asset('/admin/assets/js/datatable-report.js') }}"></script>
     <script src="{{ asset('/admin/assets/js/sweetalert.js') }}"></script>
 
     @endsection

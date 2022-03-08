@@ -26,7 +26,7 @@
                   <input type="hidden" name="vendor" id="vendor" value="">
 
                   <div class="row">
-                    <div class="col-6 col-lg-6 col-md-6">
+                    <div class="col-3 col-lg-3 col-md-3">
                       <div class="form-group">
                         <label>Select Vendor *</label>
                         <select class="form-control select2" name="vendor_id" id="vendor_id" {{(isset($view)) ? 'disabled' : ''}} >
@@ -37,15 +37,7 @@
                         </select>
                       </div>
                     </div>
-                    <div class="col-6 col-lg-6 col-md-6"  style="margin-top: 30px;">
-                      <a href="javascript:void(0);" class="btn btn-primary btn-sm mt-2" id="changeVendor" style="display:none;" title="Change Vendor">Change Vendor</a>
-                    </div>
-                  </div>
-
-                  
-
-                  <div class="row">
-                    <div class="col-4 col-lg-4 col-md-4">
+                    <div class="col-2 col-lg-2 col-md-2">
                       <div class="form-group">
                         <label for="exampleInputPassword1">Order No.</label>
                         <input type="text" class="form-control" name="order" id="order" value="{{ (isset($data->id) && !empty($data->id)) ? $data->id : '' }}" placeholder="Order No." {{(isset($data)) ? 'readonly' : ''}}>
@@ -54,7 +46,7 @@
                         @enderror
                       </div>
                     </div>
-                    <div class="col-4 col-lg-4 col-md-4">
+                    <div class="col-2 col-lg-2 col-md-2">
                       <div class="form-group">
                         <label for="exampleInputPassword1">Vendor Bill No.</label>
                         <input type="text" class="form-control" name="billno" value="{{ (isset($data->vendor_bill_no) && !empty($data->vendor_bill_no)) ? $data->vendor_bill_no : '' }}" placeholder="Vendor Bill No." {{(isset($data)) ? 'readonly' : ''}}>
@@ -63,7 +55,7 @@
                         @enderror
                       </div>
                     </div>
-                    <div class="col-4 col-lg-4 col-md-4">
+                    <div class="col-2 col-lg-2 col-md-2">
                       <div class="form-group">
                         <label for="exampleInputPassword1">Date of Receive</label>
                         <input type="date" class="form-control" name="dateofreceive" value="{{ (isset($data->received_date) && !empty($data->received_date)) ? $data->received_date : date('Y-m-d') }}" placeholder="Date of Receive" {{(isset($data)) ? 'readonly' : ''}}>
@@ -72,26 +64,40 @@
                         @enderror
                       </div>
                     </div>
-
-                  </div>
-
-                  <div id="inwardProductData" style="display: none;">
-                    <div class="row">
-                      <div class="col-12 col-lg-12 col-md-6">
+                      <div class="col-12 col-lg-3 col-md-3" id="inwardProductData" style="display: none;">
                         <div class="form-group">
                           <label>Select Product </label>
                           <select class="form-control select2" style="width: 100%;" name="product_id" id="product_id">
                             <option value="">Select Product</option>
                           </select>
                         </div>
-                      </div>
                     </div>
-
+                  </div>
+                  
                     <div class="row">
-                      <div class="col-12 col-lg-2 col-md-2">
+                      
+                      <div class="col-12 col-lg-1 col-md-1">
                         <div class="form-group">
-                          <label for="exampleInputPassword1">Unit Price</label>
+                          <label for="exampleInputPassword1">Quantity</label>
+                          <input type="number" class="form-control" name="qty" id="qty" value="1" placeholder="Quantity" min="0.1" max="9999">
+                          @error('quantity')
+                          <div class="text-danger">{{$message}}</div>
+                          @enderror
+                        </div>
+                      </div>
+                      <div class="col-12 col-lg-1 col-md-1">
+                        <div class="form-group">
+                          <label for="exampleInputPassword1">Rate</label>
                           <input type="text" class="form-control" name="unit_price" id="unit_price" value="" placeholder="0.00" >
+                          @error('quantity')
+                          <div class="text-danger">{{$message}}</div>
+                          @enderror
+                        </div>
+                      </div>
+                      <div class="col-12 col-lg-1 col-md-1">
+                        <div class="form-group">
+                          <label for="exampleInputPassword1">UOM</label>
+                          <input type="text" class="form-control" name="uom" id="uom" value="uom" readonly>
                           @error('quantity')
                           <div class="text-danger">{{$message}}</div>
                           @enderror
@@ -99,11 +105,12 @@
                       </div>
                       <div class="col-12 col-lg-2 col-md-2">
                         <div class="form-group">
-                          <label for="exampleInputPassword1">Quantity</label>
-                          <input type="number" class="form-control" name="qty" id="qty" value="1" placeholder="Quantity" min="1" max="9999">
-                          @error('quantity')
-                          <div class="text-danger">{{$message}}</div>
-                          @enderror
+                          <label for="exampleInputPassword1">Select Tax</label>
+                          <select class="form-control select2" style="width: 100%;" name="tax" id="tax" multiple>
+                            @foreach($taxes as $tax)
+                              <option value="{{ $tax->id }}">{{ $tax->tax_name }}</option>
+                            @endforeach
+                          </select>
                         </div>
                       </div>
                       <div class="col-12 col-lg-2 col-md-2">
@@ -131,36 +138,25 @@
                           <div class="text-danger">{{$message}}</div>
                           @enderror
                         </div>
+                        
+                      </div>
+                      <div class="col-12 col-md-2 col-lg-2" style="margin-top:30px;">
+                        <button class="btn btn-primary" id="addInwardProduct">Add Product</button>
                       </div>
 
-                      <div class="col-12 col-lg-4 col-md-4">
-                        <div class="form-group">
-                          <label for="batch_number">Batch Number *</label>
-                          <input type="text" class="form-control" name="batch_no" id="batch_number" value="" placeholder="Batch Number">
-                          @error('batch_number')
-                          <div class="text-danger">{{$message}}</div>
-                          @enderror
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="row">
-                      <div class="col-12 col-lg-6 col-md-6">
-                        <div class="form-group">
-                          <label for="exampleInputPassword1">Select Tax</label>
-                          <select class="form-control select2" style="width: 100%;" name="tax" id="tax" multiple>
-                            @foreach($taxData as $tax)
-                              <option value="{{ $tax->id }}">{{ $tax->tax_name }}</option>
-                            @endforeach
-                          </select>
-                        </div>
-                      </div>
+                      <!--<div class="col-12 col-lg-4 col-md-4">-->
+                      <!--  <div class="form-group">-->
+                      <!--    <label for="batch_number">Batch Number *</label>-->
+                      <!--    <input type="text" class="form-control" name="batch_no" id="batch_number" value="" placeholder="Batch Number">-->
+                      <!--    @error('batch_number')-->
+                      <!--    <div class="text-danger">{{$message}}</div>-->
+                      <!--    @enderror-->
+                      <!--  </div>-->
+                      <!--</div>-->
                     </div>
 
                     <div class="row" style="margin-bottom: 1rem;">
-                      <div class="col-12 col-lg-12 col-md-12">
-                        <button class="btn btn-primary" id="addInwardProduct">Add Product</button>
-                      </div>
+                      
                     </div>
 
                   </div>
@@ -177,8 +173,8 @@
                         <!-- <th>Unit</th> -->
                         <th>Tax</th>
                         <th>Pkg Month-Year</th>
-                        <th>Batch No</th>
-                        <th>Cost Per Item</th>
+                        <!--<th>Batch No</th>-->
+                        <th>Total Amount</th>
                         <th></th>
                       </tr>
                     </thead>
@@ -187,7 +183,7 @@
                         @if(isset($inwardItemData) && $inwardItemData)
 
                         @php
-                        $i = 1;
+                        $i = 1; $totamt=0;
                         @endphp
 
                         @foreach($inwardItemData as $orderItem)
@@ -216,22 +212,54 @@
                         <td>
                           <input type='text' value="{{ $orderItem->packaging_month }}" id="Packaging_month_{{ $i }}" name='monthYear[]' class='form-control filterme' readonly>
                         </td>
-                        <td>
-                          <input type='text' value="{{ $orderItem->batch_no }}" id="NetPrice_{{ $i }}" name='batch_number[]' class='form-control filterme' readonly>
-                        </td>
-                        <td>
-                          <input type='text' value="{{ $orderItem->cost_per_item }}" id="Cost_Per_Item_{{ $i }}" name='cost_per_item[]' class='form-control filterme' readonly>
+                        
+                        <td align="right">
+                          <input type='text' value="{{ number_format($orderItem->cost_per_item,2) }}" id="Cost_Per_Item_{{ $i }}" name='cost_per_item[]' class='form-control filterme' readonly>
                         </td>
                          <td>
-                          <button type="button" class="btn btn-danger btn-sm removethis">
+                          @if(!isset($view))<button type="button" class="btn btn-danger btn-sm removethis">
                             <i class="fa fa-trash"></i>
-                          </button>
+                          </button>@endif
                         </td> 
                       </tr>
-                      @php $i++; @endphp
+                      <?php $i++; $totamt += $orderItem->cost_per_item; ?>
                       @endforeach
                       @endif
                     </tbody>
+                    <tfoot>
+                                        <tr>
+                                            <th colspan="6" class="text-right" >Total:</th>
+                                            <th><b><span id="total">{{(isset($totamt)) ? number_format($totamt,2) : "0.00" }}</span></b></th>
+                                            
+                                        </tr>
+                                    </tfoot>
+                  </table>
+                  <table class="table table-bordered table-hover " id="taxTotal">
+                    <tr>
+                      <td width="85%" align="right" style="padding-right:20px;"> <b>Sub Total (₹)</b>
+                      </td>
+                      <td width="15%" align="right"> <span id="SubTotalAmt">{{ (isset($orderData)) ? number_format($orderData->sub_total, 2) : 0.00 }}</span></td>
+                    </tr>
+
+                    @foreach($taxes as $t)
+
+                    <tr>
+                      <input type="hidden" name="hiddenTotalTax[]" id="hiddenTotalTax_{{ $t->id }}" value="{{ (isset($taxData)) ? isset($taxData[$t->id]) : 0 }}">
+                      <input type="hidden" name="hiddenTaxId[]" id="hiddenTaxId_{{ $t->id }}" value="{{ $t->id }}">
+                      <input type="hidden" name="hiddenTaxName[]" id="hiddenTaxName_{{ $t->id }}" value="{{ (isset($t->name)) ? $t->name : $t->tax_name }}">
+                      <td width="85%" align="right" style="padding-right:20px;">
+                        <b>{{ (isset($t->name)) ? $t->name : $t->tax_name }} (₹)</b>
+                      </td>
+                      <td width="15%" align="right"> <b><span id="TotalSingleTax_{{ $t->id }}">{{ (isset($taxData)) ? number_format(isset($taxData[$t->id]), 2) : 0.00 }}</span></b></td>
+                    </tr>
+                    @endforeach
+
+                    <tr>
+                      <td width="85%" align="right" style="padding-right:20px;">
+                        <b>Total Amount (₹)</b>
+                      </td>
+                      <td width="15%" align="right"> <b><span id="TotalAmt">{{ (isset($orderData)) ? number_format($orderData->total, 2) : 0.00 }}</span></b></td>
+                    </tr>
                   </table>
 
                   <div class="text-center">

@@ -17,11 +17,11 @@
           <div class="col-12">
             <div class="card">
               <div class="card-header text-right">
-                <a href="{{url('place-purchase-order') . '/' . $orderData->id}}" class="btn btn-primary">Convert to Purchase Order</a>
+                @if(Auth::USer()->role==1)<a href="{{url('place-purchase-order') . '/' . $orderData->id}}" class="btn btn-primary">Convert to Purchase Order</a>@endif
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <form action="{{ url('admin-order/updateOrder') }}" method="post" id="orderForm">
+                <form action="{{ (Auth::USer()->role==1) ? url('admin-order/updateOrder') : url('user/order/updateOrder') }}" method="post" id="orderForm">
                   @csrf
                   <input type="hidden" name="id" value="{{ (isset($orderData->id) && !empty($orderData->id)) ? $orderData->id : '' }}">
                   <div class="row">
@@ -55,6 +55,7 @@
                         <th class='text-center' width="5%">No.</th>
                         <th width="45%">Product Name</th>
                         <th width="10%">Quantity</th>
+                        <th width="5%">UOM</th>
                         <th width="20%">Unit Price</th>
                         <th width="20%">Amount</th>
                         <!-- <th></th> -->
@@ -103,13 +104,16 @@
                           <input type="hidden" name="itemTax[]" id="itemTax_{{ $i }}" value="{{ $orderItem->tax }}" data-id="{{ $i }}">
                         </td>
                         <td>
-                          <input type='number' value="{{ $orderItem->qty }}" id="Qty_{{ $i }}" name='Qty[]' class='form-control filterme' min='1' max='9999' onkeyup="updateAmount('{{ $orderItem->item_id }}', '{{ $i }}')" >
+                          <input type='number' value="{{ $orderItem->qty }}" id="Qty_{{ $i }}" name='Qty[]' class='form-control filterme' min='1' max='9999' onkeyup="updateAmount('{{ $orderItem->item_id }}', '{{ $i }}','cd')" onchange="updateAmount('{{ $orderItem->item_id }}', '{{ $i }}', 'ab')" @if(isset($view)) readonly @endif>
+                        </td>
+                         <td>
+                          <input type='text' value="{{ $orderItem->unit_name }}" class='form-control' readonly>
                         </td>
                         <td>
                           <input type='text' value="{{ $orderItem->unit_price }}" id="NetPrice_{{ $i }}" name='NetPrice[]' class='form-control filterme' readonly>
                         </td>
-                        <td>
-                          <input type='text' value="{{ $orderItem->unit_price * $orderItem->qty }}" id='Amount_{{ $i }}' name='Amount[]' class='form-control filterme' readonly>
+                        <td align="right">
+                          <input type='text' value="{{ number_format($orderItem->unit_price * $orderItem->qty,2) }}" id='Amount_{{ $i }}' name='Amount[]' class='form-control filterme' readonly>
                           <input type='hidden' name='taxAmount[]' id='taxAmount_{{ $i }}' value='{{ $totalTaxAmt }}' data-id='{{ $i }}' {{ $taxStr }}>
                         </td>
                         <!-- <td class='text-center'>
@@ -166,11 +170,12 @@
                       @enderror
                     </div>
                   </div>
-
+                    
+                     
                   <div class="col-6 col-md-6 col-lg-5">
                     <div class="form-group">
                       <label>Order Status *</label>
-                      <select class="form-control select2" style="width: 100%;" name="is_confirm" id="is_confirm">
+                      <select class="form-control select2" style="width: 100%;" name="is_confirm" id="is_confirm" disabled readonly>
                         <option value="0" {{ (isset($orderData) && $orderData->is_confirm == 0) ? 'selected' : '' }}>Pending</option>
                         <option value="1" {{ (isset($orderData) && $orderData->is_confirm == 1) ? 'selected' : '' }}>Accepted</option>
                         <option value="2" {{ (isset($orderData) && $orderData->is_confirm == 2) ? 'selected' : '' }}>Cancelled</option>
@@ -181,16 +186,17 @@
                   <div class="col-6 col-md-6 col-lg-5">
                     <div class="form-group">
                       <label>Payment Status *</label>
-                      <select class="form-control select2" style="width: 100%;" name="payment_status" id="payment_status">
+                      <select class="form-control select2" style="width: 100%;" name="payment_status" id="payment_status" readonly disabled>
                         <option value="0" {{ (isset($orderData) && $orderData->payment_status == 0) ? 'selected' : '' }}>Pending</option>
                         <option value="1" {{ (isset($orderData) && $orderData->payment_status == 1) ? 'selected' : '' }}>Completed</option>
                       </select>
                     </div>
                   </div>
+                  
 
                   <div class="text-center">
-                    <button type="submit" class="btn btn-primary">Save Order</button>
-                    <a href="{{url('admin-order')}}" class="btn btn-danger">Back</a>
+                   @if(!isset($view))  <button type="submit" class="btn btn-primary">Save Order</button>  @endif
+                    <a href="{{(Auth::User()->role==1) ? url('admin-order') : url('user/order') }}" class="btn btn-danger">Back</a>
                   </div>
                 </form>
               </div>

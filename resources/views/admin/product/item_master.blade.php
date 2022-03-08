@@ -63,7 +63,7 @@
                                     <td>{{$info->code}}</td>
                                     <td>{{$info->name}}</td>
                                     <td>{{$info->uunit}}</td>
-                                    <td>{{$info->price}}</td>
+                                    <td align="right">{{number_format($info->price,2)}}</td>
                                     <td>{{$info->sub_category}}</td>
                                     <td>{{$info->title}}</td>
                                     </tr>
@@ -86,7 +86,7 @@
         <!-- /.content -->
     </div>
     @section('page-footer-script')
-    <script src="{{ asset('/admin/assets/js/data-tables.js') }}"></script>
+    <script src="{{ asset('/admin/assets/js/report/datatable-report.js') }}"></script>
     <script src="{{ asset('/admin/assets/js/sweetalert.js') }}"></script>
 
     @endsection

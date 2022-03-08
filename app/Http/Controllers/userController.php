@@ -19,9 +19,18 @@ class UserController extends Controller
     {
         $user = User::all()->count();
         $products = product_master::all()->count();
-        $product = product_master::all();
-        $order = DB::table('orders')->paginate(10);
+        $product = DB::table('product_masters')->paginate(5);
+        $order = DB::table('orders')->join('users as u','orders.user_id','=','u.id')->select('orders.*','u.name')->orderBy('id','DESC')->paginate(10);
         return view('admin.dashboard')->with(['user'=>$user,'product'=>$product,'products'=>$products,'order'=>$order]);
+    }
+    
+    public function userdashboard()
+    {
+        $order = DB::table('orders')->where('user_id',Auth::User()->id)->get();
+        $confirm = DB::table('orders')->where('is_confirm',1)->where('user_id',Auth::User()->id)->get();
+        $pending = DB::table('orders')->where('is_confirm',0)->where('user_id',Auth::User()->id)->get();
+        $cancel = DB::table('orders')->where('is_confirm',2)->where('user_id',Auth::User()->id)->get();
+        return view('user.dashboard')->with(['order'=>$order, 'confirm'=>$confirm, 'pending'=>$pending, 'cancel'=>$cancel]);
     }
 
     public function view()

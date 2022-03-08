@@ -53,8 +53,9 @@
                       <tr>
                         <th class='text-center' width="5%">No.</th>
                         <th width="45%">Product Name</th>
+                        <th width="10%">Rate</th>
                         <th width="10%">Quantity</th>
-                        <th width="20%">Unit Price</th>
+                         <th width="10%">UOM</th>
                         <th width="20%">Amount</th>
                         <!-- <th></th> -->
                       </tr>
@@ -102,12 +103,12 @@
                           <input type="hidden" name="itemTax[]" id="itemTax_{{ $i }}" value="{{ $orderItem->tax }}" data-id="{{ $i }}">
                         </td>
                         <td>
-                          <input type='number' value="{{ $orderItem->qty }}" id="Qty_{{ $i }}" name='Qty[]' class='form-control filterme' min='1' max='9999' onkeyup="updateAmount('{{ $orderItem->item_id }}', '{{ $i }}')" onchange="updateAmount('{{ $orderItem->item_id }}', '{{ $i }}')" readonly>
+                          <input type='text' pattern="0-9" value="{{ $orderItem->qty }}" id="Qty_{{ $i }}" name='Qty[]' class='form-control filterme' min='1' max='9999' onkeyup="updateAmount('{{ $orderItem->item_id }}', '{{ $i }}', 'cd')" onchange="updateAmount('{{ $orderItem->item_id }}', '{{ $i }}', 'ab')" >
                         </td>
                         <td>
                           <input type='text' value="{{ $orderItem->unit_price }}" id="NetPrice_{{ $i }}" name='NetPrice[]' class='form-control filterme' readonly>
                         </td>
-                        <td>
+                        <td align="right">
                           <input type='text' value="{{ number_format($orderItem->unit_price * $orderItem->qty, 2) }}" id='Amount_{{ $i }}' name='Amount[]' class='form-control filterme' readonly>
                           <input type='hidden' name='taxAmount[]' id='taxAmount_{{ $i }}' value='{{ $totalTaxAmt }}' data-id='{{ $i }}' {{ $taxStr }}>
                         </td>

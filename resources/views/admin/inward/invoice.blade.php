@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Gallops | Order Invoice</title>
+  <title>Gallops | Inward Invoice</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -66,8 +66,8 @@
             <th>Particulars</th>
             <th>Unit</th>
             <th>Quantity</th>
-            <th>Batch No.</th>
-            <th>Mfg. Month</th>
+            <th>Rate</th>
+            <th>Amount</th>
           </tr>
           </thead>
           <tbody>
@@ -78,14 +78,42 @@
               <td>{{ $data->name }}</td>
               <td>{{ $data->qty}}</td>
               <td>{{ $data->qty}}&nbsp; {{$data->unit_name}}</td>
-              <td>{{ $data->batch_no}}</td>
-              <td>{{ date('M-Y',strtotime($data->packaging_month))}}</td>
+             <td>{{ $data->unit_price}} / {{$data->unit_name}}</td>
+             <td align="right">{{ number_format(($data->qty * $data->unit_price),2)}}</td>
               
             </tr>
-            
+             <?php $total+=($data->qty * $data->unit_price); ?>
+             <?php $c++; ?>
             @endforeach
           </tbody>
-          
+          <tfoot>
+            <tr>
+              <th colspan="5" class="text-right">Subtotal:</th>
+              <td width="15%" align="right"><b>₹ {{number_format($total,2) }}</b></td>
+            </tr>
+             <?php  $totaltaxamt=0; ?>
+              @foreach($leads as $key => $value)
+              @php $taxArr = json_decode($value->tax_data); @endphp
+              @endforeach
+              @foreach($taxArr as $tax)
+                
+              
+                    <tr>
+                      <th colspan="5" class="text-right">
+                        <b>{{$tax->name}}(₹)</b>
+                      </th>
+                      @php $taxamt = ($total *($tax->value))/100; @endphp
+                      <td width="15%" align="right"> <b><span id="">{{number_format($taxamt,2)}}</span></b></td>
+                      <? $totaltaxamt += $taxamt; ?>
+                    </tr>
+                     @endforeach
+            <tr>
+                
+               
+              <th colspan="5" class="text-right">Total:</th>
+              <td align="right"><b>₹ {{number_format($total +$totaltaxamt,2)}}</td>
+            </tr>
+          </tfoot>
         </table>
       </div>
       <!-- /.col -->

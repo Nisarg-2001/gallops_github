@@ -41,6 +41,9 @@
     <!-- /.card-body -->
   </div>
   <!-- /.card -->
+  <div style="margin-top:50px;">
+      <center><a href="https://mpiricsoftware.com/" style="font-size:18px;font-weight:bold;color:#5e6fb5;" target="_blank">Developed by MPIRIC</a></center>
+  </div>
 </div>
 <!-- /.login-box -->
 @include('layouts.scripts')

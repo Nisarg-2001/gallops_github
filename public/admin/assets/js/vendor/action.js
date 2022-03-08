@@ -1,26 +1,6 @@
 $('#vendorForm').validate({
-    rules: {
-        email: {
-            required: true,
-            email: true,
-            xssProtection: true
-        },
-        password: {
-            required: true,
-            minlength: 5,
-            xssProtection: true
-        },
-    },
-    messages: {
-        email: {
-            required: "Please enter a email address",
-            email: "Please enter a vaild email address"
-        },
-        password: {
-            required: "Please provide a password",
-            minlength: "Your password must be at least 5 characters long"
-        },
-    },
+    
+    
     errorElement: 'span',
     errorPlacement: function (error, element) {
         error.addClass('invalid-feedback');

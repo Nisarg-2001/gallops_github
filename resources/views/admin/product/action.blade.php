@@ -45,7 +45,7 @@
                     <div class="col-12 col-md-3 col-lg-3">
                       <div class="form-group">
                         <label>Product Code</label>
-                        <input type="number" class="form-control" name="code" value="{{ (isset($data->alias) && !empty($data->alias)) ? $data->alias : '' }}" placeholder="Product Code" >
+                        <input type="number" class="form-control" name="code" value="{{ (isset($data->code) && !empty($data->code)) ? $data->code : '' }}" placeholder="Product Code" required>
                         @error('code')
                         <div class="text-danger">{{$message}}</div>
                         @enderror
@@ -54,7 +54,7 @@
                     <div class="col-12 col-md-3 col-lg-3">
                     <div class="form-group">
                         <label>HSN no.</label>
-                        <input type="text" class="form-control" name="hsn" value="{{ (isset($data->alias) && !empty($data->alias)) ? $data->alias : '' }}" placeholder="Hsn no.">
+                        <input type="text" class="form-control" name="hsn" value="{{ (isset($data->hsn) && !empty($data->hsn)) ? $data->hsn : '' }}" placeholder="Hsn no.">
                         @error('hsn')
                         <div class="text-danger">{{$message}}</div>
                         @enderror
@@ -68,12 +68,20 @@
                             <label for="exampleInputPassword1">Product Self Life</label>
                             <div class="row">
                               <div class="col-md-8 col-lg-8">
-                            <input type="number" class="form-control" name="life">
+                                  <?php
+                                  if(isset($data->self_life))
+                                  {
+                                      $months = intval(($data->self_life)/30);
+                                      $year = intval(($data->self_life)/365);
+                                  }
+                                  ?>
+                            <input type="number" class="form-control" name="life"
+                            value="{{ (isset($data->self_life) && !empty($data->self_life)) ? (($data->self_life >30) ?$months : $data->self_life) : '' }}">
                             </div>
                             <div class="col-md-4 col-lg-4">
                            <select class="form-control" name="format">
-                             <option value="1">Days</option>
-                             <option value="2">Months</option>
+                             <option value="1" @if(isset($data->self_life) && $data->self_life<=30) ? selected="Selected" :'' @endif >Days</option>
+                             <option value="2" @if(isset($data->self_life) && $data->self_life>30) ? selected="Selected" :'' @endif >Months</option>
                              <option value="3">Years</option>
                            </select>
                             </div>
@@ -86,7 +94,7 @@
                         <label>Category</label>
                         <select name="category" class="form-control" required>
                           @foreach($category as $info)
-                          <option value="{{ $info->id}}" @if(isset($data->category)==$info->id) ? selected="Selected" :'' @endif>{{ $info->title }}</option>
+                          <option value="{{ $info->id}}" @if(isset($data->category) && $data->category==$info->id) ? selected="Selected" :'' @endif>{{ $info->title }}</option>
                           @endforeach
                         </select>
                       </div>
@@ -97,7 +105,7 @@
                         <select name="subcategory" class="form-control" required>
                           <option value="none" selected>none</option>
                           @foreach($sub_category as $info)
-                          <option value="{{ $info->id}}" @if(isset($data->sub_category)==$info->id) ? selected="Selected" :'' @endif>{{ $info->sub_category }}</option>
+                          <option value="{{ $info->id}}" @if(isset($data->sub_category)&& $data->sub_category==$info->id) ? selected="Selected" :'' @endif>{{ $info->sub_category }}</option>
                           @endforeach
                         </select>
                       </div>
@@ -107,7 +115,7 @@
                         <label for="exampleInputPassword1">Unit Of Measurement</label>
                         <select name="unit" class="form-control" required>
                         @foreach($unit as $info)
-                          <option value="{{ $info->id}}" @if(isset($data->unit)==$info->id) ? selected="Selected" :'' @endif>{{ $info->unit }}</option>
+                          <option value="{{ $info->id}}" @if(isset($data->unit) && $data->unit==$info->id) ? selected="Selected" :'' @endif>{{ $info->unit }}</option>
                           @endforeach
                         </select>
                       </div>

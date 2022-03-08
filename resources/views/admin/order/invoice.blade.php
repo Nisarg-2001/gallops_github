@@ -18,7 +18,7 @@
   <!-- Main content -->
   <section class="invoice p-5" style="border:2px solid black">
   <div class="row">
-      
+     
       <div class="col-sm-12 text-center">
         <h3 style="margin-bottom:0px;">RETAIL INVOICE</h3>
         <h6 style="margin-top:5px;">(ISSUE OF INVOICE UNDER RULE 11 OF CENTRAL EXCISE RULE 2002)</h6>
@@ -79,7 +79,7 @@
               <td>{{ $data->qty}}</td>
               <td>{{ $data->qty}}&nbsp; {{$data->unit_name}}</td>
               <td>{{ $data->unit_price}} / {{$data->unit_name}}</td>
-              <td>{{ ($data->qty * $data->unit_price)}}</td>
+              <td align="right">{{ number_format(($data->qty * $data->unit_price),2)}}</td>
             </tr>
             <?php $total+=($data->qty * $data->unit_price); ?>
             <?php $c++; ?>
@@ -88,19 +88,29 @@
           <tfoot>
             <tr>
               <th colspan="5" class="text-right">Subtotal:</th>
-              <th >₹ {{$total }}</th>
+              <td width="15%" align="right"><b>₹ {{number_format($total,2) }}</b></td>
             </tr>
+            <?php  $totaltaxamt=0; ?>
+              @foreach($leads as $key => $value)
+              @php $taxArr = json_decode($value->tax); @endphp
+              @endforeach
+              @foreach($taxArr as $tax)
+                
+              
+                    <tr>
+                      <th colspan="5" class="text-right">
+                        <b>{{$tax->name}}(₹)</b>
+                      </th>
+                      @php $taxamt = ($total *($tax->value))/100; @endphp
+                      <td width="15%" align="right"> <b><span id="">{{number_format($taxamt,2)}}</span></b></td>
+                      <? $totaltaxamt += $taxamt; ?>
+                    </tr>
+                     @endforeach
             <tr>
-              <th colspan="5" class="text-right">Tax (9.3%)</th>
-              <td>₹ 10.34</td>
-            </tr>
-            <tr>
-              <th colspan="5" class="text-right">Shipping:</th>
-              <td>₹ 5.80</td>
-            </tr>
-            <tr>
+                
+               
               <th colspan="5" class="text-right">Total:</th>
-              <td><b>₹ {{$total}}</td>
+              <td align="right"><b>₹ {{number_format($total +$totaltaxamt,2)}}</td>
             </tr>
           </tfoot>
           
@@ -132,6 +142,7 @@
   </section>
   <!-- /.content -->
 </div>
+<script src="{{ asset('/admin/assets/js/order/invoice.js') }}"></script>
 <!-- ./wrapper -->
 <!-- Page specific script -->
 <script>
